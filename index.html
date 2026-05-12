@@ -264,9 +264,165 @@ body { min-height: 100vh; }
   .spec-row { grid-template-columns: 100px 1fr; }
   .spec-val { grid-column: 1 / -1; text-align: right; }
 }
+
+/* ---------- Profile picker / settings modal ---------- */
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 100;
+  background: rgba(0,0,0,0.5); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  display: none; align-items: center; justify-content: center; padding: 20px;
+}
+.modal-overlay.show { display: flex; }
+.modal {
+  background: var(--surface); border-radius: var(--radius-lg); padding: 36px 32px;
+  max-width: 480px; width: 100%; max-height: 90vh; overflow-y: auto;
+  box-shadow: var(--shadow-lg); animation: modalIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+@keyframes modalIn { from { opacity: 0; transform: scale(0.95) translateY(10px); } to { opacity: 1; transform: none; } }
+.modal-eyebrow { font-size: 12px; font-weight: 600; color: var(--accent); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 10px; }
+.modal-title { font-family: 'Fraunces', serif; font-size: 28px; font-weight: 500; letter-spacing: -0.02em; margin-bottom: 8px; }
+.modal-sub { color: var(--ink-2); font-size: 14px; line-height: 1.55; margin-bottom: 24px; }
+.profile-options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; }
+.profile-option {
+  display: flex; align-items: center; gap: 14px; padding: 16px 18px;
+  border: 1px solid var(--line); border-radius: 14px; cursor: pointer;
+  background: var(--surface); transition: all 0.15s; text-align: left;
+  font-family: inherit; font-size: 15px; width: 100%;
+}
+.profile-option:hover { border-color: var(--accent); background: var(--surface-2); }
+.profile-avatar {
+  width: 42px; height: 42px; border-radius: 50%; flex-shrink: 0;
+  background: linear-gradient(135deg, var(--ink), #3A3A3C); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Fraunces', serif; font-size: 18px; font-weight: 500;
+}
+.profile-avatar.b { background: linear-gradient(135deg, #5856D6, #AF52DE); }
+.profile-avatar.new { background: var(--surface-2); color: var(--ink-2); border: 1px dashed var(--line); }
+.profile-info-name { font-weight: 600; color: var(--ink); }
+.profile-info-meta { font-size: 12px; color: var(--ink-3); margin-top: 2px; }
+.modal-input {
+  width: 100%; padding: 12px 14px; border: 1px solid var(--line); border-radius: 10px;
+  font-family: 'JetBrains Mono', monospace; font-size: 13px; background: var(--surface);
+  color: var(--ink); margin-bottom: 12px;
+}
+.modal-input:focus { outline: none; border-color: var(--accent); }
+.modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 18px; }
+.modal-btn {
+  padding: 10px 18px; border-radius: 10px; border: 1px solid var(--line);
+  background: var(--surface); font-family: inherit; font-size: 14px; font-weight: 500;
+  cursor: pointer; color: var(--ink); transition: all 0.15s;
+}
+.modal-btn:hover { border-color: var(--ink-3); }
+.modal-btn.primary { background: var(--ink); color: #fff; border-color: var(--ink); }
+.modal-btn.primary:hover { background: #000; }
+.modal-step { display: none; }
+.modal-step.show { display: block; }
+.modal-help { background: var(--surface-2); border-radius: 10px; padding: 14px 16px; font-size: 13px; color: var(--ink-2); line-height: 1.5; margin-bottom: 16px; }
+.modal-help strong { color: var(--ink); }
+.modal-help a { color: var(--accent); text-decoration: none; }
+.modal-help ol { padding-left: 20px; margin: 8px 0 4px; }
+.modal-help li { margin-bottom: 4px; }
+
+/* Profile chip in topbar */
+.profile-chip {
+  display: flex; align-items: center; gap: 8px;
+  background: var(--surface-2); padding: 4px 10px 4px 4px; border-radius: 999px;
+  cursor: pointer; transition: all 0.15s; font-size: 13px; font-weight: 500;
+  border: none; font-family: inherit; color: var(--ink-2);
+}
+.profile-chip:hover { background: var(--line-2); }
+.profile-chip-avatar { width: 24px; height: 24px; border-radius: 50%; background: linear-gradient(135deg, var(--ink), #3A3A3C); color: #fff; display: flex; align-items: center; justify-content: center; font-family: 'Fraunces', serif; font-size: 12px; font-weight: 500; }
+.profile-chip-avatar.b { background: linear-gradient(135deg, #5856D6, #AF52DE); }
+
+.sync-indicator { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; color: var(--ink-3); font-weight: 500; }
+.sync-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); }
+.sync-dot.syncing { background: var(--orange); animation: pulse 1.2s ease-in-out infinite; }
+.sync-dot.error { background: var(--red); }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+.topbar-actions { display: flex; align-items: center; gap: 10px; }
 </style>
 </head>
 <body>
+
+<!-- Profile picker / setup modal -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <!-- Step 1: Pick profile -->
+    <div class="modal-step" id="modalStepProfile">
+      <div class="modal-eyebrow">Welcome</div>
+      <div class="modal-title">Who's flying today?</div>
+      <div class="modal-sub">Pick your profile. Your progress will sync across all your devices automatically.</div>
+      <div class="profile-options">
+        <button class="profile-option" onclick="selectProfile('chris')">
+          <div class="profile-avatar">C</div>
+          <div><div class="profile-info-name">Chris</div><div class="profile-info-meta">Pilot · N199RF</div></div>
+        </button>
+        <button class="profile-option" onclick="selectProfile('brenda')">
+          <div class="profile-avatar b">B</div>
+          <div><div class="profile-info-name">Brenda</div><div class="profile-info-meta">Pilot · N199RF</div></div>
+        </button>
+        <button class="profile-option" onclick="showStep('local')">
+          <div class="profile-avatar new">+</div>
+          <div><div class="profile-info-name">Use without sync</div><div class="profile-info-meta">Progress saves on this device only</div></div>
+        </button>
+      </div>
+    </div>
+
+    <!-- Step 2: Token entry -->
+    <div class="modal-step" id="modalStepToken">
+      <div class="modal-eyebrow"><span id="tokenForName">Chris</span> · One-time setup</div>
+      <div class="modal-title">Connect to GitHub</div>
+      <div class="modal-sub">To sync progress across your devices, this app needs permission to save data to your GitHub account. You only do this once per device.</div>
+
+      <div class="modal-help">
+        <strong>How to get your token (takes 90 seconds):</strong>
+        <ol>
+          <li>Open <a href="https://github.com/settings/tokens/new?scopes=gist&description=N199RF+Mastery+Sync" target="_blank">github.com/settings/tokens/new</a> (already pre-filled)</li>
+          <li>At the bottom, set expiration to <strong>"No expiration"</strong></li>
+          <li>Click <strong>Generate token</strong> at the bottom</li>
+          <li>Copy the token (starts with <code>ghp_</code>) and paste below</li>
+        </ol>
+      </div>
+
+      <input type="password" class="modal-input" id="tokenInput" placeholder="ghp_xxxxxxxxxxxxxxxxxxxxxxxx" autocomplete="off" />
+      <div class="modal-actions">
+        <button class="modal-btn" onclick="showStep('profile')">Back</button>
+        <button class="modal-btn primary" onclick="saveToken()">Connect</button>
+      </div>
+    </div>
+
+    <!-- Step 3: Local-only mode -->
+    <div class="modal-step" id="modalStepLocal">
+      <div class="modal-eyebrow">Local mode</div>
+      <div class="modal-title">No sync, this device only</div>
+      <div class="modal-sub">Progress will save in this browser but won't follow you to other devices. You can always switch to a synced profile later from the settings icon.</div>
+      <div class="modal-actions">
+        <button class="modal-btn" onclick="showStep('profile')">Back</button>
+        <button class="modal-btn primary" onclick="useLocalOnly()">Continue</button>
+      </div>
+    </div>
+
+    <!-- Step 4: Settings / profile switch -->
+    <div class="modal-step" id="modalStepSettings">
+      <div class="modal-eyebrow">Settings</div>
+      <div class="modal-title">Profile & sync</div>
+      <div class="modal-sub" id="settingsSub">Currently signed in as <strong id="settingsName">Chris</strong>.</div>
+      <div class="profile-options">
+        <button class="profile-option" onclick="signOut()">
+          <div class="profile-avatar new">↺</div>
+          <div><div class="profile-info-name">Switch profile</div><div class="profile-info-meta">Sign out and pick a different one</div></div>
+        </button>
+        <button class="profile-option" onclick="forceSync()">
+          <div class="profile-avatar new">⟳</div>
+          <div><div class="profile-info-name">Force sync now</div><div class="profile-info-meta">Pull latest data from GitHub</div></div>
+        </button>
+      </div>
+      <div class="modal-actions">
+        <button class="modal-btn primary" onclick="closeModal()">Done</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <div class="topbar">
   <div class="topbar-inner">
@@ -274,7 +430,14 @@ body { min-height: 100vh; }
       <div class="brand-mark">N</div>
       <div class="brand-name">N199RF <span class="light">Mastery</span></div>
     </div>
-    <div class="progress-pill" id="progressPill">0 / 60 days</div>
+    <div class="topbar-actions">
+      <div class="progress-pill" id="progressPill">0 / 60 days</div>
+      <button class="profile-chip" id="profileChip" onclick="openSettings()" style="display:none;">
+        <div class="profile-chip-avatar" id="profileChipAvatar">C</div>
+        <span id="profileChipName">Chris</span>
+        <span class="sync-indicator"><span class="sync-dot" id="syncDot"></span></span>
+      </button>
+    </div>
   </div>
 </div>
 
@@ -531,9 +694,235 @@ const state = {
   cardIndex: 0,
   cards: [],
   checklistChecks: new Set(),
+  profile: null,        // 'chris' | 'brenda' | 'local' | null
+  token: null,          // GitHub PAT (per-device)
+  gistId: null,         // Gist ID for this profile
+  syncing: false,
+  saveTimer: null,      // debounce timer
 };
 
-function loadState() {
+// ============================================================
+// PROFILE / SYNC SYSTEM
+// ============================================================
+// Profile config — Gist IDs are stored per profile. First device to sign in
+// creates the Gist; other devices for the same profile reuse it.
+const PROFILES = {
+  chris: { name: 'Chris', avatar: 'C', avatarClass: '' },
+  brenda: { name: 'Brenda', avatar: 'B', avatarClass: 'b' },
+};
+
+const GIST_DESC = 'N199RF Mastery — sync data';
+const GIST_FILENAME = 'progress.json';
+
+function getProfileFromURL() {
+  const params = new URLSearchParams(window.location.search);
+  return params.get('p');
+}
+function setProfileInURL(p) {
+  const url = new URL(window.location);
+  if (p && p !== 'local') url.searchParams.set('p', p);
+  else url.searchParams.delete('p');
+  window.history.replaceState({}, '', url);
+}
+
+function showModal() { document.getElementById('modalOverlay').classList.add('show'); }
+function closeModal() { document.getElementById('modalOverlay').classList.remove('show'); }
+function showStep(step) {
+  document.querySelectorAll('.modal-step').forEach(el => el.classList.remove('show'));
+  const map = { profile: 'modalStepProfile', token: 'modalStepToken', local: 'modalStepLocal', settings: 'modalStepSettings' };
+  document.getElementById(map[step]).classList.add('show');
+}
+
+function selectProfile(p) {
+  state.profile = p;
+  document.getElementById('tokenForName').textContent = PROFILES[p].name;
+  // Check if we already have a token for this profile on this device
+  const existingToken = localStorage.getItem('n199rf_token_' + p);
+  if (existingToken) {
+    state.token = existingToken;
+    state.gistId = localStorage.getItem('n199rf_gist_' + p);
+    finishProfileSetup();
+  } else {
+    showStep('token');
+  }
+}
+
+async function saveToken() {
+  const token = document.getElementById('tokenInput').value.trim();
+  if (!token.startsWith('ghp_') && !token.startsWith('github_pat_')) {
+    alert('That doesn\u2019t look like a GitHub token. It should start with "ghp_" or "github_pat_".');
+    return;
+  }
+  state.token = token;
+  localStorage.setItem('n199rf_token_' + state.profile, token);
+  // Try to find an existing Gist for this profile
+  setSyncStatus('syncing');
+  try {
+    const existing = await findExistingGist();
+    if (existing) {
+      state.gistId = existing;
+      localStorage.setItem('n199rf_gist_' + state.profile, existing);
+    }
+    finishProfileSetup();
+  } catch (e) {
+    alert('Couldn\u2019t connect to GitHub. Check your token and try again.\n\n' + e.message);
+    setSyncStatus('error');
+  }
+}
+
+function useLocalOnly() {
+  state.profile = 'local';
+  closeModal();
+  loadFromLocal();
+  setupProfileUI();
+}
+
+async function finishProfileSetup() {
+  setProfileInURL(state.profile);
+  closeModal();
+  setupProfileUI();
+  await loadFromCloud();
+}
+
+function setupProfileUI() {
+  const chip = document.getElementById('profileChip');
+  if (state.profile === 'local' || !state.profile) {
+    chip.style.display = state.profile === 'local' ? 'flex' : 'none';
+    if (state.profile === 'local') {
+      document.getElementById('profileChipName').textContent = 'Local';
+      document.getElementById('profileChipAvatar').textContent = 'L';
+      document.getElementById('profileChipAvatar').className = 'profile-chip-avatar new';
+    }
+  } else {
+    const p = PROFILES[state.profile];
+    chip.style.display = 'flex';
+    document.getElementById('profileChipName').textContent = p.name;
+    document.getElementById('profileChipAvatar').textContent = p.avatar;
+    document.getElementById('profileChipAvatar').className = 'profile-chip-avatar ' + p.avatarClass;
+  }
+}
+
+function openSettings() {
+  if (state.profile && PROFILES[state.profile]) {
+    document.getElementById('settingsName').textContent = PROFILES[state.profile].name;
+  } else {
+    document.getElementById('settingsName').textContent = 'Local (no sync)';
+  }
+  showStep('settings');
+  showModal();
+}
+
+function signOut() {
+  if (!confirm('Sign out? Your data stays in GitHub — you can sign back in anytime.')) return;
+  // Don't delete the token — keep it for re-signin convenience
+  state.profile = null;
+  setProfileInURL(null);
+  closeModal();
+  // Reset state
+  state.completed = new Set();
+  state.checklistChecks = new Set();
+  updateProgress();
+  renderDayGrid();
+  renderLesson(state.selectedDay);
+  renderChecklists();
+  // Re-prompt
+  showStep('profile');
+  showModal();
+}
+
+async function forceSync() {
+  closeModal();
+  setSyncStatus('syncing');
+  await loadFromCloud();
+}
+
+// --- GitHub API calls ---
+async function ghFetch(url, options = {}) {
+  return fetch(url, {
+    ...options,
+    headers: {
+      'Accept': 'application/vnd.github+json',
+      'Authorization': 'Bearer ' + state.token,
+      'X-GitHub-Api-Version': '2022-11-28',
+      ...(options.headers || {}),
+    },
+  });
+}
+
+async function findExistingGist() {
+  // Look through user's Gists for one matching our description
+  const res = await ghFetch('https://api.github.com/gists?per_page=100');
+  if (!res.ok) throw new Error('GitHub returned ' + res.status);
+  const gists = await res.json();
+  const tag = '[N199RF:' + state.profile + ']';
+  const match = gists.find(g => g.description && g.description.includes(tag));
+  return match ? match.id : null;
+}
+
+async function createGist(data) {
+  const tag = '[N199RF:' + state.profile + ']';
+  const res = await ghFetch('https://api.github.com/gists', {
+    method: 'POST',
+    body: JSON.stringify({
+      description: GIST_DESC + ' ' + tag,
+      public: false,
+      files: { [GIST_FILENAME]: { content: JSON.stringify(data, null, 2) } },
+    }),
+  });
+  if (!res.ok) throw new Error('Create failed: ' + res.status);
+  const gist = await res.json();
+  return gist.id;
+}
+
+async function updateGist(data) {
+  const res = await ghFetch('https://api.github.com/gists/' + state.gistId, {
+    method: 'PATCH',
+    body: JSON.stringify({
+      files: { [GIST_FILENAME]: { content: JSON.stringify(data, null, 2) } },
+    }),
+  });
+  if (!res.ok) throw new Error('Update failed: ' + res.status);
+}
+
+async function readGist() {
+  const res = await ghFetch('https://api.github.com/gists/' + state.gistId);
+  if (!res.ok) throw new Error('Read failed: ' + res.status);
+  const gist = await res.json();
+  const file = gist.files[GIST_FILENAME];
+  if (!file) return null;
+  return JSON.parse(file.content);
+}
+
+// --- Load/save ---
+async function loadFromCloud() {
+  if (!state.token || state.profile === 'local') return loadFromLocal();
+  setSyncStatus('syncing');
+  try {
+    if (!state.gistId) {
+      // No gist yet — try to find one
+      state.gistId = await findExistingGist();
+      if (state.gistId) localStorage.setItem('n199rf_gist_' + state.profile, state.gistId);
+    }
+    if (state.gistId) {
+      const data = await readGist();
+      if (data) {
+        state.completed = new Set(data.completed || []);
+        state.checklistChecks = new Set(data.checklistChecks || []);
+      }
+    }
+    setSyncStatus('ok');
+  } catch (e) {
+    console.error('Sync load error:', e);
+    setSyncStatus('error');
+    loadFromLocal(); // fallback
+  }
+  updateProgress();
+  renderDayGrid();
+  renderLesson(state.selectedDay);
+  renderChecklists();
+}
+
+function loadFromLocal() {
   try {
     const c = localStorage.getItem('n199rf_completed');
     if (c) state.completed = new Set(JSON.parse(c));
@@ -544,9 +933,76 @@ function loadState() {
   } catch (e) {}
   updateProgress();
 }
+
 function saveState() {
+  // Always save locally as a fallback
   try { localStorage.setItem('n199rf_completed', JSON.stringify([...state.completed])); } catch (e) {}
   try { localStorage.setItem('n199rf_checklistChecks', JSON.stringify([...state.checklistChecks])); } catch (e) {}
+  // Then sync to cloud (debounced)
+  if (state.profile && state.profile !== 'local' && state.token) {
+    clearTimeout(state.saveTimer);
+    state.saveTimer = setTimeout(syncToCloud, 800);
+  }
+}
+
+async function syncToCloud() {
+  if (!state.token || state.profile === 'local') return;
+  setSyncStatus('syncing');
+  const data = {
+    profile: state.profile,
+    completed: [...state.completed],
+    checklistChecks: [...state.checklistChecks],
+    updatedAt: new Date().toISOString(),
+  };
+  try {
+    if (!state.gistId) {
+      state.gistId = await createGist(data);
+      localStorage.setItem('n199rf_gist_' + state.profile, state.gistId);
+    } else {
+      await updateGist(data);
+    }
+    setSyncStatus('ok');
+  } catch (e) {
+    console.error('Sync save error:', e);
+    setSyncStatus('error');
+  }
+}
+
+function setSyncStatus(s) {
+  const dot = document.getElementById('syncDot');
+  if (!dot) return;
+  dot.classList.remove('syncing', 'error');
+  if (s === 'syncing') dot.classList.add('syncing');
+  else if (s === 'error') dot.classList.add('error');
+}
+
+function loadState() {
+  // First-time setup: check URL for profile
+  const urlProfile = getProfileFromURL();
+  if (urlProfile && (PROFILES[urlProfile] || urlProfile === 'local')) {
+    state.profile = urlProfile;
+    if (urlProfile === 'local') {
+      loadFromLocal();
+      setupProfileUI();
+      return;
+    }
+    state.token = localStorage.getItem('n199rf_token_' + urlProfile);
+    state.gistId = localStorage.getItem('n199rf_gist_' + urlProfile);
+    if (state.token) {
+      setupProfileUI();
+      loadFromCloud();
+      return;
+    } else {
+      // URL says we're chris/brenda but no token on this device — prompt for token
+      document.getElementById('tokenForName').textContent = PROFILES[urlProfile].name;
+      showStep('token');
+      showModal();
+      return;
+    }
+  }
+  // No URL profile — show picker
+  showStep('profile');
+  showModal();
 }
 
 // ============================================================
