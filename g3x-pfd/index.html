@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>G3X Touch PFD · N199RF Reference</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #FBFBFD; --surface: #FFFFFF; --surface-2: #F5F5F7;
+  --ink: #1D1D1F; --ink-2: #424245; --ink-3: #86868B;
+  --line: #D2D2D7; --line-2: #E8E8ED;
+  --accent: #0071E3; --green: #34C759; --orange: #FF9500; --red: #FF3B30; --purple: #5856D6;
+  --magenta: #E91E63;
+  --shadow-lg: 0 12px 40px rgba(0,0,0,0.08);
+  --radius: 14px; --radius-lg: 22px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+body { background: var(--bg); color: var(--ink); font-family: 'Inter', -apple-system, sans-serif; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+.wrap { max-width: 900px; margin: 0 auto; padding: 40px 24px 80px; }
+
+.hero { text-align: center; padding: 24px 0 48px; border-bottom: 1px solid var(--line-2); margin-bottom: 48px; }
+.eyebrow { font-size: 12px; font-weight: 600; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 14px; }
+h1 { font-family: 'Fraunces', serif; font-size: clamp(36px, 6vw, 58px); font-weight: 400; letter-spacing: -0.03em; line-height: 1.05; margin-bottom: 18px; }
+h1 em { font-style: italic; color: var(--ink-2); font-weight: 300; }
+.lede { color: var(--ink-2); font-size: 17px; max-width: 620px; margin: 0 auto; }
+
+.tabs { display: flex; gap: 4px; background: var(--surface-2); padding: 4px; border-radius: 12px; margin-bottom: 32px; overflow-x: auto; scrollbar-width: none; }
+.tabs::-webkit-scrollbar { display: none; }
+.tab { flex: 1; min-width: max-content; padding: 10px 18px; border: none; background: transparent; font-family: inherit; font-size: 14px; font-weight: 500; color: var(--ink-2); border-radius: 8px; cursor: pointer; white-space: nowrap; }
+.tab.active { background: var(--surface); color: var(--ink); box-shadow: 0 1px 2px rgba(0,0,0,0.04); }
+
+.view { display: none; }
+.view.active { display: block; animation: fadeIn 0.3s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+h2 { font-family: 'Fraunces', serif; font-size: 30px; font-weight: 500; letter-spacing: -0.02em; margin: 48px 0 8px; line-height: 1.2; }
+h3 { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 500; letter-spacing: -0.015em; margin: 28px 0 10px; }
+.h2-sub { color: var(--ink-3); font-size: 15px; margin-bottom: 28px; }
+p { margin-bottom: 14px; color: var(--ink-2); }
+strong { color: var(--ink); font-weight: 600; }
+ul:not(.bare) { padding-left: 22px; margin-bottom: 14px; }
+ul:not(.bare) li { color: var(--ink-2); margin-bottom: 6px; }
+
+/* PFD MOCKUP */
+.pfd-section { background: linear-gradient(180deg, #2A2A2D 0%, #1A1A1D 100%); border-radius: var(--radius-lg); padding: 28px 24px; margin: 24px 0 40px; box-shadow: var(--shadow-lg); }
+.pfd-label { color: rgba(255,255,255,0.55); font-size: 11px; letter-spacing: 0.12em; font-weight: 600; text-transform: uppercase; text-align: center; margin-bottom: 18px; }
+.pfd-caption { color: rgba(255,255,255,0.55); font-size: 12px; text-align: center; font-style: italic; margin-top: 18px; }
+
+.pfd {
+  background: linear-gradient(180deg, #87CEEB 0%, #87CEEB 50%, #8B7355 50%, #5C4A3B 100%);
+  border: 2px solid #2A2A2D; border-radius: 8px;
+  display: grid;
+  grid-template-columns: 80px 1fr 80px;
+  grid-template-rows: 1fr 1fr;
+  gap: 0;
+  max-width: 700px; margin: 0 auto;
+  position: relative; min-height: 380px;
+  overflow: hidden;
+}
+
+/* Airspeed tape (left) */
+.pfd-asi {
+  grid-row: 1 / 3; grid-column: 1;
+  background: rgba(0,0,0,0.75);
+  border-right: 1px solid rgba(255,255,255,0.2);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  cursor: pointer; transition: all 0.2s;
+}
+.pfd-asi:hover { background: rgba(0,80,160,0.5); }
+.pfd-asi-label { color: rgba(255,255,255,0.5); font-size: 9px; letter-spacing: 0.1em; font-weight: 700; margin-bottom: 8px; }
+.pfd-asi-value { background: rgba(0,0,0,0.9); color: #fff; font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 22px; padding: 4px 10px; border: 1px solid #fff; }
+.pfd-asi-tape { color: rgba(255,255,255,0.6); font-family: 'JetBrains Mono', monospace; font-size: 10px; margin-top: 6px; line-height: 1.6; }
+
+/* Attitude (center) */
+.pfd-att {
+  grid-row: 1 / 3; grid-column: 2;
+  position: relative;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: all 0.2s;
+}
+.pfd-att:hover { filter: brightness(1.1); }
+.pfd-symbol {
+  color: #FFD700; font-size: 32px; font-weight: bold;
+  text-shadow: 0 0 4px rgba(0,0,0,0.6);
+  position: relative; z-index: 2;
+}
+.pfd-att-label {
+  position: absolute; top: 10px; right: 10px;
+  color: #fff; font-size: 9px; letter-spacing: 0.1em; font-weight: 700;
+  background: rgba(0,0,0,0.6); padding: 3px 8px; border-radius: 4px;
+}
+
+/* Altimeter tape (right) */
+.pfd-alt {
+  grid-row: 1; grid-column: 3;
+  background: rgba(0,0,0,0.75);
+  border-left: 1px solid rgba(255,255,255,0.2);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  cursor: pointer; transition: all 0.2s;
+}
+.pfd-alt:hover { background: rgba(0,80,160,0.5); }
+.pfd-alt-label { color: rgba(255,255,255,0.5); font-size: 9px; letter-spacing: 0.1em; font-weight: 700; margin-bottom: 8px; }
+.pfd-alt-value { background: rgba(0,0,0,0.9); color: #fff; font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 20px; padding: 4px 8px; border: 1px solid #fff; }
+.pfd-alt-bug { color: #4FC3F7; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; margin-top: 4px; }
+
+/* VSI (right bottom) */
+.pfd-vsi {
+  grid-row: 2; grid-column: 3;
+  background: rgba(0,0,0,0.55);
+  border-left: 1px solid rgba(255,255,255,0.2);
+  border-top: 1px solid rgba(255,255,255,0.1);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  cursor: pointer; transition: all 0.2s;
+}
+.pfd-vsi:hover { background: rgba(0,80,160,0.5); }
+.pfd-vsi-label { color: rgba(255,255,255,0.5); font-size: 9px; letter-spacing: 0.1em; font-weight: 700; }
+.pfd-vsi-value { color: #fff; font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 14px; margin-top: 4px; }
+
+/* HSI overlay */
+.pfd-hsi {
+  position: absolute; bottom: 16px; left: 50%; transform: translateX(-50%);
+  width: 130px; height: 130px; border-radius: 50%;
+  background: rgba(0,0,0,0.75); border: 2px solid rgba(255,255,255,0.3);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; z-index: 3;
+}
+.pfd-hsi:hover { border-color: rgba(64,150,255,0.8); }
+.pfd-hsi-needle { color: var(--magenta); font-size: 28px; }
+.pfd-hsi-label { position: absolute; top: 6px; left: 50%; transform: translateX(-50%); color: #fff; font-size: 9px; font-weight: 700; letter-spacing: 0.1em; }
+.pfd-hsi-course { position: absolute; bottom: 6px; left: 50%; transform: translateX(-50%); color: var(--magenta); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; }
+
+/* Top bar (AP modes) */
+.pfd-modes {
+  position: absolute; top: 0; left: 80px; right: 80px;
+  background: rgba(0,0,0,0.85); padding: 4px 8px;
+  display: flex; justify-content: space-between; align-items: center;
+  font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700;
+  border-bottom: 1px solid rgba(255,255,255,0.15);
+}
+.pfd-mode { color: #34C759; padding: 0 6px; }
+.pfd-mode.armed { color: #fff; }
+
+/* EIS marker (where it could be) */
+.pfd-eis-note {
+  position: absolute; right: -2px; top: 50%; transform: translateY(-50%);
+  background: rgba(255,150,0,0.15); border: 1px dashed rgba(255,150,0,0.4);
+  border-radius: 4px; padding: 4px 8px;
+  color: rgba(255,200,100,0.8); font-size: 9px; letter-spacing: 0.05em;
+  pointer-events: none;
+}
+
+/* Element detail cards */
+.elem-detail {
+  background: var(--surface); border: 1px solid var(--line-2); border-radius: var(--radius-lg);
+  padding: 24px 28px; margin-bottom: 16px; scroll-margin-top: 80px;
+}
+.elem-head { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
+.elem-chip {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 6px 14px; background: var(--ink); color: #fff;
+  font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 700;
+  border-radius: 6px; letter-spacing: 0.05em; min-width: 60px;
+}
+.elem-name { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 500; letter-spacing: -0.015em; flex: 1; }
+.elem-body { color: var(--ink-2); font-size: 15px; line-height: 1.65; }
+.elem-body strong { color: var(--ink); }
+.elem-body ol, .elem-body ul { padding-left: 22px; margin: 8px 0; }
+.elem-body li { margin-bottom: 5px; }
+
+/* Scenarios */
+.scenario { background: var(--surface); border: 1px solid var(--line-2); border-radius: var(--radius-lg); padding: 28px; margin-bottom: 20px; }
+.scenario-num { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 12px; font-size: 12px; font-weight: 700; letter-spacing: 0.1em; color: var(--accent); text-transform: uppercase; }
+.scenario-num-circle { width: 28px; height: 28px; border-radius: 50%; background: var(--accent); color: #fff; display: inline-flex; align-items: center; justify-content: center; font-family: 'Fraunces', serif; font-size: 14px; font-weight: 500; }
+.scenario-title { font-family: 'Fraunces', serif; font-size: 26px; font-weight: 500; letter-spacing: -0.02em; margin-bottom: 4px; }
+.scenario-when { color: var(--ink-3); font-size: 13px; margin-bottom: 20px; font-weight: 500; }
+.scenario-context { background: var(--surface-2); border-radius: 10px; padding: 16px 18px; margin-bottom: 18px; font-size: 14px; color: var(--ink-2); line-height: 1.55; border-left: 3px solid var(--accent); }
+.scenario-context strong { color: var(--ink); }
+.steps { counter-reset: step; list-style: none; padding: 0; }
+.steps > li { counter-increment: step; padding-left: 52px; position: relative; margin-bottom: 16px; min-height: 36px; }
+.steps > li::before { content: counter(step); position: absolute; left: 0; top: 0; width: 32px; height: 32px; border-radius: 50%; background: var(--ink); color: #fff; display: flex; align-items: center; justify-content: center; font-family: 'Fraunces', serif; font-weight: 500; font-size: 14px; }
+.steps li strong { color: var(--ink); }
+.press { display: inline-block; padding: 3px 9px; border-radius: 6px; background: var(--ink); color: #fff; font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.05em; margin: 0 2px; }
+
+.callout { padding: 18px 22px; border-radius: var(--radius); margin: 16px 0; font-size: 14px; line-height: 1.55; border-left: 3px solid var(--accent); background: #EAF2FB; color: var(--ink-2); }
+.callout strong { color: var(--ink); }
+.callout-tag { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; color: var(--accent); text-transform: uppercase; margin-bottom: 6px; }
+.callout.warn { background: #FFF8EF; border-left-color: var(--orange); }
+.callout.warn .callout-tag { color: var(--orange); }
+.callout.note { background: #F0FBF4; border-left-color: var(--green); }
+.callout.note .callout-tag { color: var(--green); }
+
+.qref-card { background: var(--surface); border: 1px solid var(--line-2); border-radius: var(--radius-lg); padding: 24px 28px; margin-bottom: 16px; }
+.qref-title { font-family: 'Fraunces', serif; font-size: 20px; font-weight: 500; letter-spacing: -0.01em; margin-bottom: 14px; }
+.qref-list { display: grid; gap: 8px; }
+.qref-item { display: grid; grid-template-columns: 120px 1fr; gap: 14px; padding: 8px 0; border-bottom: 1px solid var(--line-2); align-items: baseline; }
+.qref-item:last-child { border-bottom: 0; }
+.qref-key { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 700; color: var(--ink); letter-spacing: 0.05em; }
+.qref-val { color: var(--ink-2); font-size: 14px; line-height: 1.5; }
+</style>
+<link rel="manifest" href="/manifest.json"><meta name="theme-color" content="#0071E3"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="apple-mobile-web-app-title" content="N199RF"><script>if("serviceWorker" in navigator){window.addEventListener("load",()=>{navigator.serviceWorker.register("/service-worker.js").catch(e=>console.log("SW failed:",e));});}</script></head>
+<body>
+<div class="wrap">
+
+<div class="hero">
+  <div class="eyebrow">N199RF · PFD reference</div>
+  <h1>The G3X Touch <em>PFD</em></h1>
+  <p class="lede">Your primary flight display — everything you need to fly the airplane is on this screen. Tap any element on the diagram to learn what it means and how to use it.</p>
+</div>
+
+<div class="tabs">
+  <button class="tab active" data-view="overview">Overview</button>
+  <button class="tab" data-view="layout">PFD layout</button>
+  <button class="tab" data-view="elements">Elements</button>
+  <button class="tab" data-view="scenarios">Scenarios</button>
+  <button class="tab" data-view="qref">Quick reference</button>
+</div>
+
+<!-- OVERVIEW -->
+<section class="view active" id="view-overview">
+  <h2>What you're looking at</h2>
+  <p class="h2-sub">A 10.6-inch touchscreen that replaces every traditional flight instrument plus most engine gauges.</p>
+
+  <p>The G3X Touch GDU 460 is the heart of your panel. What used to be six round gauges (airspeed, attitude, altitude, heading, turn coordinator, vertical speed) plus another set for the engine — all of it lives on this one screen now.</p>
+
+  <h3>The big mental shift</h3>
+  <p>Round gauges showed you one thing each. The PFD shows you <strong>everything in one glance</strong> — your airspeed, attitude, altitude, heading, vertical speed, course, and engine data are all visible without moving your head.</p>
+
+  <p>This is a feature, not a gimmick. It dramatically reduces "head down" time during instrument approaches and busy phases of flight.</p>
+
+  <h3>What's on the PFD (we'll cover each in detail)</h3>
+  <ul>
+    <li><strong>Airspeed tape</strong> (left) — your current airspeed, V-speed markings</li>
+    <li><strong>Attitude indicator</strong> (center) — artificial horizon with synthetic vision</li>
+    <li><strong>Altitude tape</strong> (top right) — your current altitude, altitude bug</li>
+    <li><strong>Vertical speed indicator</strong> (right) — climb/descent rate</li>
+    <li><strong>HSI / heading display</strong> (bottom center) — compass, course needle</li>
+    <li><strong>Autopilot mode annunciators</strong> (top bar) — what the AP is doing</li>
+    <li><strong>EIS strip</strong> (left or right edge) — engine information</li>
+    <li><strong>Wind indicator, OAT, G-meter, time</strong> — minor displays in corners</li>
+  </ul>
+
+  <h3>How to interact</h3>
+  <p>Everything's touch. To change something, <strong>tap it.</strong></p>
+  <ul>
+    <li>Tap the altitude bug → spin to new altitude</li>
+    <li>Tap the heading bug → spin to new heading</li>
+    <li>Tap the baro field → set altimeter</li>
+    <li>Tap the airplane on the attitude indicator → access PFD settings</li>
+    <li>Tap an EIS gauge → see detailed engine data</li>
+  </ul>
+
+  <div class="callout">
+    <div class="callout-tag">Physical buttons too</div>
+    The G3X has physical bezel buttons along the bottom: <strong>MENU, BACK, HOME</strong>, and direct-access keys. Touch is primary; bezel buttons help when you're bouncing around in turbulence.
+  </div>
+</section>
+
+<!-- LAYOUT -->
+<section class="view" id="view-layout">
+  <h2>The PFD layout</h2>
+  <p class="h2-sub">An illustration of the standard PFD layout. Tap any element to read the full reference.</p>
+
+  <div class="pfd-section">
+    <div class="pfd-label">G3X Touch · Primary Flight Display</div>
+
+    <div class="pfd">
+      <div class="pfd-modes">
+        <span class="pfd-mode">HDG</span>
+        <span class="pfd-mode">AP</span>
+        <span class="pfd-mode">ALT</span>
+      </div>
+
+      <div class="pfd-asi" onclick="goToElement('asi')">
+        <div class="pfd-asi-label">KIAS</div>
+        <div class="pfd-asi-tape">120</div>
+        <div class="pfd-asi-tape">110</div>
+        <div class="pfd-asi-value">102</div>
+        <div class="pfd-asi-tape">90</div>
+        <div class="pfd-asi-tape">80</div>
+      </div>
+
+      <div class="pfd-att" onclick="goToElement('att')">
+        <div class="pfd-att-label">ATTITUDE</div>
+        <div class="pfd-symbol">⟶─⟵</div>
+        <div class="pfd-hsi" onclick="event.stopPropagation(); goToElement('hsi')">
+          <div class="pfd-hsi-label">HSI</div>
+          <div class="pfd-hsi-needle">|</div>
+          <div class="pfd-hsi-course">072° GPS</div>
+        </div>
+      </div>
+
+      <div class="pfd-alt" onclick="goToElement('alt')">
+        <div class="pfd-alt-label">FEET</div>
+        <div class="pfd-alt-value">2540</div>
+        <div class="pfd-alt-bug">3000 ▼</div>
+      </div>
+
+      <div class="pfd-vsi" onclick="goToElement('vsi')">
+        <div class="pfd-vsi-label">VSI</div>
+        <div class="pfd-vsi-value">+500</div>
+      </div>
+    </div>
+
+    <div class="pfd-caption">Illustrated layout. Your actual display shows live values from the airplane's sensors.</div>
+  </div>
+
+  <div class="callout note">
+    <div class="callout-tag">EIS location</div>
+    <strong>The EIS strip (engine information) can appear on either side of the PFD.</strong> In your airplane it might be on the left or right depending on how it's configured. Tap MENU → PFD Setup → EIS Position to toggle (if pilot-configurable on your install).
+  </div>
+</section>
+
+<!-- ELEMENTS -->
+<section class="view" id="view-elements">
+  <h2>Every element, explained</h2>
+  <p class="h2-sub">Tap an element on the PFD diagram (previous tab) to jump here.</p>
+  <div id="elementDetails"></div>
+</section>
+
+<!-- SCENARIOS -->
+<section class="view" id="view-scenarios">
+  <h2>Real-flight scenarios</h2>
+  <p class="h2-sub">Common PFD interactions, step by step.</p>
+  <div id="scenarioContainer"></div>
+</section>
+
+<!-- QREF -->
+<section class="view" id="view-qref">
+  <h2>Quick reference</h2>
+
+  <div class="qref-card">
+    <div class="qref-title">Pre-flight PFD setup ritual (every flight)</div>
+    <div class="qref-list">
+      <div class="qref-item"><div class="qref-key">1.</div><div class="qref-val">Tap BARO field → set current altimeter from AWOS/ATIS</div></div>
+      <div class="qref-item"><div class="qref-key">2.</div><div class="qref-val">Verify altimeter reads field elevation ± 75 ft</div></div>
+      <div class="qref-item"><div class="qref-key">3.</div><div class="qref-val">Tap ALT bug → set first target altitude (pattern alt or cruise)</div></div>
+      <div class="qref-item"><div class="qref-key">4.</div><div class="qref-val">Tap HDG bug → set runway heading</div></div>
+      <div class="qref-item"><div class="qref-key">5.</div><div class="qref-val">Verify HSI source is GPS (magenta)</div></div>
+      <div class="qref-item"><div class="qref-key">6.</div><div class="qref-val">Verify synthetic vision ON (if you use it)</div></div>
+      <div class="qref-item"><div class="qref-key">7.</div><div class="qref-val">Glance at EIS strip — all green, no warnings</div></div>
+    </div>
+  </div>
+
+  <div class="qref-card">
+    <div class="qref-title">Airspeed tape colors</div>
+    <div class="qref-list">
+      <div class="qref-item"><div class="qref-key">WHITE ARC</div><div class="qref-val">Flap operating range — V_S0 to V_FE</div></div>
+      <div class="qref-item"><div class="qref-key">GREEN ARC</div><div class="qref-val">Normal operating range — V_S1 to V_NO</div></div>
+      <div class="qref-item"><div class="qref-key">YELLOW ARC</div><div class="qref-val">Caution — smooth air only — V_NO to V_NE</div></div>
+      <div class="qref-item"><div class="qref-key">RED LINE</div><div class="qref-val">V_NE — never exceed (176 KIAS in 182Q)</div></div>
+    </div>
+  </div>
+
+  <div class="qref-card">
+    <div class="qref-title">HSI source selection</div>
+    <div class="qref-list">
+      <div class="qref-item"><div class="qref-key">GPS</div><div class="qref-val">Following GTN flight plan / Direct-To (magenta)</div></div>
+      <div class="qref-item"><div class="qref-key">VLOC1</div><div class="qref-val">Following VOR or ILS from GTN NAV1 (green)</div></div>
+      <div class="qref-item"><div class="qref-key">SWITCH</div><div class="qref-val">CDI button on GTN (or tap source on G3X)</div></div>
+    </div>
+  </div>
+
+  <div class="qref-card">
+    <div class="qref-title">Reading the wind indicator</div>
+    <div class="qref-list">
+      <div class="qref-item"><div class="qref-key">ARROW</div><div class="qref-val">Direction the wind is going TO (not from)</div></div>
+      <div class="qref-item"><div class="qref-key">NUMBER</div><div class="qref-val">Wind speed in knots</div></div>
+      <div class="qref-item"><div class="qref-key">USE</div><div class="qref-val">Lean into headwind component for power decisions</div></div>
+    </div>
+  </div>
+
+  <div class="qref-card">
+    <div class="qref-title">PFD reversion modes</div>
+    <div class="qref-list">
+      <div class="qref-item"><div class="qref-key">G3X FAIL</div><div class="qref-val">GI 275 takes over as standby PFD</div></div>
+      <div class="qref-item"><div class="qref-key">ATTITUDE FAIL</div><div class="qref-val">GI 275 attitude is independent — keeps flying</div></div>
+      <div class="qref-item"><div class="qref-key">PROCEDURE</div><div class="qref-val">Hand-fly using GI 275 + airspeed/altitude from any source</div></div>
+    </div>
+  </div>
+
+  <div class="qref-card">
+    <div class="qref-title">Synthetic vision (SV)</div>
+    <div class="qref-list">
+      <div class="qref-item"><div class="qref-key">TURN ON</div><div class="qref-val">PFD Menu → Synthetic Vision → ON</div></div>
+      <div class="qref-item"><div class="qref-key">SHOWS</div><div class="qref-val">3D terrain, obstacles, runway environment</div></div>
+      <div class="qref-item"><div class="qref-key">BEST FOR</div><div class="qref-val">Mountain flying, IMC, night, unfamiliar terrain</div></div>
+      <div class="qref-item"><div class="qref-key">LIMIT</div><div class="qref-val">SV is supplemental — don't substitute for situational awareness</div></div>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<script>
+const elements = [
+  { id: 'asi', label: 'ASI', name: 'Airspeed indicator',
+    body: '<p>The vertical tape on the left side of the PFD showing your <strong>indicated airspeed (KIAS)</strong> in knots. The big number in the box in the middle of the tape is your current speed.</p><p><strong>Colors mean something:</strong></p><ul><li><strong>White arc</strong>: flap operating range (V_S0 to V_FE) — you can extend or fly with flaps in this range</li><li><strong>Green arc</strong>: normal operating range (V_S1 to V_NO) — fly all day here</li><li><strong>Yellow arc</strong>: caution — fly in smooth air only</li><li><strong>Red radial line at top</strong>: V_NE never exceed (176 KIAS for your 182Q)</li><li><strong>Red bottom</strong>: stall speed in current configuration</li></ul><p><strong>V-speed markers</strong> show on the tape as you fly — V_R, V_Y, V_X are bugged automatically based on configuration.</p>',
+  },
+  { id: 'att', label: 'ATT', name: 'Attitude indicator',
+    body: '<p>The big central display — your <strong>artificial horizon</strong>. Blue above is sky, brown below is ground. The yellow airplane symbol in the middle is you. The line between blue and brown is the horizon.</p><p><strong>Bank angle</strong>: shown along the top arc, with tick marks at 10°, 20°, 30°, 45°, 60°. The pointer at top shows current bank.</p><p><strong>Pitch attitude</strong>: shown by where the airplane symbol sits relative to the horizon line. Climb attitude = airplane symbol above horizon. Descending = below.</p><p><strong>Synthetic Vision</strong>: if enabled, the attitude indicator overlays a 3D view of the terrain ahead — mountains, runways, obstacles. Wildly useful in low visibility, mountain flying, or unfamiliar terrain.</p><p><strong>Slip/skid indicator</strong>: the small white triangle/ball below the horizon — keep it centered for coordinated flight. "Step on the ball."</p>',
+  },
+  { id: 'alt', label: 'ALT', name: 'Altimeter',
+    body: '<p>The tape on the upper right showing your current <strong>altitude in feet MSL</strong>. The big number in the box is your current altitude.</p><p><strong>Altitude bug</strong>: the cyan "bug" showing your target altitude. Tap and spin to set. This is what the autopilot tries to capture in ALT mode.</p><p><strong>Baro setting</strong>: at the bottom of the tape — the current altimeter setting (e.g., 30.05). Tap to update from AWOS/ATIS/ATC. <strong>Verify before every flight</strong> — altitude is wrong if baro is wrong.</p><p><strong>Selected altitude alerter</strong>: the G3X will alert you (audio + visual) when you\'re approaching your altitude bug — typically 200 ft before and at capture. Helps prevent altitude busts.</p><p><strong>Trend indicator</strong>: a small arrow predicting where altitude will be in 6 seconds based on current rate. Useful for level-offs.</p>',
+  },
+  { id: 'vsi', label: 'VSI', name: 'Vertical speed indicator',
+    body: '<p>Shows your <strong>climb or descent rate in feet per minute</strong>. Positive number = climbing, negative = descending.</p><p><strong>What\'s normal:</strong></p><ul><li>Climb: 500-700 fpm in the 182 at typical climb power</li><li>Descent: 500 fpm is the rule-of-thumb (3°/NM rough rule)</li><li>Cruise: 0 fpm ± small fluctuations</li></ul><p><strong>VS bug</strong>: set with the autopilot V/S knob. Tells the AP what climb/descent rate you want when in VS mode.</p>',
+  },
+  { id: 'hsi', label: 'HSI', name: 'Horizontal situation indicator',
+    body: '<p>The compass/course display at the bottom center of the PFD. Combines:</p><ul><li><strong>Heading rose</strong>: showing your current heading (the airplane symbol points at the top)</li><li><strong>Course needle</strong>: magenta line showing the GPS course you\'re trying to follow</li><li><strong>Heading bug</strong>: the cyan bug you set for the autopilot to follow in HDG mode</li><li><strong>Course deviation indicator (CDI)</strong>: the bar that shifts left/right of center showing whether you\'re left or right of course</li></ul><p><strong>HSI source</strong>: shown at the bottom of the HSI:</p><ul><li><strong>GPS</strong> (magenta) — following the GTN flight plan or Direct-To</li><li><strong>VLOC1</strong> (green) — following a VOR or ILS from the GTN\'s NAV1 receiver</li></ul><p><strong>To switch source</strong>: press the CDI button on the GTN, or tap the source on the G3X.</p>',
+  },
+];
+
+function renderElements() {
+  document.getElementById('elementDetails').innerHTML = elements.map(e => `
+    <div class="elem-detail" id="elem-${e.id}">
+      <div class="elem-head">
+        <div class="elem-chip">${e.label}</div>
+        <div class="elem-name">${e.name}</div>
+      </div>
+      <div class="elem-body">${e.body}</div>
+    </div>
+  `).join('');
+}
+
+function goToElement(id) {
+  showView('elements');
+  setTimeout(() => {
+    const el = document.getElementById('elem-' + id);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 100);
+}
+
+const scenarios = [
+  { num: 1, title: 'PFD pre-flight setup', when: 'Before engine start, every flight',
+    context: '<strong>Setting:</strong> Sitting in N199RF at 1K1. Master on, G3X is booted. You have AWOS information ready.',
+    steps: [
+      'Tap the <strong>BARO</strong> field at the bottom of the altimeter tape.',
+      'Spin to the current altimeter setting from AWOS (e.g., 30.05).',
+      'Verify the altitude reading is within ±75 ft of 1K1\'s field elevation (1,364 ft).',
+      'Tap the <strong>ALT bug</strong> (above the altimeter tape). Set to your first cruise altitude — say 3,500.',
+      'Tap the <strong>HDG bug</strong> on the HSI. Set to runway heading (350 for runway 35).',
+      'Verify <strong>HSI source is GPS</strong> (magenta indicator at bottom of HSI). If it shows VLOC, tap the source button to switch.',
+      'Glance at the attitude indicator — symbol level with horizon, wings level. If not, the airplane is on uneven ground — that\'s OK, it\'ll fix itself on takeoff.',
+      'Check EIS strip — all gauges in their normal startup range (cold values).',
+    ],
+  },
+  { num: 2, title: 'Setting altitude bug during climb', when: 'Climbing to cruise',
+    context: '<strong>Setting:</strong> Climbed through 2,000 ft after departure. Cleared to 4,500.',
+    steps: [
+      'Tap the <strong>ALT bug</strong> next to the altimeter tape.',
+      'Spin to 4,500.',
+      'Confirm with the bug now showing 4,500 in cyan.',
+      'If autopilot is engaged in ALT mode, it will auto-capture 4,500 as you climb to it.',
+      'Trend indicator (the small arrow next to the altitude) shows where you\'ll be in 6 seconds at current climb rate.',
+      'As you approach 4,500, the alerter beeps. Reduce power for cruise as you level off.',
+    ],
+  },
+  { num: 3, title: 'Switching from GPS to VLOC for an ILS', when: 'IFR, approaching an ILS approach',
+    context: '<strong>Setting:</strong> Inbound for an ILS approach. You loaded the ILS in the GTN. Currently HSI is showing GPS (magenta).',
+    steps: [
+      'Verify ILS frequency tuned in GTN NAV1.',
+      'On the GTN, press the <strong>CDI</strong> button (or tap the source field).',
+      'HSI source changes from GPS to VLOC1 — color changes from magenta to green.',
+      'Course needle now shows ILS localizer deviation.',
+      'Engage autopilot APR mode — it now couples to ILS via VLOC1.',
+      'Glideslope arms and captures at the FAF.',
+    ],
+  },
+  { num: 4, title: 'Using synthetic vision', when: 'Low-visibility conditions or unfamiliar terrain',
+    context: '<strong>Setting:</strong> Flying VFR but visibility is hazy. Want better situational awareness.',
+    steps: [
+      'Press <strong>MENU</strong> on the G3X bezel.',
+      'Tap <strong>PFD Setup</strong>.',
+      'Tap <strong>Synthetic Vision</strong>.',
+      'Toggle <strong>ON</strong>.',
+      'Back out. Attitude indicator now shows 3D terrain — mountains, hills, airports.',
+      'Pathway markers (boxes in the sky) appear if a flight plan is active — fly through them.',
+      'Use as a supplement to outside visual scan — not a replacement.',
+    ],
+  },
+  { num: 5, title: 'Reading wind drift in cruise', when: 'Cross-country, want to know what the wind is doing',
+    context: '<strong>Setting:</strong> Cruising at 4,500 ft on a 60 NM cross-country.',
+    steps: [
+      'Find the <strong>wind indicator</strong> on the PFD (usually upper-left corner area).',
+      'The arrow shows the direction wind is going TO (not from).',
+      'Number next to it is wind speed in knots.',
+      'Compare wind direction to your heading: if it\'s on your tail, expect higher groundspeed; if headwind, lower.',
+      'Use this to estimate ETA more accurately than just airspeed alone.',
+      'Look at <strong>HDG vs TRK</strong>: if they differ by a few degrees, you\'re crabbing into the wind.',
+    ],
+  },
+];
+
+function renderScenarios() {
+  document.getElementById('scenarioContainer').innerHTML = scenarios.map(s => `
+    <div class="scenario">
+      <div class="scenario-num"><span class="scenario-num-circle">${s.num}</span>Scenario ${s.num}</div>
+      <div class="scenario-title">${s.title}</div>
+      <div class="scenario-when">${s.when}</div>
+      <div class="scenario-context">${s.context}</div>
+      <ol class="steps">${s.steps.map(st => `<li>${st}</li>`).join('')}</ol>
+    </div>
+  `).join('');
+}
+
+function showView(v) {
+  document.querySelectorAll('.view').forEach(el => el.classList.remove('active'));
+  document.getElementById('view-' + v).classList.add('active');
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.view === v));
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => showView(t.dataset.view)));
+
+renderElements();
+renderScenarios();
+</script>
+</body>
+</html>

@@ -1,0 +1,2475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<title>N199RF · Mastery Program</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #FBFBFD;
+  --surface: #FFFFFF;
+  --surface-2: #F5F5F7;
+  --ink: #1D1D1F;
+  --ink-2: #424245;
+  --ink-3: #86868B;
+  --line: #D2D2D7;
+  --line-2: #E8E8ED;
+  --accent: #0071E3;
+  --accent-2: #0077ED;
+  --green: #34C759;
+  --orange: #FF9500;
+  --red: #FF3B30;
+  --purple: #5856D6;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+  --shadow: 0 4px 16px rgba(0,0,0,0.06);
+  --shadow-lg: 0 12px 40px rgba(0,0,0,0.08);
+  --radius: 14px;
+  --radius-lg: 22px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html, body { background: var(--bg); color: var(--ink); font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; -webkit-font-smoothing: antialiased; }
+body { min-height: 100vh; }
+
+/* ---------- Layout ---------- */
+.app { max-width: 1200px; margin: 0 auto; padding: 24px 20px 80px; }
+
+/* ---------- Top bar ---------- */
+.topbar {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(251,251,253,0.85); backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px);
+  padding: 14px 20px; margin: -24px -20px 0; border-bottom: 1px solid var(--line-2);
+}
+.topbar-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.brand { display: flex; align-items: center; gap: 10px; }
+.brand-mark { width: 28px; height: 28px; border-radius: 8px; background: linear-gradient(135deg, var(--ink), #3A3A3C); display: flex; align-items: center; justify-content: center; color: #fff; font-family: 'Fraunces', serif; font-weight: 600; font-size: 14px; letter-spacing: -0.02em; }
+.brand-name { font-family: 'Fraunces', serif; font-weight: 500; font-size: 17px; letter-spacing: -0.01em; }
+.brand-name .light { color: var(--ink-3); font-weight: 400; }
+.progress-pill { font-size: 13px; color: var(--ink-2); background: var(--surface-2); padding: 6px 12px; border-radius: 999px; font-weight: 500; font-variant-numeric: tabular-nums; }
+
+/* ---------- Hero ---------- */
+.hero { padding: 56px 0 40px; text-align: center; }
+.eyebrow { font-size: 13px; font-weight: 600; color: var(--accent); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 12px; }
+.hero h1 {
+  font-family: 'Fraunces', serif; font-weight: 400; font-size: clamp(40px, 7vw, 76px);
+  letter-spacing: -0.035em; line-height: 1.02; color: var(--ink); margin-bottom: 18px;
+}
+.hero h1 em { font-style: italic; font-weight: 300; color: var(--ink-2); }
+.hero-sub { font-size: 19px; color: var(--ink-2); max-width: 600px; margin: 0 auto 28px; line-height: 1.5; font-weight: 400; }
+.hero-stats { display: flex; gap: 0; justify-content: center; flex-wrap: wrap; margin-top: 36px; }
+.hero-stat { padding: 0 32px; border-right: 1px solid var(--line-2); }
+.hero-stat:last-child { border-right: 0; }
+.hero-stat-n { font-family: 'Fraunces', serif; font-size: 36px; font-weight: 500; letter-spacing: -0.02em; }
+.hero-stat-l { font-size: 12px; color: var(--ink-3); font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; margin-top: 4px; }
+
+/* ---------- Tabs ---------- */
+.tabs { display: flex; gap: 4px; background: var(--surface-2); padding: 4px; border-radius: 12px; margin: 32px 0 28px; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+.tabs::-webkit-scrollbar { display: none; }
+.tab {
+  flex: 1; min-width: max-content; padding: 10px 18px; border: none; background: transparent;
+  font-family: inherit; font-size: 14px; font-weight: 500; color: var(--ink-2);
+  border-radius: 8px; cursor: pointer; transition: all 0.2s; white-space: nowrap;
+}
+.tab.active { background: var(--surface); color: var(--ink); box-shadow: var(--shadow-sm); }
+.tab:hover:not(.active) { color: var(--ink); }
+
+/* ---------- View ---------- */
+.view { display: none; animation: fadeIn 0.3s ease; }
+.view.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+/* ---------- Cards ---------- */
+.card { background: var(--surface); border-radius: var(--radius-lg); padding: 28px; box-shadow: var(--shadow-sm); border: 1px solid var(--line-2); margin-bottom: 20px; }
+.card-title { font-family: 'Fraunces', serif; font-size: 26px; font-weight: 500; letter-spacing: -0.02em; margin-bottom: 6px; }
+.card-sub { color: var(--ink-3); font-size: 14px; margin-bottom: 20px; }
+
+/* ---------- Day grid ---------- */
+.weeks-nav { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+.week-chip {
+  padding: 8px 14px; border-radius: 999px; border: 1px solid var(--line);
+  background: var(--surface); font-size: 13px; font-weight: 500; cursor: pointer;
+  color: var(--ink-2); transition: all 0.15s;
+}
+.week-chip.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+.week-chip:hover:not(.active) { border-color: var(--ink-3); }
+
+.day-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(72px, 1fr)); gap: 10px; }
+.day-cell {
+  aspect-ratio: 1; border-radius: 12px; border: 1px solid var(--line-2);
+  background: var(--surface); display: flex; flex-direction: column;
+  align-items: center; justify-content: center; cursor: pointer;
+  transition: all 0.15s; position: relative;
+}
+.day-cell:hover { border-color: var(--accent); transform: translateY(-1px); box-shadow: var(--shadow); }
+.day-cell.done { background: linear-gradient(135deg, #34C759, #30B956); border-color: transparent; color: #fff; }
+.day-cell.today { border-color: var(--accent); border-width: 2px; }
+.day-num { font-family: 'Fraunces', serif; font-size: 20px; font-weight: 500; letter-spacing: -0.01em; }
+.day-mini { font-size: 10px; color: var(--ink-3); margin-top: 2px; font-weight: 500; }
+.day-cell.done .day-mini { color: rgba(255,255,255,0.85); }
+
+/* ---------- Lesson detail ---------- */
+.lesson-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; margin-bottom: 24px; }
+.lesson-title-block .eyebrow { margin-bottom: 8px; }
+.lesson-title { font-family: 'Fraunces', serif; font-size: 38px; font-weight: 400; letter-spacing: -0.025em; line-height: 1.1; margin-bottom: 10px; }
+.lesson-intro { color: var(--ink-2); font-size: 16px; line-height: 1.55; max-width: 720px; }
+.complete-btn {
+  background: var(--ink); color: #fff; border: none; padding: 12px 22px; border-radius: 999px;
+  font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer; white-space: nowrap;
+  transition: all 0.15s; box-shadow: var(--shadow);
+}
+.complete-btn:hover { transform: translateY(-1px); }
+.complete-btn.done { background: var(--green); }
+
+.block { padding: 22px 24px; border-radius: var(--radius); background: var(--surface-2); margin-bottom: 14px; border-left: 3px solid var(--accent); }
+.block-head { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+.block-tag { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; color: var(--accent); text-transform: uppercase; }
+.block-time { font-size: 12px; color: var(--ink-3); font-weight: 500; }
+.block-title { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 500; letter-spacing: -0.015em; margin-bottom: 8px; }
+.block-body { color: var(--ink-2); font-size: 15px; line-height: 1.6; }
+.block-body ul { padding-left: 20px; margin: 8px 0; }
+.block-body li { margin-bottom: 5px; }
+.block-body strong { color: var(--ink); font-weight: 600; }
+.block.b { border-left-color: var(--purple); } .block.b .block-tag { color: var(--purple); }
+.block.c { border-left-color: var(--orange); } .block.c .block-tag { color: var(--orange); }
+.block.d { border-left-color: var(--green); } .block.d .block-tag { color: var(--green); }
+
+.lesson-nav { display: flex; justify-content: space-between; margin-top: 28px; gap: 12px; }
+.nav-btn { padding: 12px 18px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface); font-family: inherit; font-size: 14px; font-weight: 500; color: var(--ink); cursor: pointer; display: flex; align-items: center; gap: 8px; transition: all 0.15s; }
+.nav-btn:hover { border-color: var(--ink-3); }
+.nav-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* ---------- V-Speeds / Limitations table ---------- */
+.spec-grid { display: grid; grid-template-columns: 1fr; gap: 0; border: 1px solid var(--line-2); border-radius: var(--radius); overflow: hidden; }
+.spec-row { display: grid; grid-template-columns: 140px 1fr auto; gap: 16px; padding: 14px 18px; border-bottom: 1px solid var(--line-2); align-items: baseline; }
+.spec-row:last-child { border-bottom: 0; }
+.spec-row:nth-child(even) { background: var(--surface-2); }
+.spec-key { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 600; color: var(--ink); }
+.spec-desc { color: var(--ink-2); font-size: 14px; }
+.spec-val { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 500; letter-spacing: -0.01em; color: var(--ink); font-variant-numeric: tabular-nums; }
+.spec-val small { font-size: 13px; color: var(--ink-3); font-family: 'Inter', sans-serif; font-weight: 500; margin-left: 4px; }
+
+/* ---------- Panel diagram ---------- */
+.panel-wrap { background: linear-gradient(180deg, #2A2A2D 0%, #1A1A1D 100%); border-radius: var(--radius-lg); padding: 32px 28px; margin-bottom: 24px; box-shadow: var(--shadow-lg); }
+.panel-title { color: rgba(255,255,255,0.7); font-size: 12px; letter-spacing: 0.1em; font-weight: 500; text-transform: uppercase; margin-bottom: 18px; text-align: center; }
+.panel-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 14px; align-items: stretch; }
+.panel-unit {
+  background: linear-gradient(180deg, #0A0A0A, #000); border-radius: 8px;
+  padding: 14px 12px; color: #fff; cursor: pointer;
+  border: 1px solid rgba(255,255,255,0.06); transition: all 0.2s;
+  display: flex; flex-direction: column; min-height: 100px; position: relative; overflow: hidden;
+}
+.panel-unit::before { content: ''; position: absolute; inset: 1px; border-radius: 7px; background: linear-gradient(180deg, rgba(40,80,140,0.15), transparent 30%); pointer-events: none; }
+.panel-unit:hover { border-color: rgba(64,150,255,0.4); transform: translateY(-2px); }
+.panel-unit.gtn { grid-row: span 2; min-height: 200px; }
+.panel-label { font-size: 10px; color: rgba(255,255,255,0.5); letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; position: relative; }
+.panel-name { font-family: 'Fraunces', serif; font-size: 17px; font-weight: 500; margin-top: 4px; position: relative; }
+.panel-detail { font-size: 11px; color: rgba(255,255,255,0.55); margin-top: auto; line-height: 1.4; position: relative; }
+.panel-screen { flex: 1; margin-top: 10px; background: radial-gradient(ellipse at 30% 30%, rgba(64,150,255,0.15), transparent 60%), linear-gradient(180deg, #001428, #000); border-radius: 4px; border: 1px solid rgba(64,150,255,0.2); display: flex; align-items: center; justify-content: center; min-height: 40px; position: relative; }
+.panel-screen-text { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: rgba(64,200,255,0.7); letter-spacing: 0.05em; }
+
+/* ---------- EIS Display ---------- */
+.eis-display { background: linear-gradient(180deg, #1A1A1D 0%, #0A0A0A 100%); border-radius: var(--radius-lg); padding: 28px 24px; margin-bottom: 28px; box-shadow: var(--shadow-lg); }
+.eis-display-title { color: rgba(255,255,255,0.7); font-size: 11px; letter-spacing: 0.1em; font-weight: 600; text-transform: uppercase; margin-bottom: 16px; text-align: center; }
+.eis-display-caption { color: rgba(255,255,255,0.45); font-size: 12px; text-align: center; margin-top: 18px; font-style: italic; }
+.eis-strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); gap: 8px; align-items: stretch; }
+.eis-gauge { background: linear-gradient(180deg, #000, #0A0A0A); border-radius: 8px; padding: 12px 8px; border: 1px solid rgba(64,150,255,0.15); cursor: pointer; display: flex; flex-direction: column; align-items: center; transition: all 0.2s; min-height: 110px; position: relative; overflow: hidden; }
+.eis-gauge::before { content: ''; position: absolute; inset: 1px; border-radius: 7px; background: linear-gradient(180deg, rgba(64,150,255,0.06), transparent 30%); pointer-events: none; }
+.eis-gauge:hover { border-color: rgba(64,200,255,0.5); transform: translateY(-2px); }
+.eis-gauge.wide { grid-column: span 2; }
+.eis-label { font-size: 9px; color: rgba(255,255,255,0.5); letter-spacing: 0.08em; font-weight: 700; text-transform: uppercase; margin-bottom: 6px; position: relative; z-index: 1; }
+.eis-value { font-family: 'JetBrains Mono', monospace; color: #34C759; font-weight: 700; font-size: 13px; margin-top: auto; position: relative; z-index: 1; }
+.eis-needle { width: 36px; height: 36px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.2); position: relative; margin: 6px 0; flex-grow: 1; display: flex; align-items: center; justify-content: center; }
+.eis-needle::after { content: ''; position: absolute; width: 2px; height: 14px; background: #34C759; border-radius: 1px; transform: rotate(45deg); transform-origin: bottom center; bottom: 50%; }
+.eis-bar { width: 16px; height: 50px; background: rgba(255,255,255,0.1); border-radius: 3px; position: relative; margin: 6px 0; flex-grow: 1; display: flex; align-items: flex-end; padding: 1px; }
+.eis-bar-fill { width: 100%; background: #34C759; border-radius: 2px; transition: height 0.3s; }
+.eis-fuel-tanks { display: flex; gap: 6px; margin: 6px 0; flex-grow: 1; align-items: stretch; }
+.eis-tank { width: 16px; background: rgba(255,255,255,0.1); border-radius: 3px; position: relative; display: flex; align-items: flex-end; padding: 1px; }
+.eis-tank span { position: absolute; top: -14px; left: 50%; transform: translateX(-50%); color: rgba(255,255,255,0.5); font-size: 8px; font-weight: 700; }
+.eis-tank-fill { width: 100%; background: #0071E3; border-radius: 2px; }
+.eis-cyl-row { display: flex; gap: 2px; align-items: flex-end; height: 50px; margin: 6px 0; flex-grow: 1; padding: 0 4px; }
+.eis-cyl { flex: 1; background: #34C759; border-radius: 2px 2px 0 0; min-height: 4px; }
+.eis-cyl.hot { background: #FF9500; }
+
+.eis-detail-card { background: var(--surface); border: 1px solid var(--line-2); border-radius: var(--radius-lg); padding: 28px; margin-bottom: 18px; scroll-margin-top: 100px; }
+.eis-detail-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 16px; }
+.eis-detail-name { font-family: 'Fraunces', serif; font-size: 26px; font-weight: 500; letter-spacing: -0.02em; margin-bottom: 4px; }
+.eis-detail-abbr { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--ink-3); background: var(--surface-2); padding: 4px 10px; border-radius: 6px; font-weight: 700; letter-spacing: 0.05em; }
+.eis-detail-body { color: var(--ink-2); font-size: 15px; line-height: 1.6; margin-bottom: 18px; }
+.eis-ranges { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 0; border: 1px solid var(--line-2); border-radius: var(--radius); overflow: hidden; }
+.eis-range { padding: 14px 16px; border-right: 1px solid var(--line-2); }
+.eis-range:last-child { border-right: 0; }
+.eis-range-label { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 6px; }
+.eis-range-value { font-family: 'JetBrains Mono', monospace; font-size: 15px; font-weight: 600; color: var(--ink); }
+.eis-range.danger { background: #FFF1F0; }
+.eis-range.danger .eis-range-label { color: var(--red); }
+.eis-range.warn { background: #FFF8EF; }
+.eis-range.warn .eis-range-label { color: var(--orange); }
+.eis-range.ok { background: #F0FBF4; }
+.eis-range.ok .eis-range-label { color: var(--green); }
+.eis-action { margin-top: 16px; padding: 14px 18px; background: var(--surface-2); border-radius: var(--radius); font-size: 14px; color: var(--ink-2); border-left: 3px solid var(--accent); line-height: 1.55; }
+.eis-action strong { color: var(--ink); }
+
+.callout-block { background: linear-gradient(135deg, #FFF1F0 0%, #FFE5E3 100%); border-radius: var(--radius-lg); padding: 28px; margin-top: 32px; border: 1px solid #FFCDD2; }
+.callout-block-tag { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; color: var(--red); text-transform: uppercase; margin-bottom: 8px; }
+.callout-block-title { font-family: 'Fraunces', serif; font-size: 24px; font-weight: 500; letter-spacing: -0.015em; color: var(--ink); margin-bottom: 10px; }
+.callout-block-body { color: var(--ink-2); font-size: 15px; line-height: 1.6; }
+.callout-block-body strong { color: var(--ink); }
+
+/* ---------- Radios ---------- */
+.radio-principles { display: grid; gap: 14px; margin: 24px 0 36px; }
+.radio-principle { display: flex; gap: 18px; padding: 20px 22px; background: var(--surface-2); border-radius: var(--radius); align-items: flex-start; }
+.rp-num { width: 32px; height: 32px; border-radius: 50%; background: var(--ink); color: #fff; font-family: 'Fraunces', serif; font-weight: 500; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.rp-body { flex: 1; }
+.rp-title { font-family: 'Fraunces', serif; font-size: 18px; font-weight: 500; letter-spacing: -0.01em; margin-bottom: 4px; color: var(--ink); }
+.rp-text { font-size: 14px; color: var(--ink-2); line-height: 1.55; }
+
+.rsection { font-family: 'Fraunces', serif; font-size: 26px; font-weight: 500; letter-spacing: -0.02em; margin: 44px 0 16px; color: var(--ink); }
+
+.radio-phase { background: var(--surface); border: 1px solid var(--line-2); border-radius: var(--radius-lg); padding: 24px; margin-bottom: 16px; }
+.rp-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; color: var(--accent); text-transform: uppercase; margin-bottom: 6px; }
+.rp-title-2 { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 500; letter-spacing: -0.015em; margin-bottom: 16px; color: var(--ink); }
+.rp-table { border: 1px solid var(--line-2); border-radius: var(--radius); overflow: hidden; margin-bottom: 14px; }
+.rp-row { display: grid; grid-template-columns: 140px 1fr; padding: 11px 16px; border-bottom: 1px solid var(--line-2); align-items: baseline; gap: 14px; }
+.rp-row:last-child { border-bottom: 0; }
+.rp-row:nth-child(even) { background: var(--surface-2); }
+.rp-key { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--accent); letter-spacing: 0.04em; }
+.rp-val { font-size: 14px; color: var(--ink); line-height: 1.5; }
+.rp-note { background: var(--surface-2); border-left: 3px solid var(--accent); padding: 12px 16px; border-radius: 0 var(--radius) var(--radius) 0; font-size: 14px; color: var(--ink-2); line-height: 1.55; margin-top: 10px; }
+.rp-note strong { color: var(--ink); }
+.rp-callouts { margin-top: 12px; display: grid; gap: 8px; }
+.rp-call { background: linear-gradient(180deg, #1D1D1F, #2C2C2E); color: #fff; padding: 14px 18px; border-radius: var(--radius); font-family: 'JetBrains Mono', monospace; font-size: 13px; line-height: 1.5; }
+.rp-call em { color: #FFB84D; font-style: normal; }
+.rp-call-tag { font-size: 10px; color: rgba(255,255,255,0.55); letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; margin-bottom: 4px; font-family: 'Inter', sans-serif; }
+
+.radio-special { background: var(--surface); border: 1px solid var(--line-2); border-radius: var(--radius); padding: 22px 24px; margin-bottom: 14px; }
+.rs-tag { display: inline-block; background: var(--surface-2); color: var(--ink); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 6px; letter-spacing: 0.04em; margin-bottom: 12px; }
+.rs-body { color: var(--ink-2); font-size: 14px; line-height: 1.6; }
+.rs-body strong { color: var(--ink); }
+.rs-body ul, .rs-body ol { padding-left: 22px; margin: 8px 0; }
+.rs-body li { margin-bottom: 5px; }
+
+/* ---------- Flashcards ---------- */
+.flashcard-stage { perspective: 1200px; max-width: 560px; margin: 0 auto 24px; }
+.flashcard {
+  position: relative; width: 100%; aspect-ratio: 5/3;
+  cursor: pointer; transform-style: preserve-3d; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.flashcard.flipped { transform: rotateY(180deg); }
+.flashcard-face {
+  position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden;
+  background: var(--surface); border-radius: var(--radius-lg); padding: 36px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  box-shadow: var(--shadow); border: 1px solid var(--line-2); text-align: center;
+}
+.flashcard-back { transform: rotateY(180deg); background: linear-gradient(135deg, #1D1D1F, #3A3A3C); color: #fff; }
+.flashcard-label { font-size: 11px; letter-spacing: 0.12em; color: var(--ink-3); text-transform: uppercase; font-weight: 600; margin-bottom: 14px; }
+.flashcard-back .flashcard-label { color: rgba(255,255,255,0.5); }
+.flashcard-q { font-family: 'Fraunces', serif; font-size: 32px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.15; }
+.flashcard-a { font-family: 'Fraunces', serif; font-size: 28px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.2; }
+.flashcard-hint { font-size: 12px; color: var(--ink-3); margin-top: 16px; }
+.flashcard-back .flashcard-hint { color: rgba(255,255,255,0.5); }
+.flashcard-controls { display: flex; justify-content: space-between; align-items: center; max-width: 560px; margin: 0 auto; gap: 12px; }
+.fc-counter { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--ink-3); font-weight: 500; }
+.fc-actions { display: flex; gap: 8px; }
+.fc-btn { padding: 10px 16px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface); font-family: inherit; font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.15s; }
+.fc-btn:hover { border-color: var(--ink-3); }
+.fc-btn.primary { background: var(--ink); color: #fff; border-color: var(--ink); }
+
+.fc-deck-picker { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; }
+.fc-deck { padding: 8px 14px; border: 1px solid var(--line); border-radius: 999px; font-size: 13px; font-weight: 500; background: var(--surface); cursor: pointer; }
+.fc-deck.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+
+/* ---------- Checklist ---------- */
+.checklist-section { margin-bottom: 28px; }
+.checklist-heading { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 500; letter-spacing: -0.015em; margin-bottom: 4px; }
+.checklist-sub { color: var(--ink-3); font-size: 13px; margin-bottom: 14px; }
+.checklist {
+  background: var(--surface); border: 1px solid var(--line-2); border-radius: var(--radius);
+  overflow: hidden;
+}
+.checklist-item {
+  display: flex; justify-content: space-between; align-items: center; gap: 16px;
+  padding: 13px 18px; border-bottom: 1px solid var(--line-2);
+  cursor: pointer; transition: background 0.15s; user-select: none;
+}
+.checklist-item:last-child { border-bottom: 0; }
+.checklist-item:hover { background: var(--surface-2); }
+.checklist-item.checked { opacity: 0.45; }
+.checklist-item.checked .ci-text { text-decoration: line-through; }
+.ci-text { flex: 1; font-size: 15px; color: var(--ink); font-weight: 500; }
+.ci-action { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--ink-2); font-weight: 600; letter-spacing: 0.02em; }
+
+/* ---------- Garmin exercises ---------- */
+.exercise { background: var(--surface); border: 1px solid var(--line-2); border-radius: var(--radius); padding: 22px; margin-bottom: 14px; }
+.exercise-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 10px; }
+.exercise-title { font-family: 'Fraunces', serif; font-size: 19px; font-weight: 500; letter-spacing: -0.01em; }
+.exercise-meta { font-size: 12px; color: var(--ink-3); font-weight: 500; }
+.exercise-box { font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 6px; background: var(--surface-2); color: var(--ink-2); letter-spacing: 0.04em; }
+.exercise-body { color: var(--ink-2); font-size: 14px; line-height: 1.6; }
+.exercise-body ol { padding-left: 22px; margin-top: 8px; }
+.exercise-body li { margin-bottom: 5px; }
+
+/* ---------- Milestones ---------- */
+.milestone { padding: 28px; border-radius: var(--radius-lg); background: linear-gradient(135deg, var(--surface), var(--surface-2)); border: 1px solid var(--line-2); margin-bottom: 16px; }
+.milestone-head { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
+.milestone-num { width: 44px; height: 44px; border-radius: 50%; background: var(--ink); color: #fff; display: flex; align-items: center; justify-content: center; font-family: 'Fraunces', serif; font-size: 18px; font-weight: 500; flex-shrink: 0; }
+.milestone-title { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 500; letter-spacing: -0.015em; }
+.milestone-day { font-size: 13px; color: var(--ink-3); font-weight: 500; }
+.milestone-body { color: var(--ink-2); font-size: 15px; line-height: 1.6; }
+.milestone-body ul { padding-left: 22px; margin-top: 8px; }
+
+/* ---------- Today widget ---------- */
+.today-banner {
+  background: linear-gradient(135deg, #1D1D1F 0%, #2C2C2E 100%); color: #fff;
+  border-radius: var(--radius-lg); padding: 32px; margin-bottom: 24px; position: relative; overflow: hidden;
+}
+.today-banner::after { content: ''; position: absolute; top: -50%; right: -10%; width: 60%; height: 200%; background: radial-gradient(circle, rgba(64,150,255,0.15), transparent 60%); pointer-events: none; }
+.today-eye { font-size: 12px; letter-spacing: 0.1em; color: rgba(255,255,255,0.6); font-weight: 600; text-transform: uppercase; margin-bottom: 10px; position: relative; }
+.today-title { font-family: 'Fraunces', serif; font-size: 36px; font-weight: 400; letter-spacing: -0.025em; margin-bottom: 8px; position: relative; }
+.today-sub { font-size: 16px; color: rgba(255,255,255,0.75); margin-bottom: 22px; position: relative; max-width: 600px; }
+.today-cta {
+  background: #fff; color: var(--ink); border: none; padding: 12px 22px; border-radius: 999px;
+  font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer; position: relative;
+}
+
+@media (max-width: 720px) {
+  .panel-grid { grid-template-columns: 1fr 1fr; }
+  .panel-unit.gtn { grid-row: span 1; grid-column: span 2; min-height: 120px; }
+  .hero-stat { padding: 0 18px; }
+  .lesson-title { font-size: 30px; }
+  .lesson-header { flex-direction: column; }
+  .spec-row { grid-template-columns: 100px 1fr; }
+  .spec-val { grid-column: 1 / -1; text-align: right; }
+}
+
+/* ---------- Profile picker / settings modal ---------- */
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 100;
+  background: rgba(0,0,0,0.5); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  display: none; align-items: center; justify-content: center; padding: 20px;
+}
+.modal-overlay.show { display: flex; }
+.modal {
+  background: var(--surface); border-radius: var(--radius-lg); padding: 36px 32px;
+  max-width: 480px; width: 100%; max-height: 90vh; overflow-y: auto;
+  box-shadow: var(--shadow-lg); animation: modalIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+@keyframes modalIn { from { opacity: 0; transform: scale(0.95) translateY(10px); } to { opacity: 1; transform: none; } }
+.modal-eyebrow { font-size: 12px; font-weight: 600; color: var(--accent); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 10px; }
+.modal-title { font-family: 'Fraunces', serif; font-size: 28px; font-weight: 500; letter-spacing: -0.02em; margin-bottom: 8px; }
+.modal-sub { color: var(--ink-2); font-size: 14px; line-height: 1.55; margin-bottom: 24px; }
+.profile-options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; }
+.profile-option {
+  display: flex; align-items: center; gap: 14px; padding: 16px 18px;
+  border: 1px solid var(--line); border-radius: 14px; cursor: pointer;
+  background: var(--surface); transition: all 0.15s; text-align: left;
+  font-family: inherit; font-size: 15px; width: 100%;
+}
+.profile-option:hover { border-color: var(--accent); background: var(--surface-2); }
+.profile-avatar {
+  width: 42px; height: 42px; border-radius: 50%; flex-shrink: 0;
+  background: linear-gradient(135deg, var(--ink), #3A3A3C); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Fraunces', serif; font-size: 18px; font-weight: 500;
+}
+.profile-avatar.b { background: linear-gradient(135deg, #5856D6, #AF52DE); }
+.profile-avatar.new { background: var(--surface-2); color: var(--ink-2); border: 1px dashed var(--line); }
+.profile-info-name { font-weight: 600; color: var(--ink); }
+.profile-info-meta { font-size: 12px; color: var(--ink-3); margin-top: 2px; }
+.modal-input {
+  width: 100%; padding: 12px 14px; border: 1px solid var(--line); border-radius: 10px;
+  font-family: 'JetBrains Mono', monospace; font-size: 13px; background: var(--surface);
+  color: var(--ink); margin-bottom: 12px;
+}
+.modal-input:focus { outline: none; border-color: var(--accent); }
+.modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 18px; }
+.modal-btn {
+  padding: 10px 18px; border-radius: 10px; border: 1px solid var(--line);
+  background: var(--surface); font-family: inherit; font-size: 14px; font-weight: 500;
+  cursor: pointer; color: var(--ink); transition: all 0.15s;
+}
+.modal-btn:hover { border-color: var(--ink-3); }
+.modal-btn.primary { background: var(--ink); color: #fff; border-color: var(--ink); }
+.modal-btn.primary:hover { background: #000; }
+.modal-step { display: none; }
+.modal-step.show { display: block; }
+.modal-help { background: var(--surface-2); border-radius: 10px; padding: 14px 16px; font-size: 13px; color: var(--ink-2); line-height: 1.5; margin-bottom: 16px; }
+.modal-help strong { color: var(--ink); }
+.modal-help a { color: var(--accent); text-decoration: none; }
+.modal-help ol { padding-left: 20px; margin: 8px 0 4px; }
+.modal-help li { margin-bottom: 4px; }
+
+/* Profile chip in topbar */
+.profile-chip {
+  display: flex; align-items: center; gap: 8px;
+  background: var(--surface-2); padding: 4px 10px 4px 4px; border-radius: 999px;
+  cursor: pointer; transition: all 0.15s; font-size: 13px; font-weight: 500;
+  border: none; font-family: inherit; color: var(--ink-2);
+}
+.profile-chip:hover { background: var(--line-2); }
+.profile-chip-avatar { width: 24px; height: 24px; border-radius: 50%; background: linear-gradient(135deg, var(--ink), #3A3A3C); color: #fff; display: flex; align-items: center; justify-content: center; font-family: 'Fraunces', serif; font-size: 12px; font-weight: 500; }
+.profile-chip-avatar.b { background: linear-gradient(135deg, #5856D6, #AF52DE); }
+
+.sync-indicator { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; color: var(--ink-3); font-weight: 500; }
+.sync-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); }
+.sync-dot.syncing { background: var(--orange); animation: pulse 1.2s ease-in-out infinite; }
+.sync-dot.error { background: var(--red); }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+.topbar-actions { display: flex; align-items: center; gap: 10px; }
+</style>
+<link rel="manifest" href="/manifest.json"><meta name="theme-color" content="#0071E3"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="apple-mobile-web-app-title" content="N199RF"><script>if("serviceWorker" in navigator){window.addEventListener("load",()=>{navigator.serviceWorker.register("/service-worker.js").catch(e=>console.log("SW failed:",e));});}</script></head>
+<body>
+
+<!-- Profile picker / setup modal -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <!-- Step 1: Pick profile -->
+    <div class="modal-step" id="modalStepProfile">
+      <div class="modal-eyebrow">Welcome</div>
+      <div class="modal-title">Who's flying today?</div>
+      <div class="modal-sub">Pick your profile. Your progress will sync across all your devices automatically.</div>
+      <div class="profile-options">
+        <button class="profile-option" onclick="selectProfile('chris')">
+          <div class="profile-avatar">C</div>
+          <div><div class="profile-info-name">Chris</div><div class="profile-info-meta">Pilot · N199RF</div></div>
+        </button>
+        <button class="profile-option" onclick="selectProfile('brenda')">
+          <div class="profile-avatar b">B</div>
+          <div><div class="profile-info-name">Brenda</div><div class="profile-info-meta">Pilot · N199RF</div></div>
+        </button>
+        <button class="profile-option" onclick="showStep('local')">
+          <div class="profile-avatar new">+</div>
+          <div><div class="profile-info-name">Use without sync</div><div class="profile-info-meta">Progress saves on this device only</div></div>
+        </button>
+      </div>
+    </div>
+
+    <!-- Step 2: Token entry -->
+    <div class="modal-step" id="modalStepToken">
+      <div class="modal-eyebrow"><span id="tokenForName">Chris</span> · One-time setup</div>
+      <div class="modal-title">Connect to GitHub</div>
+      <div class="modal-sub">To sync progress across your devices, this app needs permission to save data to your GitHub account. You only do this once per device.</div>
+
+      <div class="modal-help">
+        <strong>How to get your token (takes 90 seconds):</strong>
+        <ol>
+          <li>Open <a href="https://github.com/settings/tokens/new?scopes=gist&description=N199RF+Mastery+Sync" target="_blank">github.com/settings/tokens/new</a> (already pre-filled)</li>
+          <li>At the bottom, set expiration to <strong>"No expiration"</strong></li>
+          <li>Click <strong>Generate token</strong> at the bottom</li>
+          <li>Copy the token (starts with <code>ghp_</code>) and paste below</li>
+        </ol>
+      </div>
+
+      <input type="password" class="modal-input" id="tokenInput" placeholder="ghp_xxxxxxxxxxxxxxxxxxxxxxxx" autocomplete="off" />
+      <div class="modal-actions">
+        <button class="modal-btn" onclick="showStep('profile')">Back</button>
+        <button class="modal-btn primary" onclick="saveToken()">Connect</button>
+      </div>
+    </div>
+
+    <!-- Step 3: Local-only mode -->
+    <div class="modal-step" id="modalStepLocal">
+      <div class="modal-eyebrow">Local mode</div>
+      <div class="modal-title">No sync, this device only</div>
+      <div class="modal-sub">Progress will save in this browser but won't follow you to other devices. You can always switch to a synced profile later from the settings icon.</div>
+      <div class="modal-actions">
+        <button class="modal-btn" onclick="showStep('profile')">Back</button>
+        <button class="modal-btn primary" onclick="useLocalOnly()">Continue</button>
+      </div>
+    </div>
+
+    <!-- Step 4: Settings / profile switch -->
+    <div class="modal-step" id="modalStepSettings">
+      <div class="modal-eyebrow">Settings</div>
+      <div class="modal-title">Profile & sync</div>
+      <div class="modal-sub" id="settingsSub">Currently signed in as <strong id="settingsName">Chris</strong>.</div>
+      <div class="profile-options">
+        <button class="profile-option" onclick="signOut()">
+          <div class="profile-avatar new">↺</div>
+          <div><div class="profile-info-name">Switch profile</div><div class="profile-info-meta">Sign out and pick a different one</div></div>
+        </button>
+        <button class="profile-option" onclick="forceSync()">
+          <div class="profile-avatar new">⟳</div>
+          <div><div class="profile-info-name">Force sync now</div><div class="profile-info-meta">Pull latest data from GitHub</div></div>
+        </button>
+      </div>
+      <div class="modal-actions">
+        <button class="modal-btn primary" onclick="closeModal()">Done</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <div class="brand-mark">N</div>
+      <div class="brand-name">N199RF <span class="light">Mastery</span></div>
+    </div>
+    <div class="topbar-actions">
+      <div class="progress-pill" id="progressPill">0 / 60 days</div>
+      <button class="profile-chip" id="profileChip" onclick="openSettings()" style="display:none;">
+        <div class="profile-chip-avatar" id="profileChipAvatar">C</div>
+        <span id="profileChipName">Chris</span>
+        <span class="sync-indicator"><span class="sync-dot" id="syncDot"></span></span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="app">
+
+  <!-- ========== HERO ========== -->
+  <section class="hero">
+    <div class="eyebrow">A 60-day program · 2 hours daily</div>
+    <h1>Know your airplane.<br><em>Master your panel.</em></h1>
+    <p class="hero-sub">A structured course built around your 1979 Cessna 182Q and its Garmin glass panel. Designed for a student pilot at 40 hours, working alongside Clemens Aviation.</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="hero-stat-n">60</div><div class="hero-stat-l">Days</div></div>
+      <div class="hero-stat"><div class="hero-stat-n">120</div><div class="hero-stat-l">Hours</div></div>
+      <div class="hero-stat"><div class="hero-stat-n">7</div><div class="hero-stat-l">Garmin LRUs</div></div>
+      <div class="hero-stat"><div class="hero-stat-n">4</div><div class="hero-stat-l">Milestones</div></div>
+    </div>
+  </section>
+
+  <!-- ========== TABS ========== -->
+  <div class="tabs">
+    <button class="tab active" data-view="overview">Overview</button>
+    <button class="tab" data-view="schedule">Schedule</button>
+    <button class="tab" data-view="today">Today’s lesson</button>
+    <button class="tab" data-view="panel">Your panel</button>
+    <button class="tab" data-view="eis">EIS</button>
+    <button class="tab" data-view="radios">Radios</button>
+    <button class="tab" data-view="vspeeds">V-Speeds</button>
+    <button class="tab" data-view="checklists">Checklists</button>
+    <button class="tab" data-view="flashcards">Flashcards</button>
+    <button class="tab" data-view="garmin">Garmin drills</button>
+    <button class="tab" data-view="milestones">Milestones</button>
+  </div>
+
+  <!-- ========== OVERVIEW ========== -->
+  <section class="view active" id="view-overview">
+
+    <div class="today-banner">
+      <div class="today-eye">Start here</div>
+      <div class="today-title">Day <span id="bannerDay">1</span> is ready.</div>
+      <div class="today-sub" id="bannerSub">Cold cockpit familiarization. Sit in the airplane, identify every switch, every breaker, every annunciator. No flying today — just looking.</div>
+      <button class="today-cta" onclick="showView('today')">Begin lesson →</button>
+    </div>
+
+    <div class="card">
+      <div class="card-title">How the day is structured</div>
+      <div class="card-sub">Four blocks. Same shape every day. Two hours total.</div>
+      <div class="block">
+        <div class="block-head"><span class="block-tag">Block A</span><span class="block-time">30 minutes</span></div>
+        <div class="block-title">Checklists, V-speeds, limitations</div>
+        <div class="block-body">Flashcard drill against the spaced-repetition deck. By day 14, every V-speed and limitation is automatic. By day 30, every checklist flows without looking.</div>
+      </div>
+      <div class="block b">
+        <div class="block-head"><span class="block-tag">Block B</span><span class="block-time">30 minutes</span></div>
+        <div class="block-title">182Q systems</div>
+        <div class="block-body">One subsystem deep with FAA references. Fuel, electrical, engine, prop, vacuum, pitot-static, flaps, trim, gear (fixed in your case), brakes. Hand-draw the schematics in your notebook.</div>
+      </div>
+      <div class="block c">
+        <div class="block-head"><span class="block-tag">Block C</span><span class="block-time">45 minutes</span></div>
+        <div class="block-title">Garmin trainer — hands on</div>
+        <div class="block-body">One box, one workflow. GTN 750Xi PC trainer on the Mac. G3X Touch trainer on the iPad. GFC 500 mode awareness. You will own these workflows.</div>
+      </div>
+      <div class="block d">
+        <div class="block-head"><span class="block-tag">Block D</span><span class="block-time">15 minutes</span></div>
+        <div class="block-title">Chair-fly scenario</div>
+        <div class="block-body">Apply today’s content to a real flight. Brief the route, set up the panel cold-to-coupled-approach, fly it in your head with your eyes closed.</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">The weekly cadence</div>
+      <div class="card-sub">Rotating Garmin focus. Same airplane systems every day.</div>
+      <div class="spec-grid" id="cadenceGrid"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">What you need</div>
+      <div class="card-sub">All free except your time.</div>
+      <ul style="padding-left: 22px; color: var(--ink-2); font-size: 15px; line-height: 1.8;">
+        <li>Cessna 182Q POH/AFM for <strong>N199RF</strong> (the actual one in the airplane — verify all numbers against it)</li>
+        <li>Garmin Pilot app on iPad with built-in trainers</li>
+        <li>Garmin GTN 750Xi PC Trainer (free from garmin.com)</li>
+        <li>Garmin G3X Touch PC Trainer (free from garmin.com)</li>
+        <li>Garmin GFC 500 Pilot’s Guide PDF</li>
+        <li>FAA Airplane Flying Handbook (FAA-H-8083-3C)</li>
+        <li>FAA Pilot’s Handbook of Aeronautical Knowledge (FAA-H-8083-25C)</li>
+        <li>A spiral notebook. Hand-write the V-speeds every day for 14 days. Muscle memory.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ========== SCHEDULE ========== -->
+  <section class="view" id="view-schedule">
+    <div class="card">
+      <div class="card-title">The 60-day map</div>
+      <div class="card-sub">Tap any day to open its lesson. Mark days complete as you go.</div>
+      <div class="weeks-nav" id="weeksNav"></div>
+      <div class="day-grid" id="dayGrid"></div>
+    </div>
+  </section>
+
+  <!-- ========== TODAY (LESSON DETAIL) ========== -->
+  <section class="view" id="view-today">
+    <div id="lessonContainer"></div>
+  </section>
+
+  <!-- ========== PANEL ========== -->
+  <section class="view" id="view-panel">
+    <div class="card">
+      <div class="card-title">Your panel, post-upgrade</div>
+      <div class="card-sub">Tap any unit to learn what it does and how to use it.</div>
+
+      <div class="panel-wrap">
+        <div class="panel-title">N199RF · Avionics layout</div>
+        <div class="panel-grid">
+          <div class="panel-unit" onclick="showUnit('g3x')">
+            <div class="panel-label">PFD · EIS</div>
+            <div class="panel-name">G3X Touch GDU 460</div>
+            <div class="panel-screen"><div class="panel-screen-text">PFD · 10.6"</div></div>
+            <div class="panel-detail">Primary flight display + engine instrumentation</div>
+          </div>
+          <div class="panel-unit" onclick="showUnit('gi275')">
+            <div class="panel-label">Standby</div>
+            <div class="panel-name">GI 275</div>
+            <div class="panel-screen"><div class="panel-screen-text">ADAHRS</div></div>
+            <div class="panel-detail">MFD / standby attitude</div>
+          </div>
+          <div class="panel-unit" onclick="showUnit('gmc507')">
+            <div class="panel-label">AP Control</div>
+            <div class="panel-name">GMC 507</div>
+            <div class="panel-screen"><div class="panel-screen-text">HDG · NAV · APR</div></div>
+            <div class="panel-detail">GFC 500 mode controller</div>
+          </div>
+          <div class="panel-unit gtn" onclick="showUnit('gtn750')">
+            <div class="panel-label">GPS · NAV · COM</div>
+            <div class="panel-name">GTN 750Xi</div>
+            <div class="panel-screen"><div class="panel-screen-text">FPL · DIRECT · PROC</div></div>
+            <div class="panel-detail">Primary nav and flight planning. WAAS GPS, VOR/ILS, COM1.</div>
+          </div>
+          <div class="panel-unit" onclick="showUnit('gma350c')">
+            <div class="panel-label">Audio</div>
+            <div class="panel-name">GMA 350c</div>
+            <div class="panel-screen"><div class="panel-screen-text">BLUETOOTH</div></div>
+            <div class="panel-detail">Audio panel + intercom</div>
+          </div>
+          <div class="panel-unit" onclick="showUnit('gtx345')">
+            <div class="panel-label">Transponder</div>
+            <div class="panel-name">GTX 345R</div>
+            <div class="panel-screen"><div class="panel-screen-text">ADS-B IN/OUT</div></div>
+            <div class="panel-detail">1090ES, traffic, weather</div>
+          </div>
+          <div class="panel-unit" onclick="showUnit('gtr205')">
+            <div class="panel-label">COM 2</div>
+            <div class="panel-name">GTR 205</div>
+            <div class="panel-screen"><div class="panel-screen-text">118.000</div></div>
+            <div class="panel-detail">Backup COM radio</div>
+          </div>
+        </div>
+      </div>
+
+      <div id="unitDetail"></div>
+    </div>
+  </section>
+
+  <!-- ========== EIS REFERENCE ========== -->
+  <section class="view" id="view-eis">
+    <div class="card">
+      <div class="card-title">Engine Information System</div>
+      <div class="card-sub">Your G3X EIS strip — what each gauge means, normal range, and what to do if it's out of range. <strong>Verify all values against the POH for N199RF.</strong></div>
+
+      <div class="eis-display">
+        <div class="eis-display-title">EIS strip layout</div>
+        <div class="eis-strip">
+          <div class="eis-gauge" onclick="scrollToGauge('rpm')"><div class="eis-label">RPM</div><div class="eis-needle"></div><div class="eis-value">2400</div></div>
+          <div class="eis-gauge" onclick="scrollToGauge('mp')"><div class="eis-label">MP</div><div class="eis-bar"><div class="eis-bar-fill" style="height:75%"></div></div><div class="eis-value">23.5"</div></div>
+          <div class="eis-gauge" onclick="scrollToGauge('ff')"><div class="eis-label">FF</div><div class="eis-bar"><div class="eis-bar-fill" style="height:60%; background:#34C759"></div></div><div class="eis-value">12.5</div></div>
+          <div class="eis-gauge wide" onclick="scrollToGauge('fuel')">
+            <div class="eis-label">FUEL L · R</div>
+            <div class="eis-fuel-tanks"><div class="eis-tank"><div class="eis-tank-fill" style="height:70%"></div><span>L</span></div><div class="eis-tank"><div class="eis-tank-fill" style="height:65%"></div><span>R</span></div></div>
+            <div class="eis-value">30 · 28</div>
+          </div>
+          <div class="eis-gauge wide" onclick="scrollToGauge('cht')">
+            <div class="eis-label">CHT (6 cyl)</div>
+            <div class="eis-cyl-row">
+              <div class="eis-cyl" style="height:55%"></div>
+              <div class="eis-cyl" style="height:62%"></div>
+              <div class="eis-cyl" style="height:58%"></div>
+              <div class="eis-cyl hot" style="height:78%"></div>
+              <div class="eis-cyl" style="height:60%"></div>
+              <div class="eis-cyl" style="height:57%"></div>
+            </div>
+            <div class="eis-value">380°F</div>
+          </div>
+          <div class="eis-gauge wide" onclick="scrollToGauge('egt')">
+            <div class="eis-label">EGT (6 cyl)</div>
+            <div class="eis-cyl-row">
+              <div class="eis-cyl" style="height:80%; background:#FF9500"></div>
+              <div class="eis-cyl" style="height:82%; background:#FF9500"></div>
+              <div class="eis-cyl" style="height:81%; background:#FF9500"></div>
+              <div class="eis-cyl" style="height:79%; background:#FF9500"></div>
+              <div class="eis-cyl" style="height:80%; background:#FF9500"></div>
+              <div class="eis-cyl" style="height:78%; background:#FF9500"></div>
+            </div>
+            <div class="eis-value">1380°F</div>
+          </div>
+          <div class="eis-gauge" onclick="scrollToGauge('oilp')"><div class="eis-label">OIL P</div><div class="eis-bar"><div class="eis-bar-fill" style="height:50%; background:#34C759"></div></div><div class="eis-value">45 PSI</div></div>
+          <div class="eis-gauge" onclick="scrollToGauge('oilt')"><div class="eis-label">OIL T</div><div class="eis-bar"><div class="eis-bar-fill" style="height:60%; background:#34C759"></div></div><div class="eis-value">195°F</div></div>
+          <div class="eis-gauge" onclick="scrollToGauge('volts')"><div class="eis-label">VOLTS</div><div class="eis-bar"><div class="eis-bar-fill" style="height:70%; background:#34C759"></div></div><div class="eis-value">28.2</div></div>
+        </div>
+        <div class="eis-display-caption">Tap any gauge to jump to the details. Values shown are typical cruise readings — not actual N199RF data.</div>
+      </div>
+
+      <div id="eisDetails"></div>
+
+      <div class="callout-block">
+        <div class="callout-block-tag">The #1 thing you watch every flight</div>
+        <div class="callout-block-title">Oil pressure within 30 seconds of start</div>
+        <div class="callout-block-body">After the engine fires, your eyes go to oil pressure. <strong>If the gauge doesn't rise into the green within 30 seconds, mixture to idle cutoff, master off — you have a problem.</strong> Running without oil pressure destroys the engine in minutes. This is non-negotiable.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== RADIOS ========== -->
+  <section class="view" id="view-radios">
+    <div class="card">
+      <div class="card-title">Radio best practices</div>
+      <div class="card-sub">Your stack: <strong>COM1 = GTN 750Xi</strong> · <strong>COM2 = GTR 205</strong> · audio routing through the GMA 350c. The rule: <em>active talks, standby listens, never both at once on the same ear.</em></div>
+
+      <div class="radio-principles">
+        <div class="radio-principle">
+          <div class="rp-num">1</div>
+          <div class="rp-body">
+            <div class="rp-title">COM1 is for who you're talking to right now.</div>
+            <div class="rp-text">Tower, CTAF at the airport you're going to next, ATC giving you instructions. Active = the voice that gets your reply.</div>
+          </div>
+        </div>
+        <div class="radio-principle">
+          <div class="rp-num">2</div>
+          <div class="rp-body">
+            <div class="rp-title">COM2 is for what's coming up or what to monitor.</div>
+            <div class="rp-text">The next CTAF, ATIS/AWOS, 121.5 emergency, or a busy frequency you want awareness of. Listen, don't transmit.</div>
+          </div>
+        </div>
+        <div class="radio-principle">
+          <div class="rp-num">3</div>
+          <div class="rp-body">
+            <div class="rp-title">Pre-tune the next frequency before you need it.</div>
+            <div class="rp-text">Standby slots exist for this. While talking to ground, the tower freq is in standby. Approaching the airport, CTAF is in standby. Always one move ahead.</div>
+          </div>
+        </div>
+        <div class="radio-principle">
+          <div class="rp-num">4</div>
+          <div class="rp-body">
+            <div class="rp-title">Frequency confirmed = read back, then flip-flop.</div>
+            <div class="rp-text">ATC: "Contact tower 118.7." Read back: "Tower 118.7, 199RF." Tune 118.7 in standby. Flip-flop to active. Check in.</div>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="rsection">Phase by phase</h3>
+
+      <div class="radio-phase">
+        <div class="rp-eyebrow">Phase 1 · At the home airport (1K1)</div>
+        <div class="rp-title-2">Setting up before engine start</div>
+        <div class="rp-table">
+          <div class="rp-row"><div class="rp-key">COM1 active</div><div class="rp-val">1K1 CTAF</div></div>
+          <div class="rp-row"><div class="rp-key">COM1 standby</div><div class="rp-val">First en-route frequency you'll need (often Wichita Approach 134.85)</div></div>
+          <div class="rp-row"><div class="rp-key">COM2 active</div><div class="rp-val">AWOS/ATIS for departure weather (could be KICT 124.10 or destination)</div></div>
+          <div class="rp-row"><div class="rp-key">COM2 standby</div><div class="rp-val">121.50 emergency (always have this within one button press)</div></div>
+        </div>
+        <div class="rp-note">After listening to AWOS and getting the altimeter, retune COM2 to your destination's CTAF/ATIS in standby. Now you're set up for the whole flight.</div>
+      </div>
+
+      <div class="radio-phase">
+        <div class="rp-eyebrow">Phase 2 · Taxi and run-up</div>
+        <div class="rp-title-2">Self-announce on CTAF, monitor approach</div>
+        <div class="rp-table">
+          <div class="rp-row"><div class="rp-key">COM1 active</div><div class="rp-val">1K1 CTAF (self-announce taxi)</div></div>
+          <div class="rp-row"><div class="rp-key">COM1 standby</div><div class="rp-val">Wichita Approach 134.85 (ready for after takeoff)</div></div>
+          <div class="rp-row"><div class="rp-key">COM2 active</div><div class="rp-val">KICT ATIS or destination AWOS</div></div>
+          <div class="rp-row"><div class="rp-key">COM2 standby</div><div class="rp-val">121.50</div></div>
+        </div>
+        <div class="rp-callouts">
+          <div class="rp-call"><div class="rp-call-tag">Taxi</div>"Stearman traffic, Cessna 199 Romeo Foxtrot, taxiing from <em>[tiedown]</em> to runway <em>[35]</em>, Stearman."</div>
+          <div class="rp-call"><div class="rp-call-tag">Departing</div>"Stearman traffic, 199 Romeo Foxtrot, departing runway 35, <em>[direction of flight]</em> departure, Stearman."</div>
+        </div>
+      </div>
+
+      <div class="radio-phase">
+        <div class="rp-eyebrow">Phase 3 · Departure & climb</div>
+        <div class="rp-title-2">Get out of the pattern, then make contact</div>
+        <div class="rp-table">
+          <div class="rp-row"><div class="rp-key">COM1 active</div><div class="rp-val">1K1 CTAF until ~5 NM from field</div></div>
+          <div class="rp-row"><div class="rp-key">COM1 standby</div><div class="rp-val">Wichita Approach 134.85 (or your en route ATC)</div></div>
+          <div class="rp-row"><div class="rp-key">COM2 active</div><div class="rp-val">Destination CTAF (start hearing pattern activity 20+ NM out)</div></div>
+          <div class="rp-row"><div class="rp-key">COM2 standby</div><div class="rp-val">121.50</div></div>
+        </div>
+        <div class="rp-note"><strong>When clear of 1K1 pattern:</strong> Flip-flop COM1 to Approach (134.85). If requesting flight following, call up: <em>"Wichita Approach, Cessna 199 Romeo Foxtrot, 5 east of Stearman, 2,500 climbing 4,500, request flight following to El Dorado."</em></div>
+      </div>
+
+      <div class="radio-phase">
+        <div class="rp-eyebrow">Phase 4 · Cruise</div>
+        <div class="rp-title-2">Two ears, two purposes</div>
+        <div class="rp-table">
+          <div class="rp-row"><div class="rp-key">COM1 active</div><div class="rp-val">Approach/ATC (if on flight following) or 122.75 air-to-air</div></div>
+          <div class="rp-row"><div class="rp-key">COM1 standby</div><div class="rp-val">Next ATC handoff (they'll tell you)</div></div>
+          <div class="rp-row"><div class="rp-key">COM2 active</div><div class="rp-val">Destination CTAF (listen to pattern activity)</div></div>
+          <div class="rp-row"><div class="rp-key">COM2 standby</div><div class="rp-val">Destination AWOS/ATIS (tune ~15 NM out)</div></div>
+        </div>
+        <div class="rp-note">This is where split-monitoring earns its keep. You're talking to ATC on COM1 while hearing what's happening at your destination on COM2. Mental picture is built before you arrive.</div>
+      </div>
+
+      <div class="radio-phase">
+        <div class="rp-eyebrow">Phase 5 · Arrival at a new airport</div>
+        <div class="rp-title-2">~15 NM out — set up for landing</div>
+        <div class="rp-table">
+          <div class="rp-row"><div class="rp-key">COM1 active</div><div class="rp-val">Still with ATC (if on flight following) — wait for handoff or "frequency change approved"</div></div>
+          <div class="rp-row"><div class="rp-key">COM1 standby</div><div class="rp-val">Destination CTAF (or tower if towered)</div></div>
+          <div class="rp-row"><div class="rp-key">COM2 active</div><div class="rp-val">Destination AWOS/ATIS — get altimeter, wind, runway in use</div></div>
+          <div class="rp-row"><div class="rp-key">COM2 standby</div><div class="rp-val">121.50</div></div>
+        </div>
+        <div class="rp-note"><strong>The handoff sequence:</strong> ATC says "Frequency change approved" or "Cancel radar services approved." You: "199RF, leaving 134.85, switching CTAF, good day." Flip-flop COM1 from Approach to CTAF. Listen for 10 seconds before transmitting — get the picture.</div>
+        <div class="rp-callouts">
+          <div class="rp-call"><div class="rp-call-tag">10 NM call</div>"El Dorado traffic, Cessna 199 Romeo Foxtrot, 10 miles west, 3,500, inbound for the runway <em>[X]</em>, El Dorado."</div>
+          <div class="rp-call"><div class="rp-call-tag">Pattern entry</div>"El Dorado traffic, 199 Romeo Foxtrot, entering left downwind runway <em>[X]</em>, El Dorado."</div>
+        </div>
+      </div>
+
+      <div class="radio-phase">
+        <div class="rp-eyebrow">Phase 6 · After landing</div>
+        <div class="rp-title-2">Clear, retune, monitor</div>
+        <div class="rp-table">
+          <div class="rp-row"><div class="rp-key">COM1 active</div><div class="rp-val">Destination CTAF — self-announce clear of runway</div></div>
+          <div class="rp-row"><div class="rp-key">COM1 standby</div><div class="rp-val">If returning: home airport CTAF</div></div>
+          <div class="rp-row"><div class="rp-key">COM2 active</div><div class="rp-val">AWOS for departure weather</div></div>
+          <div class="rp-row"><div class="rp-key">COM2 standby</div><div class="rp-val">121.50</div></div>
+        </div>
+        <div class="rp-callouts">
+          <div class="rp-call"><div class="rp-call-tag">Clear of runway</div>"El Dorado traffic, 199 Romeo Foxtrot, clear of runway <em>[X]</em>, El Dorado."</div>
+        </div>
+      </div>
+
+      <h3 class="rsection">When something's different</h3>
+
+      <div class="radio-special">
+        <div class="rs-tag">Towered airport (KICT, KAAO, KEND, etc.)</div>
+        <div class="rs-body">
+          <strong>Frequency stack:</strong> ATIS → Clearance Delivery (if Class C/B) → Ground → Tower → Departure. Five frequencies for a single departure.
+          <ul>
+            <li><strong>COM1 cycle:</strong> ATIS first → Clearance → Ground → Tower → Departure. Move through them one at a time, dropping the last into standby as you go.</li>
+            <li><strong>COM2 monitor:</strong> Keep 121.50 active throughout. You'll have your hands full with COM1.</li>
+            <li><strong>The trick:</strong> Pre-load all of them in the GTN's "recent frequencies" list before you call up Clearance. Then it's two taps to switch each time.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="radio-special">
+        <div class="rs-tag">Flight following</div>
+        <div class="rs-body">
+          <strong>Why bother?</strong> Free traffic advisories, an extra set of eyes, faster help if something goes wrong. As a student pilot you should be requesting it on every cross-country.
+          <ul>
+            <li><strong>Initial call:</strong> "Wichita Approach, Cessna 199 Romeo Foxtrot, request."</li>
+            <li><strong>Wait for "199RF, go ahead." Then:</strong> "199 Romeo Foxtrot, 5 east of Stearman, 2,500 climbing 4,500, VFR to El Dorado, request flight following."</li>
+            <li><strong>They'll say:</strong> "199RF, squawk 0427, ident." You: "Squawk 0427, ident, 199RF." Then Chris enters 0427 on the GTX transponder (via the GTN).</li>
+            <li><strong>Termination:</strong> When you're ready to leave their frequency: "Wichita Approach, 199 Romeo Foxtrot, cancel flight following, switching CTAF, good day."</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="radio-special">
+        <div class="rs-tag">Emergency on the radio</div>
+        <div class="rs-body">
+          <strong>The order is fixed. Memorize it.</strong>
+          <ol>
+            <li><strong>Aviate</strong> — fly the airplane first. Always.</li>
+            <li><strong>Navigate</strong> — head toward an airport or safe landing area.</li>
+            <li><strong>Communicate</strong> — only after the first two are stable.</li>
+          </ol>
+          <strong>What to say:</strong> "Mayday Mayday Mayday, Cessna 199 Romeo Foxtrot, <em>[nature of emergency]</em>, <em>[position]</em>, <em>[altitude]</em>, <em>[intentions]</em>, <em>[souls on board]</em>, <em>[fuel remaining]</em>."
+          <br><br>
+          <strong>Where to say it:</strong> Stay on whoever you're talking to. If silent, switch COM1 to 121.50. If you're on flight following, ATC already knows your code and position — fastest help.
+          <br><br>
+          <strong>Set the squawk:</strong> 7700 = general emergency, 7600 = lost comm, 7500 = hijack. Chris enters via the GTN.
+        </div>
+      </div>
+
+      <div class="radio-special">
+        <div class="rs-tag">Lost or unsure of frequency</div>
+        <div class="rs-body">
+          <strong>You can always:</strong>
+          <ul>
+            <li>Listen to <strong>121.50</strong> — emergency frequency, always monitored, you can ask for help even non-emergency</li>
+            <li>Press <strong>NRST on the GTN</strong> → Airports → tap an airport → see all its frequencies</li>
+            <li>Call <strong>122.20</strong> for FSS (Flight Service) — they'll figure out where to send you</li>
+            <li>Squawk <strong>7600</strong> if your comm radios are dead — ATC will see you and follow lost-comm procedures</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3 class="rsection">Audio panel (GMA 350c) tips</h3>
+
+      <div class="radio-special">
+        <div class="rs-tag">Day-to-day audio routing</div>
+        <div class="rs-body">
+          <ul>
+            <li><strong>COM1 selected for TX</strong> (transmit): green button COM1, talking on COM1</li>
+            <li><strong>Both COM1 and COM2 selected for RX</strong> (receive): you hear both, but only transmit on the one selected for TX</li>
+            <li><strong>3D Audio:</strong> turn it ON — separates COM1 (left ear) and COM2 (right ear) spatially. Makes split monitoring usable instead of confusing.</li>
+            <li><strong>Intercom mode:</strong> ALL for normal flying (pilot, passenger, all hear each other and radios). ISO if you need to concentrate during a tough call.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="radio-special">
+        <div class="rs-tag">Split COM (advanced)</div>
+        <div class="rs-body">
+          When activated, pilot transmits on COM1 and copilot transmits on COM2 simultaneously. Useful for: one person talking to Tower while the other is talking to FBO, or one person picking up the IFR clearance while the other is on Ground. <strong>Don't use it until you're solid on basic radio work.</strong>
+        </div>
+      </div>
+
+      <div class="callout-block" style="background: linear-gradient(135deg, #EAF2FB 0%, #DFE9F5 100%); border-color: #B6D4F2;">
+        <div class="callout-block-tag" style="color: var(--accent);">The habit that makes you sound professional</div>
+        <div class="callout-block-title">Listen before you transmit. Always.</div>
+        <div class="callout-block-body">When you tune a new frequency, <strong>listen for 10 seconds before you key the mic.</strong> You'll hear someone else mid-call, the rhythm of the frequency, the controller's pace. Stepping on a transmission is the #1 sign of a student pilot. Listen first.</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========== V-SPEEDS ========== -->
+  <section class="view" id="view-vspeeds">
+    <div class="card">
+      <div class="card-title">V-Speeds & limitations</div>
+      <div class="card-sub">Typical 1979 Cessna 182Q values. <strong>Verify every number against the POH for N199RF before flying.</strong></div>
+
+      <div style="margin-top: 24px; margin-bottom: 14px; font-family: 'Fraunces', serif; font-size: 22px; font-weight: 500; letter-spacing: -0.015em;">Stall speeds</div>
+      <div class="spec-grid" id="vspeedStall"></div>
+
+      <div style="margin-top: 28px; margin-bottom: 14px; font-family: 'Fraunces', serif; font-size: 22px; font-weight: 500; letter-spacing: -0.015em;">Takeoff & climb</div>
+      <div class="spec-grid" id="vspeedClimb"></div>
+
+      <div style="margin-top: 28px; margin-bottom: 14px; font-family: 'Fraunces', serif; font-size: 22px; font-weight: 500; letter-spacing: -0.015em;">Approach & landing</div>
+      <div class="spec-grid" id="vspeedApproach"></div>
+
+      <div style="margin-top: 28px; margin-bottom: 14px; font-family: 'Fraunces', serif; font-size: 22px; font-weight: 500; letter-spacing: -0.015em;">Operating limits</div>
+      <div class="spec-grid" id="vspeedLimits"></div>
+
+      <div style="margin-top: 28px; margin-bottom: 14px; font-family: 'Fraunces', serif; font-size: 22px; font-weight: 500; letter-spacing: -0.015em;">Engine — Continental O-470-U</div>
+      <div class="spec-grid" id="engineLimits"></div>
+    </div>
+  </section>
+
+  <!-- ========== CHECKLISTS ========== -->
+  <section class="view" id="view-checklists">
+    <div class="card">
+      <div class="card-title">Interactive checklists</div>
+      <div class="card-sub">Tap items to mark complete. Drill these until each flow is automatic. These are training checklists — always cross-reference with the official 182Q POH/AFM.</div>
+      <div id="checklistsContainer"></div>
+    </div>
+  </section>
+
+  <!-- ========== FLASHCARDS ========== -->
+  <section class="view" id="view-flashcards">
+    <div class="card">
+      <div class="card-title">Flashcards</div>
+      <div class="card-sub">Tap the card to flip. Use these every single day during Block A.</div>
+      <div class="fc-deck-picker" id="deckPicker"></div>
+      <div class="flashcard-stage">
+        <div class="flashcard" id="flashcard" onclick="flipCard()">
+          <div class="flashcard-face flashcard-front">
+            <div class="flashcard-label" id="fcLabelFront">Question</div>
+            <div class="flashcard-q" id="fcQ">Loading…</div>
+            <div class="flashcard-hint">Tap to reveal</div>
+          </div>
+          <div class="flashcard-face flashcard-back">
+            <div class="flashcard-label" id="fcLabelBack">Answer</div>
+            <div class="flashcard-a" id="fcA"></div>
+            <div class="flashcard-hint">Tap to flip back</div>
+          </div>
+        </div>
+      </div>
+      <div class="flashcard-controls">
+        <div class="fc-counter" id="fcCounter">1 / 1</div>
+        <div class="fc-actions">
+          <button class="fc-btn" onclick="prevCard()">Previous</button>
+          <button class="fc-btn" onclick="shuffleCards()">Shuffle</button>
+          <button class="fc-btn primary" onclick="nextCard()">Next</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== GARMIN DRILLS ========== -->
+  <section class="view" id="view-garmin">
+    <div class="card">
+      <div class="card-title">Daily Garmin drills</div>
+      <div class="card-sub">Hands-on exercises in the trainer apps. Roughly progressive — work through them in order over the program.</div>
+      <div id="drillsContainer"></div>
+    </div>
+  </section>
+
+  <!-- ========== MILESTONES ========== -->
+  <section class="view" id="view-milestones">
+    <div class="card">
+      <div class="card-title">The four milestones</div>
+      <div class="card-sub">Every 15 days. Send your answers to Dwayne at Clemens Aviation. If he signs off, you advance.</div>
+      <div id="milestonesContainer"></div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+// ============================================================
+// STATE
+// ============================================================
+const state = {
+  view: 'overview',
+  selectedDay: 1,
+  completed: new Set(),
+  deck: 'vspeeds',
+  cardIndex: 0,
+  cards: [],
+  checklistChecks: new Set(),
+  profile: null,        // 'chris' | 'brenda' | 'local' | null
+  token: null,          // GitHub PAT (per-device)
+  gistId: null,         // Gist ID for this profile
+  syncing: false,
+  saveTimer: null,      // debounce timer
+};
+
+// ============================================================
+// PROFILE / SYNC SYSTEM
+// ============================================================
+// Profile config — Gist IDs are stored per profile. First device to sign in
+// creates the Gist; other devices for the same profile reuse it.
+const PROFILES = {
+  chris: { name: 'Chris', avatar: 'C', avatarClass: '' },
+  brenda: { name: 'Brenda', avatar: 'B', avatarClass: 'b' },
+};
+
+const GIST_DESC = 'N199RF Mastery — sync data';
+const GIST_FILENAME = 'progress.json';
+
+function getProfileFromURL() {
+  const params = new URLSearchParams(window.location.search);
+  return params.get('p');
+}
+function setProfileInURL(p) {
+  const url = new URL(window.location);
+  if (p && p !== 'local') url.searchParams.set('p', p);
+  else url.searchParams.delete('p');
+  window.history.replaceState({}, '', url);
+}
+
+function showModal() { document.getElementById('modalOverlay').classList.add('show'); }
+function closeModal() { document.getElementById('modalOverlay').classList.remove('show'); }
+function showStep(step) {
+  document.querySelectorAll('.modal-step').forEach(el => el.classList.remove('show'));
+  const map = { profile: 'modalStepProfile', token: 'modalStepToken', local: 'modalStepLocal', settings: 'modalStepSettings' };
+  document.getElementById(map[step]).classList.add('show');
+}
+
+function selectProfile(p) {
+  state.profile = p;
+  document.getElementById('tokenForName').textContent = PROFILES[p].name;
+  // Check if we already have a token for this profile on this device
+  const existingToken = localStorage.getItem('n199rf_token_' + p);
+  if (existingToken) {
+    state.token = existingToken;
+    state.gistId = localStorage.getItem('n199rf_gist_' + p);
+    finishProfileSetup();
+  } else {
+    showStep('token');
+  }
+}
+
+async function saveToken() {
+  const token = document.getElementById('tokenInput').value.trim();
+  if (!token.startsWith('ghp_') && !token.startsWith('github_pat_')) {
+    alert('That doesn\u2019t look like a GitHub token. It should start with "ghp_" or "github_pat_".');
+    return;
+  }
+  state.token = token;
+  localStorage.setItem('n199rf_token_' + state.profile, token);
+  // Try to find an existing Gist for this profile
+  setSyncStatus('syncing');
+  try {
+    const existing = await findExistingGist();
+    if (existing) {
+      state.gistId = existing;
+      localStorage.setItem('n199rf_gist_' + state.profile, existing);
+    }
+    finishProfileSetup();
+  } catch (e) {
+    alert('Couldn\u2019t connect to GitHub. Check your token and try again.\n\n' + e.message);
+    setSyncStatus('error');
+  }
+}
+
+function useLocalOnly() {
+  state.profile = 'local';
+  closeModal();
+  loadFromLocal();
+  setupProfileUI();
+}
+
+async function finishProfileSetup() {
+  setProfileInURL(state.profile);
+  closeModal();
+  setupProfileUI();
+  await loadFromCloud();
+}
+
+function setupProfileUI() {
+  const chip = document.getElementById('profileChip');
+  if (state.profile === 'local' || !state.profile) {
+    chip.style.display = state.profile === 'local' ? 'flex' : 'none';
+    if (state.profile === 'local') {
+      document.getElementById('profileChipName').textContent = 'Local';
+      document.getElementById('profileChipAvatar').textContent = 'L';
+      document.getElementById('profileChipAvatar').className = 'profile-chip-avatar new';
+    }
+  } else {
+    const p = PROFILES[state.profile];
+    chip.style.display = 'flex';
+    document.getElementById('profileChipName').textContent = p.name;
+    document.getElementById('profileChipAvatar').textContent = p.avatar;
+    document.getElementById('profileChipAvatar').className = 'profile-chip-avatar ' + p.avatarClass;
+  }
+}
+
+function openSettings() {
+  if (state.profile && PROFILES[state.profile]) {
+    document.getElementById('settingsName').textContent = PROFILES[state.profile].name;
+  } else {
+    document.getElementById('settingsName').textContent = 'Local (no sync)';
+  }
+  showStep('settings');
+  showModal();
+}
+
+function signOut() {
+  if (!confirm('Sign out? Your data stays in GitHub — you can sign back in anytime.')) return;
+  // Don't delete the token — keep it for re-signin convenience
+  state.profile = null;
+  setProfileInURL(null);
+  closeModal();
+  // Reset state
+  state.completed = new Set();
+  state.checklistChecks = new Set();
+  updateProgress();
+  renderDayGrid();
+  renderLesson(state.selectedDay);
+  renderChecklists();
+  // Re-prompt
+  showStep('profile');
+  showModal();
+}
+
+async function forceSync() {
+  closeModal();
+  setSyncStatus('syncing');
+  await loadFromCloud();
+}
+
+// --- GitHub API calls ---
+async function ghFetch(url, options = {}) {
+  return fetch(url, {
+    ...options,
+    headers: {
+      'Accept': 'application/vnd.github+json',
+      'Authorization': 'Bearer ' + state.token,
+      'X-GitHub-Api-Version': '2022-11-28',
+      ...(options.headers || {}),
+    },
+  });
+}
+
+async function findExistingGist() {
+  // Look through user's Gists for one matching our description
+  const res = await ghFetch('https://api.github.com/gists?per_page=100');
+  if (!res.ok) throw new Error('GitHub returned ' + res.status);
+  const gists = await res.json();
+  const tag = '[N199RF:' + state.profile + ']';
+  const match = gists.find(g => g.description && g.description.includes(tag));
+  return match ? match.id : null;
+}
+
+async function createGist(data) {
+  const tag = '[N199RF:' + state.profile + ']';
+  const res = await ghFetch('https://api.github.com/gists', {
+    method: 'POST',
+    body: JSON.stringify({
+      description: GIST_DESC + ' ' + tag,
+      public: false,
+      files: { [GIST_FILENAME]: { content: JSON.stringify(data, null, 2) } },
+    }),
+  });
+  if (!res.ok) throw new Error('Create failed: ' + res.status);
+  const gist = await res.json();
+  return gist.id;
+}
+
+async function updateGist(data) {
+  const res = await ghFetch('https://api.github.com/gists/' + state.gistId, {
+    method: 'PATCH',
+    body: JSON.stringify({
+      files: { [GIST_FILENAME]: { content: JSON.stringify(data, null, 2) } },
+    }),
+  });
+  if (!res.ok) throw new Error('Update failed: ' + res.status);
+}
+
+async function readGist() {
+  const res = await ghFetch('https://api.github.com/gists/' + state.gistId);
+  if (!res.ok) throw new Error('Read failed: ' + res.status);
+  const gist = await res.json();
+  const file = gist.files[GIST_FILENAME];
+  if (!file) return null;
+  return JSON.parse(file.content);
+}
+
+// --- Load/save ---
+async function loadFromCloud() {
+  if (!state.token || state.profile === 'local') return loadFromLocal();
+  setSyncStatus('syncing');
+  try {
+    if (!state.gistId) {
+      // No gist yet — try to find one
+      state.gistId = await findExistingGist();
+      if (state.gistId) localStorage.setItem('n199rf_gist_' + state.profile, state.gistId);
+    }
+    if (state.gistId) {
+      const data = await readGist();
+      if (data) {
+        state.completed = new Set(data.completed || []);
+        state.checklistChecks = new Set(data.checklistChecks || []);
+      }
+    }
+    setSyncStatus('ok');
+  } catch (e) {
+    console.error('Sync load error:', e);
+    setSyncStatus('error');
+    loadFromLocal(); // fallback
+  }
+  updateProgress();
+  renderDayGrid();
+  renderLesson(state.selectedDay);
+  renderChecklists();
+}
+
+function loadFromLocal() {
+  try {
+    const c = localStorage.getItem('n199rf_completed');
+    if (c) state.completed = new Set(JSON.parse(c));
+  } catch (e) {}
+  try {
+    const cl = localStorage.getItem('n199rf_checklistChecks');
+    if (cl) state.checklistChecks = new Set(JSON.parse(cl));
+  } catch (e) {}
+  updateProgress();
+}
+
+function saveState() {
+  // Always save locally as a fallback
+  try { localStorage.setItem('n199rf_completed', JSON.stringify([...state.completed])); } catch (e) {}
+  try { localStorage.setItem('n199rf_checklistChecks', JSON.stringify([...state.checklistChecks])); } catch (e) {}
+  // Then sync to cloud (debounced)
+  if (state.profile && state.profile !== 'local' && state.token) {
+    clearTimeout(state.saveTimer);
+    state.saveTimer = setTimeout(syncToCloud, 800);
+  }
+}
+
+async function syncToCloud() {
+  if (!state.token || state.profile === 'local') return;
+  setSyncStatus('syncing');
+  const data = {
+    profile: state.profile,
+    completed: [...state.completed],
+    checklistChecks: [...state.checklistChecks],
+    updatedAt: new Date().toISOString(),
+  };
+  try {
+    if (!state.gistId) {
+      state.gistId = await createGist(data);
+      localStorage.setItem('n199rf_gist_' + state.profile, state.gistId);
+    } else {
+      await updateGist(data);
+    }
+    setSyncStatus('ok');
+  } catch (e) {
+    console.error('Sync save error:', e);
+    setSyncStatus('error');
+  }
+}
+
+function setSyncStatus(s) {
+  const dot = document.getElementById('syncDot');
+  if (!dot) return;
+  dot.classList.remove('syncing', 'error');
+  if (s === 'syncing') dot.classList.add('syncing');
+  else if (s === 'error') dot.classList.add('error');
+}
+
+function loadState() {
+  // First-time setup: check URL for profile
+  const urlProfile = getProfileFromURL();
+  if (urlProfile && (PROFILES[urlProfile] || urlProfile === 'local')) {
+    state.profile = urlProfile;
+    if (urlProfile === 'local') {
+      loadFromLocal();
+      setupProfileUI();
+      return;
+    }
+    state.token = localStorage.getItem('n199rf_token_' + urlProfile);
+    state.gistId = localStorage.getItem('n199rf_gist_' + urlProfile);
+    if (state.token) {
+      setupProfileUI();
+      loadFromCloud();
+      return;
+    } else {
+      // URL says we're chris/brenda but no token on this device — prompt for token
+      document.getElementById('tokenForName').textContent = PROFILES[urlProfile].name;
+      showStep('token');
+      showModal();
+      return;
+    }
+  }
+  // No URL profile — show picker
+  showStep('profile');
+  showModal();
+}
+
+// ============================================================
+// V-SPEEDS / LIMITS
+// ============================================================
+const vspeedStall = [
+  ['V_S0', 'Stall, landing config — full flaps, power off', '49', 'KIAS'],
+  ['V_S1', 'Stall, clean — flaps up, power off', '54', 'KIAS'],
+];
+const vspeedClimb = [
+  ['V_R', 'Rotation speed', '55', 'KIAS'],
+  ['V_X', 'Best angle of climb (obstacle)', '59', 'KIAS'],
+  ['V_Y', 'Best rate of climb (sea level)', '80', 'KIAS'],
+  ['V_Y (10K)', 'Best rate of climb at 10,000 ft', '72', 'KIAS'],
+];
+const vspeedApproach = [
+  ['Approach', 'Normal approach speed, flaps 20°', '70', 'KIAS'],
+  ['Short field', 'Short field approach, flaps 40°', '60', 'KIAS'],
+  ['V_REF', 'Reference speed, full flaps', '65', 'KIAS'],
+];
+const vspeedLimits = [
+  ['V_NE', 'Never exceed', '176', 'KIAS'],
+  ['V_NO', 'Max structural cruising (top of green arc)', '141', 'KIAS'],
+  ['V_A', 'Maneuvering — at 2950 lb', '111', 'KIAS'],
+  ['V_FE 10°', 'Max flaps 0–10°', '140', 'KIAS'],
+  ['V_FE 20°+', 'Max flaps 20°–40°', '95', 'KIAS'],
+  ['Max demo X-wind', 'Demonstrated crosswind', '15', 'kts'],
+  ['Max takeoff', 'Max gross takeoff weight', '2950', 'lb'],
+  ['Max landing', 'Max landing weight', '2950', 'lb'],
+];
+const engineLimits = [
+  ['Engine', 'Continental O-470-U', '230', 'HP'],
+  ['Max RPM', 'Takeoff power', '2400', 'RPM'],
+  ['Max CHT', 'Cylinder head temp', '460', '°F'],
+  ['Max oil T', 'Maximum oil temperature', '240', '°F'],
+  ['Min oil T', 'Minimum for run-up', '100', '°F'],
+  ['Oil press', 'Normal operating', '30–60', 'PSI'],
+  ['Oil capacity', 'Sump capacity', '9', 'qt'],
+  ['Fuel usable', 'Total usable both tanks', '88', 'gal'],
+  ['Fuel grade', '100LL aviation gasoline', '100LL', ''],
+];
+
+function renderSpecGrid(id, rows) {
+  document.getElementById(id).innerHTML = rows.map(r => `
+    <div class="spec-row">
+      <div class="spec-key">${r[0]}</div>
+      <div class="spec-desc">${r[1]}</div>
+      <div class="spec-val">${r[2]}<small>${r[3]}</small></div>
+    </div>`).join('');
+}
+
+// ============================================================
+// CADENCE
+// ============================================================
+const cadence = [
+  ['Monday', 'G3X Touch PFD + EIS deep-dive'],
+  ['Tuesday', 'GTN 750Xi flight planning, procedures, holds'],
+  ['Wednesday', 'GFC 500 modes, coupled approaches, failures'],
+  ['Thursday', 'GI 275 standby + GMA 350c audio + GTX 345R'],
+  ['Friday', 'Full IFR/cross-country scenario — cold to shutdown'],
+  ['Saturday', '182Q systems + emergency procedures drill'],
+  ['Sunday', 'Review week + flashcard sprint + log to CFI'],
+];
+function renderCadence() {
+  document.getElementById('cadenceGrid').innerHTML = cadence.map((c,i) => `
+    <div class="spec-row" style="grid-template-columns: 140px 1fr;">
+      <div class="spec-key">${c[0]}</div>
+      <div class="spec-desc" style="font-size: 15px;">${c[1]}</div>
+    </div>`).join('');
+}
+
+// ============================================================
+// 60-DAY LESSON DATA
+// ============================================================
+// Each day has: title, theme, focus tag, and 4 blocks (A,B,C,D).
+// Themes cycle by weekday; weeks build skill depth.
+const lessons = [];
+
+// Helper to build a lesson
+function L(day, title, weekTheme, blocks) {
+  return { day, title, theme: weekTheme, blocks };
+}
+
+// WEEK 1 (Days 1-7) — Orientation
+lessons.push(L(1, 'Cold cockpit familiarization', 'Foundations', [
+  {tag:'A', title:'V-speed introduction', body:'<p>Open the V-Speeds tab. Read every entry. Write each V-speed by hand in your notebook three times. Today’s focus: <strong>V_SO, V_S1, V_R, V_X, V_Y</strong>. Do not move on until you can recite these five from memory.</p>'},
+  {tag:'B', title:'Sit in the airplane', body:'<p>Go to the hangar. Sit in N199RF for 60 minutes. Touch every switch, breaker, lever, knob. With the master OFF, identify out loud what each control does. No POH yet — just observe.</p><ul><li>Locate every breaker. Count them.</li><li>Identify both fuel selector positions and OFF.</li><li>Find the primer, the carb heat (none on injected — confirm yours), the alternate static source.</li><li>Note where the ELT switch is.</li></ul>'},
+  {tag:'C', title:'Install Garmin trainers', body:'<p>On your MacBook Air: download the <strong>GTN 750Xi PC Trainer</strong> from garmin.com/trainers. On the iPad: install <strong>Garmin Pilot</strong> if you don’t have it.</p><ol><li>Launch GTN trainer. Power it on. Just look at the home screen.</li><li>Tap each of the seven boxes on the home screen. Note what they do.</li><li>Don’t enter a flight plan today — just navigate the UI.</li></ol>'},
+  {tag:'D', title:'Visualize a typical day', body:'<p>Close your eyes. Picture yourself preflighting N199RF tomorrow morning at your home field. Walk through it. Where are you tense? Where are you guessing? Write those gaps in your notebook — they become next week’s priorities.</p>'},
+]));
+lessons.push(L(2, 'GTN 750Xi home screen', 'Foundations', [
+  {tag:'A', title:'Drill the five V-speeds from yesterday', body:'<p>Flashcards tab → V-speeds deck. Run through them three times. Then write all five (V_SO, V_S1, V_R, V_X, V_Y) on a blank page from memory. Verify against the POH.</p>'},
+  {tag:'B', title:'Fuel system — 182Q', body:'<p>The 182Q has 88 gallons usable in two wing tanks (44 each). Gravity-fed to a fuel selector with BOTH / LEFT / RIGHT / OFF. Engine-driven fuel pump; <strong>no electric boost pump</strong> in the Q model (verify against POH).</p><ul><li>Draw the fuel system schematic in your notebook from memory after reading.</li><li>What does the fuel return line do?</li><li>Where are the fuel drains and how many are there?</li></ul>'},
+  {tag:'C', title:'GTN 750Xi — Direct-To', body:'<p>In the GTN trainer:</p><ol><li>Tap the <strong>Direct-To</strong> button (D→ icon).</li><li>Type your home field identifier. Confirm. Activate.</li><li>Watch the magenta line draw. Read the distance and ETE.</li><li>Now Direct-To a VOR. Now to an airport 200 NM away.</li></ol><p>Goal: 30 reps of Direct-To. Build muscle memory.</p>'},
+  {tag:'D', title:'Direct-To, eyes closed', body:'<p>Without looking, describe the button presses to direct-to your home field. Open trainer, verify. Repeat once.</p>'},
+]));
+lessons.push(L(3, 'G3X Touch — PFD overview', 'Foundations', [
+  {tag:'A', title:'Add V_FE and V_NE', body:'<p>Add today: <strong>V_FE 10°, V_FE 20°+, V_NE, V_NO, V_A</strong>. These are the limitation V-speeds — the ones that keep the airplane in one piece. Drill all 10 V-speeds via flashcards. Write them in your notebook.</p>'},
+  {tag:'B', title:'Electrical system — 182Q', body:'<p>Single 28V alternator, single battery, ammeter showing charge/discharge. Bus structure: master → bus → individual breakers. Avionics master switch isolates the radio stack. Read the POH electrical section. Draw the schematic.</p><ul><li>What happens if the alternator fails in flight?</li><li>How long will battery alone power the panel?</li><li>What is load-shed and what do you turn off first?</li></ul>'},
+  {tag:'C', title:'G3X PFD elements', body:'<p>In the G3X PC trainer (or Pilot iPad simulator):</p><ol><li>Identify every element: airspeed tape, altimeter, VSI, attitude, HSI, slip/skid.</li><li>Find the wind indicator. The OAT. The G-meter.</li><li>Locate the bug controls: HDG, ALT, ALT SEL, V/S, baro.</li><li>Practice setting an altitude bug to 5,500 and a heading bug to 270.</li></ol>'},
+  {tag:'D', title:'Picture the PFD at cruise', body:'<p>Close your eyes. Picture the PFD at cruise: 110 KIAS, 5,500 ft, heading 270°, baro 29.92. Now picture the same scene with a 30° right bank entering a turn. What changes? Open the trainer and verify.</p>'},
+]));
+lessons.push(L(4, 'GFC 500 — what it is', 'Foundations', [
+  {tag:'A', title:'All V-speeds, no notes', body:'<p>Today: recite every V-speed (all 10 from days 1–3) into your phone’s voice recorder. Play it back. Any hesitation = back to flashcards.</p>'},
+  {tag:'B', title:'Engine — O-470-U', body:'<p>Continental O-470-U: 6-cylinder, horizontally opposed, carbureted (or fuel-injected in some Q variants — verify yours), 230 HP at 2400 RPM, 230 cubic inches.</p><ul><li>Max CHT: 460°F. What’s your normal cruise CHT goal?</li><li>Oil pressure: 30–60 PSI normal, minimum 10 idle.</li><li>What is carb heat used for and when do you apply it?</li><li>What is the leaning procedure for cruise?</li></ul>'},
+  {tag:'C', title:'GFC 500 mode awareness', body:'<p>Read the GFC 500 Pilot’s Guide section on modes. Focus on:</p><ul><li>Lateral: <strong>ROL, HDG, NAV, GPSS, APR</strong></li><li>Vertical: <strong>PIT, ALT, VS, IAS, VNV, GS</strong></li><li>What does the green annunciator vs white annunciator mean?</li><li>What is the armed vs captured state?</li></ul><p>Do not press any AP buttons in flight until you can describe every mode on the ground.</p>'},
+  {tag:'D', title:'Mode awareness scenario', body:'<p>Mental scenario: You’re cleared "direct PIRAT, climb and maintain 6,000". What modes do you set up? In what order? Answer in your notebook.</p>'},
+]));
+lessons.push(L(5, 'GI 275, GMA 350c, GTX 345R', 'Foundations', [
+  {tag:'A', title:'Speeds + first limitations', body:'<p>Add today: max gross weight (2950 lb), max landing weight, demonstrated crosswind (15 kts). Drill. Recite into voice memo.</p>'},
+  {tag:'B', title:'Prop and induction', body:'<p>Constant-speed McCauley prop. Pitch is controlled by oil pressure through the governor. Cycling the prop on run-up exchanges old oil. Carbureted induction (verify) — carb ice forms in temperate humid conditions even on warm days. Read the POH section on the prop. Practice the run-up flow mentally.</p>'},
+  {tag:'C', title:'Standby + audio + transponder', body:'<p>Three boxes today, one drill each:</p><ol><li><strong>GI 275:</strong> Identify the page selector. What does it show as a standby ADAHRS? How do you sync to PFD?</li><li><strong>GMA 350c:</strong> Bluetooth pairing. COM1/COM2 selection. SPLIT COM. The intercom modes (ISO, ALL, CREW).</li><li><strong>GTX 345R:</strong> Squawk entry. VFR shortcut (1200). IDENT. What is ADS-B IN giving you on the G3X?</li></ol>'},
+  {tag:'D', title:'Radio call rehearsal', body:'<p>Practice three radio calls aloud: ground for taxi, tower for departure, approach for VFR flight following. Brief them like you’re the only voice on frequency.</p>'},
+]));
+lessons.push(L(6, 'Full IFR/XC scenario chair-fly', 'Foundations', [
+  {tag:'A', title:'V-speed sprint', body:'<p>10 minutes of flashcards on speed. Then write every V-speed in 90 seconds.</p>'},
+  {tag:'B', title:'Pitot-static and vacuum', body:'<p>Your panel is mostly electric now (G3X), but the GI 275 has its own ADAHRS. Understand the pitot-static system: pitot tube, static port, alternate static. Heated pitot? Confirm. What happens to ASI/ALT/VSI when each blocks?</p>'},
+  {tag:'C', title:'Cold-to-cruise chair-fly', body:'<p>Chair-fly an entire flight from cold cockpit to cruise at 5,500 ft, 40 NM away. Use the GTN trainer and G3X trainer simultaneously.</p><ol><li>Master ON. Avionics ON. PFD lights up.</li><li>Enter flight plan: home → DEST.</li><li>Brief departure.</li><li>Taxi, run-up, takeoff (verbalize V_R, V_X, V_Y).</li><li>Engage AP at 1,000 AGL: HDG + ALT (target 5,500).</li><li>At cruise: switch to NAV + ALT.</li></ol>'},
+  {tag:'D', title:'Debrief in writing', body:'<p>Write one page in your notebook about that chair-fly. What surprised you? What’s rough?</p>'},
+]));
+lessons.push(L(7, 'Week 1 review + Dwayne check-in', 'Foundations', [
+  {tag:'A', title:'All V-speeds, all limitations, voice memo', body:'<p>Record yourself reciting every V-speed and every limitation you’ve learned. Send the recording to yourself. Listen to it on tomorrow’s drive.</p>'},
+  {tag:'B', title:'Re-draw every schematic', body:'<p>From memory: fuel, electrical, pitot-static. Then verify against the POH. Where are you weak? Mark for next week.</p>'},
+  {tag:'C', title:'GTN proficiency check', body:'<p>In the GTN trainer, execute:</p><ol><li>Direct-To 3 different airports in sequence.</li><li>Enter a 4-waypoint flight plan.</li><li>Activate a leg in the flight plan.</li><li>Tune COM1 to your home tower frequency.</li><li>Tune NAV1 to a nearby VOR.</li></ol>'},
+  {tag:'D', title:'Send Dwayne a status note', body:'<p>Text your brother-in-law at Clemens. Tell him you’ve completed week 1. Mention three specific things you learned. He installed the panel — he wants to see you using it well.</p>'},
+]));
+
+// Continue weeks with a template generator for days 8-60.
+// We define richer themes per week.
+const weekThemes = [
+  { week: 1, name: 'Foundations', focus: 'Orientation, V-speeds, the panel layout' },
+  { week: 2, name: 'PFD fluency', focus: 'Own the G3X Touch PFD' },
+  { week: 3, name: 'GTN navigation', focus: 'Flight planning, procedures, holds' },
+  { week: 4, name: 'GFC 500 modes', focus: 'Autopilot lateral and vertical modes' },
+  { week: 5, name: 'Coupled approaches', focus: 'GPS, VOR, ILS coupled' },
+  { week: 6, name: 'Emergencies', focus: 'Memory items, partial panel, failures' },
+  { week: 7, name: 'Cross-country', focus: 'Real-world IFR/VFR XC' },
+  { week: 8, name: 'Edge cases & mastery', focus: 'Reroutes, weather, complex' },
+  { week: 9, name: 'Test & checkride prep', focus: 'Oral, written, practical readiness' },
+];
+
+const weekdayThemes = [
+  'G3X PFD + EIS',
+  'GTN 750Xi nav',
+  'GFC 500 autopilot',
+  'GI 275 + GMA 350c + GTX 345R',
+  'Full scenario',
+  '182Q systems + emergencies',
+  'Review + flashcard sprint',
+];
+
+// Build days 8–60 procedurally with rich, specific content per week
+const weekContent = {
+  2: {
+    name: 'PFD fluency',
+    days: [
+      ['G3X PFD configuration', 'Set up the PFD bugs, baro, and display preferences exactly as you want them every flight.'],
+      ['GTN flight plan, real route', 'Build a 5-waypoint flight plan from your home field to a real destination 80 NM away.'],
+      ['GFC 500 — HDG and ALT', 'Hand-fly to 5,000, engage HDG mode and ALT hold. Capture, level, turn.'],
+      ['GI 275 as backup', 'Practice loss-of-PFD: transition all flying to the GI 275.'],
+      ['Departure + cruise scenario', 'Cold start, depart, climb to cruise, level off — all in trainer.'],
+      ['Electrical failure', 'POH emergency procedure for alternator failure. Memorize, then chair-fly.'],
+      ['Week 2 sprint + log', 'Voice-memo everything. Send Dwayne a progress note.'],
+    ]
+  },
+  3: {
+    name: 'GTN navigation',
+    days: [
+      ['G3X EIS — engine monitoring', 'Read every engine parameter on the EIS strip. CHT, EGT, fuel flow, fuel quantity.'],
+      ['GTN — load a procedure', 'Load and activate a departure procedure. Then arrival. Then approach.'],
+      ['GFC 500 — NAV mode', 'Engage NAV mode coupled to GTN. Watch it track the magenta line.'],
+      ['ADS-B traffic + weather', 'Use GTX 345R ADS-B IN to display traffic and weather on the G3X.'],
+      ['VFR XC scenario', 'Real-route VFR cross-country, 120 NM. Use AP, track flight plan.'],
+      ['Engine failure in cruise', 'POH memory items. Best-glide speed. Field selection procedure.'],
+      ['Week 3 review', 'Test yourself: can you do all of the above without notes?'],
+    ]
+  },
+  4: {
+    name: 'GFC 500 modes',
+    days: [
+      ['Synthetic vision + map overlays', 'G3X synthetic vision. Highway-in-the-sky. Configure to your taste.'],
+      ['GTN — holds at a fix', 'Set up a parallel and teardrop hold entry. Verify the GTN flies it.'],
+      ['GFC 500 — VS and IAS climb', 'Climb in VS mode vs IAS mode. Understand the difference.'],
+      ['GI 275 standalone flight', 'Fly a scenario with only the GI 275 — PFD turned off.'],
+      ['IFR departure scenario', 'IFR clearance to a 100 NM destination. Departure, en route, approach.'],
+      ['Engine fire in flight', 'POH memory items. Verbalize, then chair-fly.'],
+      ['Week 4 review + Dwayne sign-off check', 'Send Dwayne your milestone 1 answers (it’s already done at day 15 — preview).'],
+    ]
+  },
+  5: {
+    name: 'Coupled approaches',
+    days: [
+      ['G3X advanced — pages and panes', 'Customize the G3X to your panels. Map, traffic, terrain, charts.'],
+      ['GTN — approach loading deep-dive', 'GPS, VOR, ILS, RNAV LPV. Load each, understand each.'],
+      ['GFC 500 — APR coupled to GPS', 'Coupled approach to an RNAV LPV. AP flies it; you monitor.'],
+      ['Audio panel complexity', 'GMA 350c split COM, sidetone, intercom modes — own them.'],
+      ['Coupled ILS scenario', 'AP flies a coupled ILS. You handle radios and gear (none for you).'],
+      ['Partial panel + AP fail', 'PFD fails AND autopilot fails. Hand-fly the GI 275.'],
+      ['Week 5 review', 'You’re halfway. Recap.'],
+    ]
+  },
+  6: {
+    name: 'Emergencies',
+    days: [
+      ['G3X reversionary mode', 'What happens if a screen fails? Practice reversion.'],
+      ['GTN — flight plan editing in flight', 'Add waypoints, delete, re-route, vectors-to-final.'],
+      ['GFC 500 — VNAV', 'Vertical navigation: set TOD, watch GFC 500 descend you.'],
+      ['Transponder + emergency squawks', '7500, 7600, 7700. When and how.'],
+      ['Lost comm scenario', 'IFR lost comm procedure. Practice 7600 + standard procedures.'],
+      ['Fuel exhaustion + forced landing', 'POH procedure. Best-glide. Field selection.'],
+      ['Week 6 review', 'Send Dwayne a weekly note. Where are you weakest?'],
+    ]
+  },
+  7: {
+    name: 'Cross-country',
+    days: [
+      ['G3X — fuel calculations + range ring', 'EIS fuel flow, totalizer, range ring on map.'],
+      ['GTN — TFRs, METARs, FIS-B weather', 'Use ADS-B IN weather products in flight planning.'],
+      ['GFC 500 — full coupled flight', 'Cold cockpit to coupled approach with AP doing every leg.'],
+      ['ADS-B traffic separation', 'Use ADS-B IN traffic to maintain separation in busy airspace.'],
+      ['Real 200 NM XC scenario', 'Full plan, full execution, in trainer.'],
+      ['Icing encounter', 'Recognize, react, exit. 182Q is not FIKI-equipped — your only option is escape.'],
+      ['Week 7 review', 'Recap.'],
+    ]
+  },
+  8: {
+    name: 'Edge cases & mastery',
+    days: [
+      ['G3X — configuration sync, MFD pages', 'Make the PFD show exactly what you want on every flight.'],
+      ['GTN — search and rescue, nearest', 'Nearest airport, frequencies, fix. Fast, under stress.'],
+      ['GFC 500 — autopilot limits and disengage', 'When does the AP kick off? What do you do?'],
+      ['GMA 350c — multi-channel mgmt', 'Monitor two COMs while talking on one. Master it.'],
+      ['Diversion scenario', 'Weather forces diversion to an unfamiliar field. Execute in trainer.'],
+      ['Mountain flying considerations', 'Density altitude, wind, downdrafts. 182Q at high DA.'],
+      ['Week 8 review', 'You’re almost there.'],
+    ]
+  },
+  9: {
+    name: 'Test & checkride prep',
+    days: [
+      ['Oral exam — systems', 'Review every systems answer for the private oral.'],
+      ['Oral exam — regs and decision-making', 'Aeromedical, 91.103, weather minimums, aeronautical decision-making.'],
+      ['Practical — maneuvers checklist', 'Every PTS maneuver. Verbalize each.'],
+      ['Avionics demonstration', 'Show the examiner you own this panel. Talk them through every box.'],
+      ['Mock checkride — full scenario', 'You’re the PIC. Plan, brief, fly, debrief.'],
+      ['Final emergency drill', 'Every memory item, no notes, voice-memo.'],
+      ['Day 60 — completion', 'You’re done. Send Dwayne the final note. Schedule the checkride.'],
+    ]
+  }
+};
+
+// Generate days 8–63 from week templates (we’ll cap at 60)
+for (let week = 2; week <= 9; week++) {
+  const wc = weekContent[week];
+  if (!wc) continue;
+  for (let d = 0; d < 7; d++) {
+    const dayNum = (week - 1) * 7 + d + 1;
+    if (dayNum > 60) break;
+    const [title, intro] = wc.days[d];
+    const weekday = weekdayThemes[d];
+    lessons.push(L(dayNum, title, wc.name, [
+      {tag:'A', title:'Flashcard drill — escalating', body:`<p>10 min flashcards. ${dayNum <= 14 ? 'Focus on V-speeds and operating limits.' : 'Add emergency memory items and engine limits.'} Voice-memo at the end.</p><p><em>Theme:</em> ${weekday}.</p>`},
+      {tag:'B', title:`Systems block — ${wc.name}`, body:`<p>${intro}</p><p>Open the POH section relevant to today’s theme. Read carefully. Then close the POH and explain it aloud in your own words. If you can’t, re-read.</p>`},
+      {tag:'C', title:`Garmin drill — ${weekday}`, body:`<p>Hands-on in the trainer. Today’s focus aligns with the week’s theme: <strong>${wc.name}</strong>.</p><ul><li>Spend 30 min on the day’s specific exercise (see <em>Garmin drills</em> tab).</li><li>Spend 15 min reviewing yesterday’s drill — repetition cements it.</li></ul>`},
+      {tag:'D', title:'Chair-fly + journal', body:`<p>Apply today’s lesson to a real flight scenario. Pick a destination. Walk through panel setup, climb, cruise, descent, approach. Write one paragraph in your notebook about what you learned today.</p>${(dayNum % 7 === 0) ? '<p><strong>End of week:</strong> Send Dwayne a brief progress note.</p>' : ''}`},
+    ]));
+  }
+}
+
+// ============================================================
+// LESSON RENDERING
+// ============================================================
+function renderLesson(day) {
+  const l = lessons.find(x => x.day === day);
+  if (!l) return;
+  const weekNum = Math.ceil(day / 7);
+  const weekInfo = weekContent[weekNum] || weekThemes[weekNum - 1];
+  const weekName = weekInfo.name || weekInfo.name || l.theme;
+
+  const isDone = state.completed.has(day);
+  document.getElementById('lessonContainer').innerHTML = `
+    <div class="lesson-header">
+      <div class="lesson-title-block">
+        <div class="eyebrow">Day ${day} · Week ${weekNum} · ${weekName}</div>
+        <div class="lesson-title">${l.title}</div>
+        <p class="lesson-intro">${l.theme}. Two hours, four blocks. Take a 5-minute break between B and C if you need it.</p>
+      </div>
+      <button class="complete-btn ${isDone ? 'done' : ''}" id="completeBtn" onclick="toggleComplete(${day})">
+        ${isDone ? '✓ Completed' : 'Mark complete'}
+      </button>
+    </div>
+    ${l.blocks.map(b => `
+      <div class="block ${b.tag === 'A' ? '' : b.tag.toLowerCase()}">
+        <div class="block-head">
+          <span class="block-tag">Block ${b.tag}</span>
+          <span class="block-time">${b.tag === 'C' ? '45 min' : b.tag === 'D' ? '15 min' : '30 min'}</span>
+        </div>
+        <div class="block-title">${b.title}</div>
+        <div class="block-body">${b.body}</div>
+      </div>
+    `).join('')}
+    <div class="lesson-nav">
+      <button class="nav-btn" onclick="gotoDay(${day - 1})" ${day === 1 ? 'disabled' : ''}>← Day ${day - 1}</button>
+      <button class="nav-btn" onclick="showView('schedule')">All days</button>
+      <button class="nav-btn" onclick="gotoDay(${day + 1})" ${day === 60 ? 'disabled' : ''}>Day ${day + 1} →</button>
+    </div>
+  `;
+}
+
+function gotoDay(day) {
+  if (day < 1 || day > 60) return;
+  state.selectedDay = day;
+  renderLesson(day);
+  showView('today');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function toggleComplete(day) {
+  if (state.completed.has(day)) state.completed.delete(day);
+  else state.completed.add(day);
+  saveState();
+  updateProgress();
+  renderLesson(day);
+  renderDayGrid();
+}
+
+function updateProgress() {
+  const n = state.completed.size;
+  document.getElementById('progressPill').textContent = `${n} / 60 days`;
+  // Set banner to next incomplete day
+  let next = 1;
+  for (let d = 1; d <= 60; d++) {
+    if (!state.completed.has(d)) { next = d; break; }
+  }
+  document.getElementById('bannerDay').textContent = next;
+  const nl = lessons.find(l => l.day === next);
+  if (nl) {
+    document.getElementById('bannerSub').textContent = nl.blocks[0].title + '. ' + (nl.theme || '');
+  }
+  state.selectedDay = next;
+}
+
+// ============================================================
+// SCHEDULE GRID
+// ============================================================
+function renderDayGrid() {
+  const today = state.selectedDay;
+  document.getElementById('dayGrid').innerHTML = lessons.map(l => {
+    const done = state.completed.has(l.day);
+    const isCur = l.day === today;
+    const weekday = weekdayThemes[(l.day - 1) % 7].split(' ')[0];
+    return `<div class="day-cell ${done ? 'done' : ''} ${isCur ? 'today' : ''}" onclick="gotoDay(${l.day})">
+      <div class="day-num">${l.day}</div>
+      <div class="day-mini">${weekday}</div>
+    </div>`;
+  }).join('');
+}
+
+function renderWeeksNav() {
+  const weeks = [...new Set(lessons.map(l => Math.ceil(l.day / 7)))];
+  document.getElementById('weeksNav').innerHTML = weeks.map(w => {
+    const wc = weekContent[w];
+    const name = wc ? wc.name : (weekThemes[w-1] ? weekThemes[w-1].name : `Week ${w}`);
+    return `<div class="week-chip" onclick="jumpToWeek(${w})">W${w} · ${name}</div>`;
+  }).join('');
+}
+
+function jumpToWeek(w) {
+  const firstDay = (w - 1) * 7 + 1;
+  gotoDay(firstDay);
+}
+
+// ============================================================
+// PANEL UNIT DETAIL
+// ============================================================
+const units = {
+  g3x: {
+    name: 'G3X Touch GDU 460',
+    role: 'Primary Flight Display + Engine Information System',
+    body: `<p>The 10.6" touchscreen GDU 460 is your primary reference for everything: attitude, airspeed, altitude, heading, vertical speed, and the engine strip (EIS) for the O-470-U.</p>
+    <p><strong>Master these:</strong></p>
+    <ul>
+      <li>The PFD pane: airspeed tape (red/yellow/green/white arcs), altimeter, VSI, attitude indicator with synthetic vision, HSI with course needle.</li>
+      <li>The EIS strip: RPM, MP, fuel flow, fuel quantity (CIES senders give resistor-perfect readings), CHT/EGT for all 6 cylinders, oil pressure and temp.</li>
+      <li>Bug controls: ALT, ALT SEL, HDG, V/S, baro, course.</li>
+      <li>Pages: PFD, MAP, charts, traffic, terrain, weather, checklists, settings.</li>
+      <li>Reversionary mode if a screen fails.</li>
+    </ul>`,
+  },
+  gtn750: {
+    name: 'GTN 750Xi',
+    role: 'GPS / NAV / COM — Primary navigator',
+    body: `<p>This is the brain of your nav stack. WAAS GPS, dual VOR/ILS, COM1, all on one touchscreen.</p>
+    <p><strong>Master these:</strong></p>
+    <ul>
+      <li>Direct-To (D→): the fastest way to navigate anywhere.</li>
+      <li>Flight Plan: build, edit, activate legs, vectors-to-final.</li>
+      <li>Procedures: departures, arrivals, approaches — all four approach types (GPS, VOR, ILS, RNAV LPV).</li>
+      <li>Holds: at a fix, automatic entry.</li>
+      <li>Nearest: airports, VORs, intersections, freqs.</li>
+      <li>COM1 tuning, recent frequencies, monitor freq.</li>
+      <li>NAV1 tuning, OBS, source switching with the GFC 500.</li>
+    </ul>`,
+  },
+  gmc507: {
+    name: 'GMC 507',
+    role: 'GFC 500 mode controller',
+    body: `<p>The autopilot panel. Buttons for HDG, NAV, APR, ALT, VS, FLC, BANK, LVL, YAW DAMP, AP engage.</p>
+    <p><strong>Master these:</strong></p>
+    <ul>
+      <li>Lateral modes: ROL (default), HDG, NAV, GPSS (GPS steering), APR (approach armed/captured).</li>
+      <li>Vertical modes: PIT (default), ALT (hold), VS, IAS/FLC, VNV, GS (glideslope captured).</li>
+      <li>Armed vs captured: white = armed, green = captured.</li>
+      <li>LVL button: emergency level — wings level, climb to safe altitude.</li>
+      <li>YD: yaw damper — engage for smoother flight, especially in turbulence.</li>
+    </ul>`,
+  },
+  gi275: {
+    name: 'GI 275',
+    role: 'Multi-function / Standby ADAHRS',
+    body: `<p>Your backup. Independent attitude, altitude, airspeed reference. If the G3X dies, the GI 275 keeps you flying.</p>
+    <p><strong>Master these:</strong></p>
+    <ul>
+      <li>How to interpret it as a standby ADI.</li>
+      <li>How to use it as an MFD page (map, traffic, weather).</li>
+      <li>Internal battery: how long does it last?</li>
+      <li>How to set baro on the GI 275 independently.</li>
+    </ul>`,
+  },
+  gma350c: {
+    name: 'GMA 350c',
+    role: 'Audio panel with Bluetooth',
+    body: `<p>Audio routing, intercom, and Bluetooth pairing for your phone or iPad audio.</p>
+    <p><strong>Master these:</strong></p>
+    <ul>
+      <li>COM1/COM2 selection: transmit and monitor.</li>
+      <li>Split COM: pilot on COM1, copilot on COM2 simultaneously.</li>
+      <li>Intercom modes: ISO (isolate), ALL, CREW.</li>
+      <li>Bluetooth pairing: phone calls and audio to headset.</li>
+      <li>Sidetone, music input, marker beacon audio.</li>
+    </ul>`,
+  },
+  gtx345: {
+    name: 'GTX 345R',
+    role: 'Mode S transponder with ADS-B In/Out',
+    body: `<p>Remote-mounted (you control it via the GTN 750Xi). Provides ADS-B Out (1090ES) compliance and ADS-B In gives you traffic and weather on the G3X.</p>
+    <p><strong>Master these:</strong></p>
+    <ul>
+      <li>Squawk entry via the GTN.</li>
+      <li>Emergency codes: 7500 (hijack), 7600 (lost comm), 7700 (emergency).</li>
+      <li>VFR shortcut: 1200.</li>
+      <li>IDENT button.</li>
+      <li>ADS-B IN products: TIS-B traffic, FIS-B weather (METARs, TAFs, NEXRAD).</li>
+    </ul>`,
+  },
+  gtr205: {
+    name: 'GTR 205',
+    role: 'Backup COM radio',
+    body: `<p>Standalone backup COM. If the GTN goes dark, you still have a radio.</p>
+    <p><strong>Master these:</strong></p>
+    <ul>
+      <li>Manual frequency entry.</li>
+      <li>Storing favorites.</li>
+      <li>Switching between COM1 (GTN) and COM2 (GTR 205) via the audio panel.</li>
+    </ul>`,
+  },
+};
+
+function showUnit(key) {
+  const u = units[key];
+  if (!u) return;
+  document.getElementById('unitDetail').innerHTML = `
+    <div class="card" style="margin-top: 24px;">
+      <div class="eyebrow">${u.role}</div>
+      <div class="card-title">${u.name}</div>
+      ${u.body}
+    </div>
+  `;
+  document.getElementById('unitDetail').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ============================================================
+// EIS REFERENCE
+// ============================================================
+const eisGauges = [
+  {
+    id: 'rpm', name: 'RPM — Engine speed', abbr: 'RPM',
+    body: 'Revolutions per minute of the crankshaft. This is your tachometer. The Continental O-470-U redlines at 2400 RPM (also its rated takeoff power). Cruise RPM varies with your power setting and altitude.',
+    ranges: [
+      ['Normal cruise', '2200–2400', 'ok'],
+      ['Idle', '600–1000', 'ok'],
+      ['Max (redline)', '2400', 'warn'],
+      ['Overspeed', '>2400', 'danger'],
+    ],
+    action: '<strong>If RPM exceeds 2400 in flight:</strong> reduce throttle and/or coarsen prop pitch immediately. Brief overspeed during prop cycling on run-up is normal — sustained overspeed in flight is not.',
+  },
+  {
+    id: 'mp', name: 'MP — Manifold Pressure', abbr: 'MP',
+    body: 'Air pressure inside the engine intake manifold, measured in inches of mercury (in. Hg). Tells you how hard the engine is breathing. Power is roughly proportional to MP × RPM. At full throttle, MP approaches ambient pressure (~30" at sea level on a standard day). Reducing throttle reduces MP.',
+    ranges: [
+      ['Idle', '10–14"', 'ok'],
+      ['Cruise', '18–22"', 'ok'],
+      ['Takeoff power', '22–24"', 'ok'],
+      ['Static (engine off)', '~29–30"', 'ok'],
+    ],
+    action: '<strong>Power management rule of thumb:</strong> never let MP exceed RPM ÷ 100 by more than 1 (the "squared" rule). For 2400 RPM, MP can be 25"; for 2200 RPM, MP can be 23". Verify against your POH cruise table.',
+  },
+  {
+    id: 'ff', name: 'FF — Fuel Flow', abbr: 'FF',
+    body: 'Real-time fuel burn rate in gallons per hour. The most useful gauge for cruise planning. Goes up with power, down when you lean the mixture. Combined with fuel quantity, the G3X also gives you a fuel totalizer (gallons remaining, time remaining, range).',
+    ranges: [
+      ['Idle', '2–3 GPH', 'ok'],
+      ['Cruise leaned', '10–13 GPH', 'ok'],
+      ['Takeoff (full rich)', '17–19 GPH', 'ok'],
+      ['Climb', '14–17 GPH', 'ok'],
+    ],
+    action: '<strong>Lean of peak vs rich of peak:</strong> the O-470 in the 182 is typically leaned to rich of peak (~50°F rich of peak EGT) for smoothness. Lean of peak operation is possible but requires careful technique. Follow your CFI\u2019s and the POH\u2019s leaning procedure.',
+  },
+  {
+    id: 'fuel', name: 'Fuel Quantity — Left & Right', abbr: 'FUEL',
+    body: 'How many gallons remain in each wing tank. Your airplane has <strong>CIES digital fuel senders</strong> (new with the upgrade) — these are dramatically more accurate than the float-and-resistor senders that came stock in 1979. You can trust these numbers in a way you couldn\u2019t before.',
+    ranges: [
+      ['Both tanks full', '44 + 44 = 88 gal', 'ok'],
+      ['Tabs (visual ref)', '~35 gal each side', 'ok'],
+      ['Reserve (1 hour @ 12 GPH)', '12 gal total', 'warn'],
+      ['Critical / land immediately', '<6 gal', 'danger'],
+    ],
+    action: '<strong>Cross-check the totalizer with the tank gauges every 30 minutes.</strong> If they disagree by more than 2-3 gallons, something is wrong (leak, miscalibration, you forgot to enter starting fuel). Always have an alternate within reach of your reserve fuel.',
+  },
+  {
+    id: 'cht', name: 'CHT — Cylinder Head Temperature', abbr: 'CHT',
+    body: 'Temperature at each of the six cylinder heads, shown as six bars. The G3X highlights the <strong>hottest cylinder</strong>. CHT tells you whether the engine is being cooled adequately. Sustained high CHT shortens engine life dramatically — every flight at 420°F+ takes hours off the engine.',
+    ranges: [
+      ['Cruise target', '<400°F', 'ok'],
+      ['Climb', '380–420°F', 'ok'],
+      ['Warning threshold', '420–460°F', 'warn'],
+      ['Maximum', '460°F', 'danger'],
+    ],
+    action: '<strong>If CHT climbs above 420°F in cruise:</strong> enrich the mixture, increase airspeed (better cooling), and/or reduce power. <strong>If one cylinder runs consistently hotter than the others:</strong> note it and tell Dwayne — could indicate baffling issue, induction leak, or valve problem.',
+  },
+  {
+    id: 'egt', name: 'EGT — Exhaust Gas Temperature', abbr: 'EGT',
+    body: 'Temperature of the exhaust at each of the six cylinders. <strong>EGT is the leaning tool.</strong> As you lean the mixture, EGT rises until it peaks, then falls. The shape of that curve tells you where each cylinder is in its combustion. EGT itself isn\u2019t safety-critical the way CHT is — exhaust gas can get very hot without harming anything.',
+    ranges: [
+      ['Cruise (rich of peak)', '1300–1450°F', 'ok'],
+      ['Peak EGT', '~1500°F', 'ok'],
+      ['Lean of peak', '1400–1480°F', 'ok'],
+      ['Note', 'Absolute EGT varies by probe location — watch trends, not numbers', 'ok'],
+    ],
+    action: '<strong>Leaning procedure (Big Mixture Pull method):</strong> in cruise, smoothly pull mixture toward idle cutoff. Engine roughens around peak EGT, then smooths out lean of peak. For rich of peak, find peak then push mixture forward 50°F. Always verify with the POH procedure for the O-470-U.',
+  },
+  {
+    id: 'oilp', name: 'Oil Pressure', abbr: 'OIL P',
+    body: 'The single most critical engine indicator. Oil pressure tells you the oil pump is pushing oil through the engine bearings, where it lubricates and cools. <strong>No oil pressure = engine destruction in minutes.</strong> Watched constantly, but especially in the first 30 seconds after start.',
+    ranges: [
+      ['Normal operating', '30–60 PSI', 'ok'],
+      ['Idle minimum', '10 PSI', 'warn'],
+      ['Below idle min', '<10 PSI', 'danger'],
+      ['Above max', '>100 PSI', 'danger'],
+    ],
+    action: '<strong>The 30-second rule:</strong> after engine start, oil pressure must rise into the green within 30 seconds. If not — mixture to idle cutoff, master off, no exceptions. <strong>In flight, sudden loss of oil pressure:</strong> declare an emergency, find a field, land. Don\u2019t troubleshoot above 1000 AGL — get the airplane on the ground.',
+  },
+  {
+    id: 'oilt', name: 'Oil Temperature', abbr: 'OIL T',
+    body: 'How hot the engine oil is. The oil cools the engine (along with the air cooling fins), so oil temperature is your second window into engine cooling. Oil must be warm enough to flow properly for run-up, but not so hot it loses its lubricating properties.',
+    ranges: [
+      ['Cold (just started)', 'Ambient', 'warn'],
+      ['Min for run-up', '100°F', 'ok'],
+      ['Normal cruise', '180–220°F', 'ok'],
+      ['Maximum', '240°F', 'danger'],
+    ],
+    action: '<strong>If oil temp climbs in cruise:</strong> often a symptom of climb power held too long, low airflow, or high ambient temperature. Reduce power, lower the nose, increase airspeed. If it keeps climbing past 240°F, treat as an engine emergency.',
+  },
+  {
+    id: 'volts', name: 'Voltage & Ammeter', abbr: 'VOLTS',
+    body: 'Tells you whether your electrical system is healthy. With the alternator running, voltage should read ~28V (it\u2019s a 28-volt system). The ammeter shows whether you\u2019re charging (positive) or discharging the battery (negative).',
+    ranges: [
+      ['Alternator working', '27.5–28.5V', 'ok'],
+      ['Battery only', '24–26V', 'warn'],
+      ['Low battery', '<22V', 'danger'],
+      ['Over-voltage', '>30V', 'danger'],
+    ],
+    action: '<strong>If voltage drops below 24V in flight:</strong> alternator has likely failed. You\u2019re now on battery only. <strong>Load shed immediately:</strong> turn off non-essential equipment (lights, second radio, second nav source, autopilot if not needed). The G3X and GTN will draw the most current — manage carefully. Plan to land soon.',
+  },
+];
+
+function renderEIS() {
+  const container = document.getElementById('eisDetails');
+  if (!container) return;
+  container.innerHTML = '<div style="margin: 32px 0 18px; font-family: \'Fraunces\', serif; font-size: 22px; font-weight: 500; letter-spacing: -0.015em;">Gauge details</div>' +
+    eisGauges.map(g => `
+    <div class="eis-detail-card" id="eis-${g.id}">
+      <div class="eis-detail-head">
+        <div><div class="eis-detail-name">${g.name}</div></div>
+        <div class="eis-detail-abbr">${g.abbr}</div>
+      </div>
+      <div class="eis-detail-body">${g.body}</div>
+      <div class="eis-ranges">
+        ${g.ranges.map(r => `
+          <div class="eis-range ${r[2]}">
+            <div class="eis-range-label">${r[0]}</div>
+            <div class="eis-range-value">${r[1]}</div>
+          </div>
+        `).join('')}
+      </div>
+      <div class="eis-action">${g.action}</div>
+    </div>
+  `).join('');
+}
+
+function scrollToGauge(id) {
+  const el = document.getElementById('eis-' + id);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ============================================================
+// CHECKLISTS
+// ============================================================
+const checklists = [
+  {
+    name: 'Preflight — exterior walkaround',
+    sub: 'Begin at the cabin door and work counterclockwise around the airplane.',
+    items: [
+      ['Documents (AROW)', 'Verify'],
+      ['Master switch', 'ON briefly — check fuel quantity, then OFF'],
+      ['Control wheel lock', 'Remove'],
+      ['Ignition', 'OFF, key removed'],
+      ['Pitot cover', 'Remove'],
+      ['Left wing fuel sample', 'Drain, check for water/sediment'],
+      ['Left wing leading edge, tip, aileron, flap', 'Inspect'],
+      ['Empennage', 'Inspect — elevator, rudder, trim tab, tiedown removed'],
+      ['Right wing flap, aileron, tip, leading edge', 'Inspect'],
+      ['Right wing fuel sample', 'Drain'],
+      ['Fuel selector drain', 'Sample, drain'],
+      ['Cowling, oil', 'Check oil 6–9 qts'],
+      ['Propeller, spinner', 'Inspect for nicks and security'],
+      ['Static port, pitot tube', 'Inspect — heat works'],
+      ['Tires, brakes, struts', 'Inspect'],
+    ],
+  },
+  {
+    name: 'Before start',
+    sub: 'Seated, ready to bring the engine to life.',
+    items: [
+      ['Seats, belts, harnesses', 'Adjust, secure'],
+      ['Brakes', 'Test, hold'],
+      ['Circuit breakers', 'In'],
+      ['Avionics master', 'OFF'],
+      ['All radios', 'OFF'],
+      ['Master switch', 'ON'],
+      ['Beacon', 'ON'],
+      ['Fuel selector', 'BOTH'],
+      ['Mixture', 'RICH'],
+      ['Throttle', 'OPEN ¼"'],
+      ['Prop', 'FULL FORWARD (high RPM)'],
+      ['Carb heat / alternate air', 'COLD / IN'],
+      ['Prime', '2–6 strokes as required (cold engine)'],
+    ],
+  },
+  {
+    name: 'Engine start',
+    sub: 'The moment of truth.',
+    items: [
+      ['Mixture', 'IDLE CUTOFF if hot start, RICH if cold'],
+      ['Throttle', 'OPEN ¼"'],
+      ['Prop area', 'CLEAR — call "CLEAR PROP" out the window'],
+      ['Ignition', 'START — release when engine fires'],
+      ['Mixture', 'RICH (if was cutoff)'],
+      ['Throttle', '1000 RPM'],
+      ['Oil pressure', 'Check rising within 30 sec'],
+      ['Alternator', 'Check charging'],
+      ['Avionics master', 'ON'],
+      ['G3X, GTN, GI 275', 'On, configured'],
+      ['Transponder', 'STBY'],
+    ],
+  },
+  {
+    name: 'Run-up',
+    sub: 'At the run-up area, into the wind, brakes locked.',
+    items: [
+      ['Parking brake', 'SET'],
+      ['Throttle', '1700 RPM'],
+      ['Magnetos', 'Check L/R — max drop 175 RPM, max differential 50 RPM'],
+      ['Prop', 'Cycle once — RPM drops, oil pressure drops slightly, return'],
+      ['Carb heat', 'ON — RPM drop expected, then OFF'],
+      ['Engine instruments', 'In green'],
+      ['Suction', 'Check (if vacuum-driven instruments present)'],
+      ['Ammeter', 'Positive'],
+      ['Throttle', 'IDLE — check'],
+      ['Throttle', '1000 RPM'],
+      ['Flight controls', 'Free and correct'],
+      ['Flight instruments', 'Set — altimeter to field elevation, heading bug, course'],
+      ['Autopilot', 'Test if equipped — engage, disengage with red AP DISC'],
+      ['Avionics', 'Configured for departure — clearance loaded'],
+      ['Trim', 'Set for takeoff'],
+      ['Flaps', 'AS REQUIRED (0° or 10° per POH for conditions)'],
+    ],
+  },
+  {
+    name: 'Before takeoff (lineup)',
+    sub: 'Last items before you push the throttle.',
+    items: [
+      ['Takeoff briefing', 'Review — abort criteria, departure plan, emergency return'],
+      ['Lights', 'On (landing, strobe, beacon)'],
+      ['Transponder', 'ALT'],
+      ['Mixture', 'Set per density altitude'],
+      ['Heading bug', 'Runway heading'],
+      ['Altimeters', 'Cross-check'],
+      ['Time', 'Note takeoff time'],
+    ],
+  },
+  {
+    name: 'After takeoff / climb',
+    sub: 'Positive rate, gear up (n/a — fixed gear), then this flow.',
+    items: [
+      ['Positive rate', 'Confirmed'],
+      ['Flaps', 'UP (at safe altitude per POH)'],
+      ['Throttle', 'Full or per profile'],
+      ['Climb speed', 'V_Y (80 KIAS) unless V_X needed for obstacle'],
+      ['Mixture', 'Lean above 3000 ft DA per POH'],
+      ['Engine instruments', 'In green'],
+      ['Transponder', 'Confirm ALT'],
+    ],
+  },
+  {
+    name: 'Cruise',
+    sub: 'Settle in.',
+    items: [
+      ['Power', 'Set cruise — RPM and MP per POH'],
+      ['Mixture', 'Lean for cruise — peak EGT then per technique'],
+      ['Fuel selector', 'Verify BOTH or rotate per technique'],
+      ['Engine instruments', 'CHT, EGT, oil temp, oil pressure all in green'],
+      ['Autopilot', 'Engage — NAV + ALT'],
+      ['Heading and altitude', 'Verify'],
+      ['Time / fuel calc', 'Note'],
+    ],
+  },
+  {
+    name: 'Descent',
+    sub: 'Plan the descent, don\'t dive.',
+    items: [
+      ['Descent point', 'Plan — 3°/NM rule of thumb'],
+      ['ATIS / weather', 'Get destination weather'],
+      ['Altimeter', 'Set to destination'],
+      ['Mixture', 'Enrich as you descend'],
+      ['Power', 'Reduce gradually — avoid shock cooling'],
+      ['Approach briefing', 'Brief the approach and missed'],
+    ],
+  },
+  {
+    name: 'Before landing',
+    sub: 'Setting up for the runway.',
+    items: [
+      ['Seatbelts', 'On'],
+      ['Mixture', 'RICH'],
+      ['Prop', 'FULL FORWARD'],
+      ['Carb heat', 'AS REQUIRED'],
+      ['Fuel selector', 'BOTH'],
+      ['Flaps', 'AS REQUIRED — 10° on downwind, 20° on base, 30° final'],
+      ['Speed', 'V_REF or per technique — 70 KIAS final'],
+      ['Lights', 'Landing light ON'],
+    ],
+  },
+  {
+    name: 'After landing',
+    sub: 'Clear of the runway, then this flow.',
+    items: [
+      ['Flaps', 'UP'],
+      ['Carb heat', 'COLD'],
+      ['Lights', 'As appropriate'],
+      ['Transponder', 'STBY or 1200'],
+      ['Trim', 'Reset for takeoff'],
+    ],
+  },
+  {
+    name: 'Shutdown',
+    sub: 'At parking, brakes set.',
+    items: [
+      ['Parking brake', 'SET'],
+      ['Throttle', 'IDLE for 1 minute (cool down)'],
+      ['Avionics master', 'OFF'],
+      ['All radios', 'OFF'],
+      ['Mixture', 'IDLE CUTOFF — engine stops'],
+      ['Ignition', 'OFF, key removed'],
+      ['Master', 'OFF'],
+      ['Control lock', 'In'],
+      ['Tiedowns', 'Secured'],
+      ['Pitot cover', 'On'],
+      ['Log Hobbs and tach', 'Recorded'],
+    ],
+  },
+  {
+    name: 'Engine failure in cruise — MEMORY ITEMS',
+    sub: 'Memorize these. No checklist reference allowed.',
+    items: [
+      ['Airspeed', 'BEST GLIDE — 75 KIAS'],
+      ['Field', 'SELECT — into wind, flat, accessible'],
+      ['Fuel selector', 'BOTH'],
+      ['Mixture', 'RICH'],
+      ['Carb heat / alt air', 'ON'],
+      ['Primer', 'In and locked'],
+      ['Magnetos', 'BOTH (try L, R)'],
+      ['Master', 'ON'],
+      ['If no restart: Mayday on 121.5, squawk 7700'],
+      ['Doors', 'UNLATCH before landing'],
+      ['Fuel selector', 'OFF before touchdown'],
+      ['Mixture', 'IDLE CUTOFF'],
+      ['Ignition', 'OFF'],
+      ['Master', 'OFF after flaps set'],
+    ],
+  },
+  {
+    name: 'Engine fire in flight — MEMORY ITEMS',
+    sub: 'Don\'t hesitate.',
+    items: [
+      ['Mixture', 'IDLE CUTOFF'],
+      ['Fuel selector', 'OFF'],
+      ['Master', 'OFF'],
+      ['Cabin heat / air', 'OFF'],
+      ['Airspeed', 'Increase — try to blow out the fire'],
+      ['Forced landing', 'Execute per POH engine failure'],
+    ],
+  },
+  {
+    name: 'Electrical fire — MEMORY ITEMS',
+    sub: 'Smoke or burning smell in the cabin.',
+    items: [
+      ['Master switch', 'OFF'],
+      ['Avionics master', 'OFF'],
+      ['All switches', 'OFF (except ignition)'],
+      ['Vents/cabin air/heat', 'Closed'],
+      ['Fire extinguisher', 'Use'],
+      ['After fire is out: vents OPEN, cautiously restore items one at a time'],
+    ],
+  },
+];
+
+function renderChecklists() {
+  document.getElementById('checklistsContainer').innerHTML = checklists.map((c, ci) => `
+    <div class="checklist-section">
+      <div class="checklist-heading">${c.name}</div>
+      <div class="checklist-sub">${c.sub}</div>
+      <div class="checklist">
+        ${c.items.map((it, ii) => {
+          const key = `${ci}-${ii}`;
+          const checked = state.checklistChecks.has(key);
+          return `<div class="checklist-item ${checked ? 'checked' : ''}" onclick="toggleCheck('${key}')">
+            <div class="ci-text">${it[0]}</div>
+            <div class="ci-action">${it[1]}</div>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>
+  `).join('');
+}
+
+function toggleCheck(key) {
+  if (state.checklistChecks.has(key)) state.checklistChecks.delete(key);
+  else state.checklistChecks.add(key);
+  saveState();
+  renderChecklists();
+}
+
+// ============================================================
+// FLASHCARDS
+// ============================================================
+const decks = {
+  vspeeds: {
+    name: 'V-Speeds',
+    cards: [
+      ['V_SO', 'Stall, landing config (full flaps) — ~49 KIAS'],
+      ['V_S1', 'Stall, clean — ~54 KIAS'],
+      ['V_R', 'Rotation — ~55 KIAS'],
+      ['V_X', 'Best angle of climb — ~59 KIAS'],
+      ['V_Y', 'Best rate of climb (SL) — ~80 KIAS'],
+      ['V_FE 10°', 'Max flaps 0–10° — ~140 KIAS'],
+      ['V_FE 20°+', 'Max flaps 20°–40° — ~95 KIAS'],
+      ['V_A at 2950 lb', 'Maneuvering — ~111 KIAS'],
+      ['V_NO', 'Max structural cruising — ~141 KIAS'],
+      ['V_NE', 'Never exceed — ~176 KIAS'],
+      ['Best glide', '~75 KIAS clean'],
+      ['Normal approach', '~70 KIAS, flaps 20°'],
+      ['Short field approach', '~60 KIAS, flaps 40°'],
+      ['Demonstrated crosswind', '15 kts'],
+    ],
+  },
+  limits: {
+    name: 'Operating Limits',
+    cards: [
+      ['Max gross takeoff weight', '2950 lb'],
+      ['Max landing weight', '2950 lb'],
+      ['Max ramp weight', '2960 lb (verify POH)'],
+      ['Fuel usable, both tanks', '88 gal'],
+      ['Fuel grade', '100LL aviation gasoline'],
+      ['Oil capacity (sump)', '9 qt'],
+      ['Min oil for flight', '6 qt'],
+      ['Max CHT', '460°F'],
+      ['Max oil temperature', '240°F'],
+      ['Min oil temp for run-up', '100°F'],
+      ['Oil pressure (normal)', '30–60 PSI'],
+      ['Max RPM (takeoff)', '2400 RPM'],
+      ['Engine model', 'Continental O-470-U'],
+      ['Engine horsepower', '230 HP @ 2400 RPM'],
+      ['Propeller', 'McCauley constant-speed, 2-blade'],
+    ],
+  },
+  emergencies: {
+    name: 'Emergency Memory Items',
+    cards: [
+      ['Engine failure in cruise — first action', 'Airspeed: best glide (75 KIAS)'],
+      ['Engine failure — restart flow', 'Fuel BOTH, Mixture RICH, Carb heat ON, Primer in, Mags BOTH, Master ON'],
+      ['Engine fire in flight — first action', 'Mixture IDLE CUTOFF'],
+      ['Engine fire — secure flow', 'Mixture cutoff, Fuel OFF, Master OFF, Cabin air OFF, Increase airspeed'],
+      ['Electrical fire — first action', 'Master switch OFF'],
+      ['Emergency squawk — general', '7700'],
+      ['Emergency squawk — lost comm', '7600'],
+      ['Emergency squawk — hijack', '7500'],
+      ['Emergency frequency', '121.5 MHz'],
+      ['Engine-out best glide ratio', '~9:1 — 1.5 NM per 1000 ft AGL'],
+    ],
+  },
+  garmin: {
+    name: 'Garmin quick recall',
+    cards: [
+      ['GFC 500 LVL button', 'Emergency level — wings level, climb to safe altitude'],
+      ['GTN Direct-To button', 'D→ — type identifier, confirm, activate'],
+      ['G3X reversionary mode', 'If a screen fails, the other shows composite PFD'],
+      ['GFC 500 NAV mode coupled to GTN', 'AP tracks the magenta GPS course'],
+      ['GFC 500 APR armed vs captured', 'White = armed, green = captured'],
+      ['GTX 345R IDENT', 'Tap IDENT on the GTN — sends squawk pulse to ATC'],
+      ['GMA 350c split COM', 'Pilot transmits COM1, copilot transmits COM2 simultaneously'],
+      ['GI 275 internal battery', 'Backup power if main bus fails — ~60 min typical'],
+      ['G3X HSI source', 'GPS, NAV1, or NAV2 — switches with the GTN or GMC 507'],
+      ['GTN nearest function', 'NRST — fastest way to find an airport in an emergency'],
+    ],
+  },
+};
+
+function renderDeckPicker() {
+  document.getElementById('deckPicker').innerHTML = Object.keys(decks).map(k => `
+    <div class="fc-deck ${state.deck === k ? 'active' : ''}" onclick="switchDeck('${k}')">${decks[k].name}</div>
+  `).join('');
+}
+
+function switchDeck(k) {
+  state.deck = k;
+  state.cardIndex = 0;
+  state.cards = [...decks[k].cards];
+  renderDeckPicker();
+  renderCard();
+}
+
+function renderCard() {
+  const c = state.cards[state.cardIndex];
+  if (!c) return;
+  const fc = document.getElementById('flashcard');
+  fc.classList.remove('flipped');
+  document.getElementById('fcQ').textContent = c[0];
+  document.getElementById('fcA').textContent = c[1];
+  document.getElementById('fcCounter').textContent = `${state.cardIndex + 1} / ${state.cards.length}`;
+}
+
+function flipCard() {
+  document.getElementById('flashcard').classList.toggle('flipped');
+}
+
+function nextCard() {
+  state.cardIndex = (state.cardIndex + 1) % state.cards.length;
+  renderCard();
+}
+function prevCard() {
+  state.cardIndex = (state.cardIndex - 1 + state.cards.length) % state.cards.length;
+  renderCard();
+}
+function shuffleCards() {
+  for (let i = state.cards.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [state.cards[i], state.cards[j]] = [state.cards[j], state.cards[i]];
+  }
+  state.cardIndex = 0;
+  renderCard();
+}
+
+// ============================================================
+// GARMIN DRILLS
+// ============================================================
+const drills = [
+  {box:'GTN 750Xi', title:'Direct-To proficiency', time:'30 min', body:`<p>Build muscle memory for the most-used button.</p><ol><li>Direct-To your home field. Activate.</li><li>Direct-To a VOR 50 NM away. Activate.</li><li>Direct-To an intersection in a flight plan.</li><li>Cancel Direct-To and resume the flight plan.</li><li>Repeat 20 times until you don’t need to look at the buttons.</li></ol>`},
+  {box:'GTN 750Xi', title:'Build a 5-waypoint flight plan', time:'45 min', body:`<p>Open the trainer. Build: home → VOR → fix → fix → destination.</p><ol><li>Tap Flight Plan.</li><li>Add waypoints one at a time.</li><li>Review the plan: distance, ETE, ETA.</li><li>Activate leg 2.</li><li>Add a waypoint in the middle of the plan.</li><li>Delete a waypoint.</li><li>Reverse the plan for the return trip.</li></ol>`},
+  {box:'GTN 750Xi', title:'Load an approach', time:'45 min', body:`<p>Load and activate an RNAV LPV approach to a familiar airport.</p><ol><li>Tap Procedures → Approach.</li><li>Select the approach and the IAF.</li><li>Load it into the flight plan.</li><li>Activate vectors-to-final, or activate from a fix.</li><li>Now do the same for an ILS, a VOR, and a GPS approach.</li></ol>`},
+  {box:'GTN 750Xi', title:'Holds at a fix', time:'30 min', body:`<p>Set up a hold at a fix in your flight plan.</p><ol><li>Tap Procedures → Hold at a fix.</li><li>Choose the fix and direction.</li><li>Activate.</li><li>Watch how the GTN flies the entry (parallel, teardrop, direct).</li><li>Exit the hold by selecting the next leg.</li></ol>`},
+  {box:'G3X Touch', title:'PFD setup ritual', time:'30 min', body:`<p>Configure the PFD exactly the way you’ll fly it every time.</p><ol><li>Set baro to current altimeter.</li><li>Set altitude bug to cruise altitude.</li><li>Set heading bug to runway heading or first waypoint.</li><li>Set V_S bug to 500 fpm if available.</li><li>Verify HSI source is GPS for departure.</li></ol>`},
+  {box:'G3X Touch', title:'EIS deep-dive', time:'30 min', body:`<p>Identify and verbalize every engine parameter.</p><ol><li>Tap the EIS strip to expand it.</li><li>Walk through: RPM, MP, fuel flow, fuel quantity (both tanks), CHT/EGT (all 6 cyl), oil pressure, oil temp, ammeter, voltage.</li><li>What is the warning threshold for CHT? Verify on the gauge.</li><li>Set a fuel flow scenario and watch the totalizer.</li></ol>`},
+  {box:'GFC 500', title:'HDG + ALT capture', time:'30 min', body:`<p>Most-used autopilot configuration.</p><ol><li>In flight (trainer): hand-fly to 3,000 ft on heading 270.</li><li>Set ALT bug to 5,000 and HDG bug to 360.</li><li>Press AP. Press HDG. Press ALT.</li><li>Watch the AP turn to 360 and climb to 5,000.</li><li>At capture, you should see ALT in green.</li></ol>`},
+  {box:'GFC 500', title:'NAV mode coupled', time:'30 min', body:`<p>Couple the AP to the GPS course.</p><ol><li>Activate a flight plan in the GTN.</li><li>In flight, press AP, then NAV.</li><li>The AP arms NAV (white) until it intercepts the course, then captures (green).</li><li>Watch it track the magenta line.</li><li>What happens when you cross a waypoint? AP turns to the next leg.</li></ol>`},
+  {box:'GFC 500', title:'Coupled GPS approach', time:'45 min', body:`<p>The killer feature. AP flies the approach down to minimums.</p><ol><li>Load an RNAV LPV approach.</li><li>Activate from an IAF.</li><li>In flight, press AP, NAV (arms), APR (arms vertical glide path).</li><li>At the FAF, glide path captures — vertical guidance is now active.</li><li>AP descends on the LPV glide path to minimums.</li><li>At minimums: AP off, land or go-missed.</li></ol>`},
+  {box:'GFC 500', title:'Coupled ILS', time:'45 min', body:`<p>Same as GPS but with NAV source switched to VLOC.</p><ol><li>Tune ILS frequency on GTN NAV1.</li><li>Switch HSI source to VLOC (button on GTN).</li><li>Activate the approach.</li><li>AP intercepts localizer (green NAV), then glideslope (green GS).</li><li>AP flies the ILS to DH.</li></ol>`},
+  {box:'GI 275', title:'Standby fly', time:'30 min', body:`<p>Turn off the G3X (or imagine it failed). Fly only the GI 275.</p><ol><li>Identify attitude on the GI 275 ADI.</li><li>Use the GI 275 HSI page if available.</li><li>Maintain altitude with limited information.</li><li>Practice straight-and-level, turns, climbs, descents.</li></ol>`},
+  {box:'GMA 350c', title:'Audio mastery', time:'15 min', body:`<p>Quick drills.</p><ol><li>Pair your phone via Bluetooth.</li><li>Switch COM1 and COM2 transmit.</li><li>Engage split COM.</li><li>Switch intercom modes: ISO, ALL, CREW.</li></ol>`},
+  {box:'GTX 345R', title:'Squawks and emergencies', time:'15 min', body:`<p>Practice on the GTN.</p><ol><li>Squawk 1200 (VFR shortcut).</li><li>Squawk a discrete code from ATC.</li><li>IDENT.</li><li>Practice entering 7700 in under 5 seconds.</li></ol>`},
+];
+
+function renderDrills() {
+  document.getElementById('drillsContainer').innerHTML = drills.map((d, i) => `
+    <div class="exercise">
+      <div class="exercise-head">
+        <div>
+          <div class="exercise-title">${d.title}</div>
+          <div class="exercise-meta">${d.time}</div>
+        </div>
+        <div class="exercise-box">${d.box}</div>
+      </div>
+      <div class="exercise-body">${d.body}</div>
+    </div>
+  `).join('');
+}
+
+// ============================================================
+// MILESTONES
+// ============================================================
+const milestones = [
+  {
+    num: 1, day: 15, title: 'Foundations established',
+    body: `<p>Send Dwayne these answers in a text or email. He installed the panel — let him verify you know it.</p>
+    <ul>
+      <li>Recite all V-speeds from memory (voice memo).</li>
+      <li>Draw the fuel and electrical systems on a sheet of paper. Photograph and send.</li>
+      <li>Explain the GTN home screen — what is on each of the 7 tiles?</li>
+      <li>Demonstrate (video) building a 3-waypoint flight plan in the GTN trainer.</li>
+      <li>Demonstrate (video) engaging HDG and ALT modes on the GFC 500.</li>
+    </ul>`,
+  },
+  {
+    num: 2, day: 30, title: 'PFD + GTN fluent',
+    body: `<p>Half-way. Send Dwayne:</p>
+    <ul>
+      <li>All operating limits from memory.</li>
+      <li>EIS gauge layout, drawn from memory.</li>
+      <li>Video: load an RNAV LPV approach and activate vectors-to-final.</li>
+      <li>Video: engage NAV mode coupled to the GTN, AP tracking magenta.</li>
+      <li>Written: explain the difference between armed and captured AP states.</li>
+    </ul>`,
+  },
+  {
+    num: 3, day: 45, title: 'Coupled approaches + emergencies',
+    body: `<p>Now you fly the system. Send Dwayne:</p>
+    <ul>
+      <li>Video: coupled RNAV LPV approach in trainer to minimums.</li>
+      <li>Recite engine-failure-in-cruise memory items, no notes.</li>
+      <li>Recite engine fire and electrical fire memory items.</li>
+      <li>Written: how does the GI 275 keep you flying if the G3X dies?</li>
+      <li>Real-flight note: which sections of this course are showing up in your dual lessons?</li>
+    </ul>`,
+  },
+  {
+    num: 4, day: 60, title: 'Mastery — ready for checkride',
+    body: `<p>You’re done. Send Dwayne:</p>
+    <ul>
+      <li>Full mock-checkride debrief (oral + practical).</li>
+      <li>Avionics demonstration on a real flight (or simulator).</li>
+      <li>Final voice memo: V-speeds, limits, emergency memory items — under 2 minutes total.</li>
+      <li>Schedule the checkride. Send Dwayne the date.</li>
+    </ul>`,
+  },
+];
+
+function renderMilestones() {
+  document.getElementById('milestonesContainer').innerHTML = milestones.map(m => `
+    <div class="milestone">
+      <div class="milestone-head">
+        <div class="milestone-num">${m.num}</div>
+        <div>
+          <div class="milestone-title">${m.title}</div>
+          <div class="milestone-day">Day ${m.day}</div>
+        </div>
+      </div>
+      <div class="milestone-body">${m.body}</div>
+    </div>
+  `).join('');
+}
+
+// ============================================================
+// NAVIGATION
+// ============================================================
+function showView(v) {
+  state.view = v;
+  document.querySelectorAll('.view').forEach(el => el.classList.remove('active'));
+  document.getElementById('view-' + v).classList.add('active');
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.view === v));
+  if (v === 'today') renderLesson(state.selectedDay);
+  if (v === 'schedule') renderDayGrid();
+}
+
+document.querySelectorAll('.tab').forEach(t => {
+  t.addEventListener('click', () => showView(t.dataset.view));
+});
+
+// ============================================================
+// INIT
+// ============================================================
+(function init() {
+  loadState();
+  renderCadence();
+  renderSpecGrid('vspeedStall', vspeedStall);
+  renderSpecGrid('vspeedClimb', vspeedClimb);
+  renderSpecGrid('vspeedApproach', vspeedApproach);
+  renderSpecGrid('vspeedLimits', vspeedLimits);
+  renderSpecGrid('engineLimits', engineLimits);
+  renderWeeksNav();
+  renderDayGrid();
+  renderLesson(state.selectedDay);
+  renderChecklists();
+  state.cards = [...decks.vspeeds.cards];
+  renderDeckPicker();
+  renderCard();
+  renderDrills();
+  renderMilestones();
+  renderEIS();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flight 1: Flint Hills Photo Tour · N199RF</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #FBFBFD; --surface: #FFFFFF; --surface-2: #F5F5F7;
+  --ink: #1D1D1F; --ink-2: #424245; --ink-3: #86868B;
+  --line: #D2D2D7; --line-2: #E8E8ED;
+  --accent: #0071E3; --green: #34C759; --orange: #FF9500; --red: #FF3B30; --purple: #5856D6;
+  --shadow: 0 4px 16px rgba(0,0,0,0.06);
+  --radius: 14px; --radius-lg: 22px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--ink); font-family: 'Inter', -apple-system, sans-serif; line-height: 1.6; -webkit-font-smoothing: antialiased; padding: 0; }
+.wrap { max-width: 820px; margin: 0 auto; padding: 40px 24px 80px; }
+
+.hero { text-align: center; padding: 32px 0 48px; border-bottom: 1px solid var(--line-2); margin-bottom: 48px; }
+.eyebrow { font-size: 12px; font-weight: 600; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 14px; }
+h1 { font-family: 'Fraunces', serif; font-size: clamp(34px, 6vw, 54px); font-weight: 400; letter-spacing: -0.03em; line-height: 1.05; margin-bottom: 18px; }
+h1 em { font-style: italic; color: var(--ink-2); font-weight: 300; }
+.lede { color: var(--ink-2); font-size: 18px; max-width: 600px; margin: 0 auto; }
+
+.crew { display: flex; gap: 12px; justify-content: center; margin-top: 32px; flex-wrap: wrap; }
+.crew-pill { background: var(--surface); border: 1px solid var(--line-2); padding: 10px 16px; border-radius: 999px; display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 500; }
+.crew-avatar { width: 26px; height: 26px; border-radius: 50%; background: linear-gradient(135deg, var(--ink), #3A3A3C); color: #fff; display: flex; align-items: center; justify-content: center; font-family: 'Fraunces', serif; font-size: 13px; font-weight: 500; }
+.crew-avatar.b { background: linear-gradient(135deg, #5856D6, #AF52DE); }
+.crew-role { color: var(--ink-3); font-weight: 500; }
+
+h2 { font-family: 'Fraunces', serif; font-size: 32px; font-weight: 500; letter-spacing: -0.02em; margin: 64px 0 8px; line-height: 1.2; }
+.h2-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; color: var(--accent); text-transform: uppercase; margin-bottom: 8px; }
+.h2-sub { color: var(--ink-3); font-size: 15px; margin-bottom: 28px; }
+
+h3 { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 500; letter-spacing: -0.015em; margin: 32px 0 10px; }
+p { margin-bottom: 14px; color: var(--ink-2); }
+strong { color: var(--ink); font-weight: 600; }
+
+.callout { background: var(--surface); border-left: 3px solid var(--accent); padding: 18px 22px; border-radius: 0 var(--radius) var(--radius) 0; margin: 18px 0; }
+.callout.warn { border-left-color: var(--orange); background: #FFF8EF; }
+.callout.danger { border-left-color: var(--red); background: #FFF1F0; }
+.callout.note { border-left-color: var(--green); background: #F0FBF4; }
+.callout-tag { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px; color: var(--accent); }
+.callout.warn .callout-tag { color: var(--orange); }
+.callout.danger .callout-tag { color: var(--red); }
+.callout.note .callout-tag { color: var(--green); }
+
+.steps { counter-reset: step; list-style: none; padding: 0; margin: 18px 0; }
+.steps > li {
+  counter-increment: step; padding-left: 56px; position: relative;
+  margin-bottom: 18px; min-height: 36px;
+}
+.steps > li::before {
+  content: counter(step); position: absolute; left: 0; top: 0;
+  width: 36px; height: 36px; border-radius: 50%; background: var(--ink); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Fraunces', serif; font-weight: 500; font-size: 16px;
+}
+.steps li strong { color: var(--ink); }
+
+.key { 
+  display: inline-block; padding: 2px 8px; border-radius: 6px;
+  background: var(--surface-2); border: 1px solid var(--line);
+  font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 600;
+  color: var(--ink); margin: 0 2px;
+}
+.key.red { background: #FFF1F0; border-color: #FFCDD2; color: #B71C1C; }
+.key.green { background: #F0FBF4; border-color: #BBE5C5; color: #1B5E20; }
+.key.blue { background: #EAF2FB; border-color: #B6D4F2; color: #0D47A1; }
+
+.route-summary { background: var(--surface); border: 1px solid var(--line-2); border-radius: var(--radius-lg); padding: 24px; margin: 24px 0 40px; }
+.route-row { display: grid; grid-template-columns: 130px 1fr; gap: 14px; padding: 10px 0; border-bottom: 1px solid var(--line-2); align-items: baseline; }
+.route-row:last-child { border-bottom: 0; }
+.route-key { font-size: 12px; font-weight: 600; letter-spacing: 0.05em; color: var(--ink-3); text-transform: uppercase; }
+.route-val { font-size: 15px; color: var(--ink); }
+.route-val code { font-family: 'JetBrains Mono', monospace; font-size: 13px; }
+
+.waypoint-list { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 14px 0; }
+.wp { background: var(--ink); color: #fff; padding: 6px 12px; border-radius: 8px; font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 600; }
+.wp-arrow { color: var(--ink-3); font-size: 16px; }
+
+.phase-card {
+  background: var(--surface); border: 1px solid var(--line-2);
+  border-radius: var(--radius-lg); padding: 28px; margin: 20px 0;
+}
+.phase-num {
+  display: inline-flex; align-items: center; gap: 10px; margin-bottom: 12px;
+  font-size: 12px; font-weight: 700; letter-spacing: 0.1em; color: var(--accent); text-transform: uppercase;
+}
+.phase-num-circle {
+  width: 28px; height: 28px; border-radius: 50%; background: var(--accent); color: #fff;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-family: 'Fraunces', serif; font-size: 14px; font-weight: 500;
+}
+.phase-title { font-family: 'Fraunces', serif; font-size: 26px; font-weight: 500; letter-spacing: -0.02em; margin-bottom: 4px; }
+.phase-meta { color: var(--ink-3); font-size: 13px; margin-bottom: 18px; font-weight: 500; }
+
+.role-tag {
+  display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 4px;
+  letter-spacing: 0.05em; margin-right: 6px; vertical-align: middle; position: relative; top: -2px;
+}
+.role-tag.brenda { background: #EAE9FC; color: #5856D6; }
+.role-tag.chris { background: #E4E4E7; color: #1D1D1F; }
+.role-tag.both { background: var(--surface-2); color: var(--ink-2); }
+
+.radio-call {
+  background: linear-gradient(180deg, #1D1D1F, #2C2C2E); color: #fff;
+  border-radius: var(--radius); padding: 16px 18px; margin: 12px 0;
+  font-family: 'JetBrains Mono', monospace; font-size: 14px; line-height: 1.5;
+}
+.radio-call .speaker { color: rgba(255,255,255,0.6); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; margin-bottom: 4px; }
+.radio-call em { color: #FFB84D; font-style: normal; }
+
+ul.bare { list-style: none; padding: 0; }
+ul.bare li { padding: 8px 0; border-bottom: 1px solid var(--line-2); display: flex; justify-content: space-between; gap: 14px; }
+ul.bare li:last-child { border-bottom: 0; }
+ul.bare li > span:first-child { color: var(--ink); font-weight: 500; }
+ul.bare li > span:last-child { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--ink-2); font-weight: 600; }
+
+ul:not(.bare) { padding-left: 22px; margin-bottom: 14px; }
+ul:not(.bare) li { color: var(--ink-2); margin-bottom: 6px; }
+
+.divider { border: 0; border-top: 1px solid var(--line-2); margin: 56px 0; }
+
+.toc { background: var(--surface); border: 1px solid var(--line-2); border-radius: var(--radius); padding: 20px 24px; margin-bottom: 40px; }
+.toc-title { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; color: var(--ink-3); text-transform: uppercase; margin-bottom: 12px; }
+.toc ol { padding-left: 22px; }
+.toc li { padding: 4px 0; }
+.toc a { color: var(--ink); text-decoration: none; font-weight: 500; }
+.toc a:hover { color: var(--accent); }
+
+@media (max-width: 640px) {
+  .wrap { padding: 24px 16px 60px; }
+  .steps > li { padding-left: 46px; }
+  .steps > li::before { width: 30px; height: 30px; font-size: 14px; }
+  .route-row { grid-template-columns: 100px 1fr; }
+}
+</style>
+<link rel="manifest" href="/manifest.json"><meta name="theme-color" content="#0071E3"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="apple-mobile-web-app-title" content="N199RF"><script>if("serviceWorker" in navigator){window.addEventListener("load",()=>{navigator.serviceWorker.register("/service-worker.js").catch(e=>console.log("SW failed:",e));});}</script></head>
+<body>
+<div class="wrap">
+
+<!-- ===== HERO ===== -->
+<div class="hero">
+  <div class="eyebrow">Flight 1 of 5 · Approximately 1 hour</div>
+  <h1>The Flint Hills <em>Photo Tour</em></h1>
+  <p class="lede">A relaxed VFR loop east into the Flint Hills to practice GTN flight plan basics, ADS-B traffic awareness, and your first landing at an unfamiliar field.</p>
+  <div class="crew">
+    <div class="crew-pill"><div class="crew-avatar b">B</div><span>Brenda</span><span class="crew-role">· Pilot in Command</span></div>
+    <div class="crew-pill"><div class="crew-avatar">C</div><span>Chris</span><span class="crew-role">· Right seat · Avionics</span></div>
+  </div>
+</div>
+
+<!-- ===== ROUTE SUMMARY ===== -->
+<div class="toc">
+  <div class="toc-title">What's in this playbook</div>
+  <ol>
+    <li><a href="#brief">Pre-flight brief — read this together over coffee</a></li>
+    <li><a href="#phase1">Phase 1 · Cold cockpit setup</a></li>
+    <li><a href="#phase2">Phase 2 · Build the flight plan on the GTN</a></li>
+    <li><a href="#phase3">Phase 3 · G3X PFD setup</a></li>
+    <li><a href="#phase4">Phase 4 · Engine start, taxi, run-up</a></li>
+    <li><a href="#phase5">Phase 5 · Departure and climb</a></li>
+    <li><a href="#phase6">Phase 6 · Cruise to Cassoday</a></li>
+    <li><a href="#phase7">Phase 7 · Turn east to El Dorado</a></li>
+    <li><a href="#phase8">Phase 8 · Touch-and-go at KEQA</a></li>
+    <li><a href="#phase9">Phase 9 · Return to 1K1</a></li>
+    <li><a href="#phase10">Phase 10 · Shutdown and debrief</a></li>
+  </ol>
+</div>
+
+<div class="route-summary">
+  <div class="route-row"><div class="route-key">Route</div><div class="route-val">
+    <div class="waypoint-list">
+      <span class="wp">1K1</span><span class="wp-arrow">→</span>
+      <span class="wp">Cassoday area</span><span class="wp-arrow">→</span>
+      <span class="wp">KEQA</span><span class="wp-arrow">→</span>
+      <span class="wp">1K1</span>
+    </div>
+  </div></div>
+  <div class="route-row"><div class="route-key">Distance</div><div class="route-val">~70 NM total</div></div>
+  <div class="route-row"><div class="route-key">Time</div><div class="route-val">~1.1 hours flight, ~1.75 hours block-to-block</div></div>
+  <div class="route-row"><div class="route-key">Altitude</div><div class="route-val">3,500 ft MSL outbound, 4,500 ft return</div></div>
+  <div class="route-row"><div class="route-key">Fuel burn</div><div class="route-val">~17 gal (well under tab fuel)</div></div>
+  <div class="route-row"><div class="route-key">Airspace</div><div class="route-val">Class E throughout, KICT Class C nearby to the west</div></div>
+  <div class="route-row"><div class="route-key">Best weather</div><div class="route-val">Light winds, ceilings 5,000+, visibility 10+, calm morning</div></div>
+</div>
+
+<!-- ===== BRIEF ===== -->
+<h2 id="brief"><span class="h2-eyebrow">Pre-flight</span>The brief</h2>
+<p class="h2-sub">15 minutes over coffee before you go to the hangar. Both of you read this together.</p>
+
+<h3>Why we're doing this flight</h3>
+<p>This is your first <strong>structured avionics flight</strong> in the upgraded panel. Easy route, easy airspace, no time pressure. The goal isn't to fly a hard mission — it's to do every avionics action <em>deliberately</em>, talk about what you're doing, and build the muscle memory.</p>
+
+<h3>Crew responsibilities</h3>
+<p><strong><span class="role-tag brenda">BRENDA</span>Pilot in Command.</strong> Flies the airplane. Makes all aircraft control inputs. Decides whether to go and whether to continue. Makes radio calls.</p>
+<p><strong><span class="role-tag chris">CHRIS</span>Right-seat avionics.</strong> Manages the GTN 750Xi, monitors the G3X EIS strip, watches for traffic on ADS-B, callouts only — no flying inputs. When Brenda asks for something specific, do it and read back what you did.</p>
+
+<div class="callout warn">
+<div class="callout-tag">Crew coordination rule</div>
+<strong>Anytime Chris touches a button on the panel, he says what he's doing out loud.</strong> Example: "Loading Direct-To Three Alpha Uniform." Brenda acknowledges with "Confirmed" or "Wait — finish the turn first." This prevents the right seat from changing something the PIC didn't expect.
+</div>
+
+<h3>Today's three learning goals</h3>
+<ol style="padding-left: 22px;">
+  <li><strong>Build and activate a multi-waypoint flight plan in the GTN</strong> (Chris's job)</li>
+  <li><strong>Use ADS-B traffic on the G3X</strong> — see traffic before ATC calls it (both)</li>
+  <li><strong>Land at an unfamiliar field</strong> (KEQA) and self-announce on CTAF (Brenda)</li>
+</ol>
+
+<div class="callout">
+<div class="callout-tag">Reminder</div>
+<strong>This playbook is not a substitute for your CFI.</strong> Before you fly this without a CFI on board, you both need to be cleared to fly this airplane solo (Brenda) or as legal right-seat (Chris). Verify your specific situation with your instructor and with the AFM/POH for N199RF.
+</div>
+
+<hr class="divider">
+
+<!-- ===== PHASE 1 ===== -->
+<div class="phase-card" id="phase1">
+  <div class="phase-num"><span class="phase-num-circle">1</span>Phase 1</div>
+  <div class="phase-title">Cold cockpit setup</div>
+  <div class="phase-meta">~5 minutes · Both seated · Master OFF</div>
+
+  <p>You've already done the walk-around and you're both buckled in. Master switch is still OFF. The panel is dark.</p>
+
+  <ol class="steps">
+    <li><strong><span class="role-tag both">BOTH</span>Belts, doors, headsets on.</strong> Plug your headsets into the LEMO jacks. Adjust seat and rudder pedals — Brenda first since she's flying.</li>
+    <li><strong><span class="role-tag brenda">BRENDA</span>Check the parking brake is set.</strong> Throttle closed. Mixture rich. Prop full forward. Fuel selector on BOTH.</li>
+    <li><strong><span class="role-tag brenda">BRENDA</span>Master switch ON</strong> (alternator + battery). The panel lights up. Beacon ON.</li>
+    <li><strong><span class="role-tag both">BOTH</span>Watch the avionics boot.</strong> The G3X will go through its self-test (15–30 seconds). The GTN 750Xi shows its boot screen, then the database currency screen.</li>
+    <li><strong><span class="role-tag chris">CHRIS</span>Accept the GTN database currency.</strong> Tap <span class="key">Enter</span> when the GTN asks. You'll see "Self-Test" then the home screen.</li>
+    <li><strong><span class="role-tag chris">CHRIS</span>Verify the G3X is showing the PFD.</strong> If it's showing a different page, swipe right or tap the <span class="key">PFD</span> soft key at the bottom.</li>
+  </ol>
+
+  <div class="callout note">
+    <div class="callout-tag">What "normal" looks like</div>
+    PFD shows zero airspeed, altimeter near field elevation (1,364 ft), heading reasonable for how the airplane is parked, attitude wings-level (or close), EIS strip on the right showing zero RPM and zero fuel flow with all temps low or starting to come up.
+  </div>
+</div>
+
+<!-- ===== PHASE 2 ===== -->
+<div class="phase-card" id="phase2">
+  <div class="phase-num"><span class="phase-num-circle">2</span>Phase 2</div>
+  <div class="phase-title">Build the flight plan on the GTN 750Xi</div>
+  <div class="phase-meta">~5 minutes · Chris does this · Brenda watches and learns</div>
+
+  <p>This is the part you've been chair-flying in the trainer. Now you do it for real. Your route is <code>1K1 → KEQA → 1K1</code> with a Direct-To deviation to fly over the Cassoday area in the middle.</p>
+
+  <ol class="steps">
+    <li><strong>Press the <span class="key">Home</span> button</strong> on the GTN bezel (bottom right). You should see the home screen with the seven main tiles.</li>
+    <li><strong>Tap <span class="key blue">Flight Plan</span></strong> (top-left tile, looks like a route icon).</li>
+    <li><strong>If there's an old flight plan loaded, clear it:</strong> Tap <span class="key">Menu</span> in the top right → <span class="key">Delete Flight Plan</span> → confirm.</li>
+    <li><strong>Tap the first empty waypoint line</strong> (says "Add Waypoint"). An on-screen keyboard appears.</li>
+    <li><strong>Type <code>1K1</code></strong> using the keyboard. As you type, the GTN suggests matches. When you see "1K1 LLOYD STEARMAN FIELD," tap it. Then tap <span class="key green">Enter</span>.</li>
+    <li><strong>Tap the next empty line</strong> below 1K1.</li>
+    <li><strong>Type <code>KEQA</code></strong> → select "KEQA CAPT JACK THOMAS MEML / EL DORADO" → <span class="key green">Enter</span>.</li>
+    <li><strong>Tap the next empty line</strong> below KEQA.</li>
+    <li><strong>Type <code>1K1</code></strong> again → <span class="key green">Enter</span>. You now have a three-waypoint flight plan: 1K1 → KEQA → 1K1.</li>
+    <li><strong>Tap <span class="key">Menu</span> → <span class="key">Activate</span></strong> to activate the flight plan. The magenta line should now appear on the map.</li>
+    <li><strong>Press <span class="key">Home</span> → tap <span class="key blue">Map</span></strong> to see the route on the moving map. You should see two airport icons and a magenta line between them.</li>
+  </ol>
+
+  <div class="callout">
+    <div class="callout-tag">Read it back to Brenda</div>
+    "Flight plan loaded: 1K1 to KEQA to 1K1. Total distance about 22 nautical miles direct each way. Active leg is 1K1 to KEQA, but we'll deviate north toward Cassoday first, then turn back to KEQA."
+  </div>
+
+  <div class="callout note">
+    <div class="callout-tag">Why no Cassoday waypoint?</div>
+    Cassoday is a town, not a navigational fix — it doesn't exist in the GTN database. We'll fly visually toward it using the map, then use Direct-To KEQA when we're ready to turn east. This is a great real-world skill: <em>combining flight plan navigation with visual flying.</em>
+  </div>
+</div>
+
+<!-- ===== PHASE 3 ===== -->
+<div class="phase-card" id="phase3">
+  <div class="phase-num"><span class="phase-num-circle">3</span>Phase 3</div>
+  <div class="phase-title">G3X PFD setup</div>
+  <div class="phase-meta">~3 minutes · Chris does this · Brenda confirms</div>
+
+  <ol class="steps">
+    <li><strong>Set the altimeter.</strong> Tap the <span class="key">BARO</span> field on the PFD (bottom of the altitude tape). Spin to the current altimeter setting from Stearman AWOS (if available) or KICT ATIS on COM2. <em>Verify the altimeter reads field elevation 1,364 ft ± 75 ft.</em></li>
+    <li><strong>Set the altitude bug to 3,500 ft.</strong> Tap the small numeric box above the altimeter tape (the "ALT SEL"). Spin to 3,500. This is your initial cruise altitude.</li>
+    <li><strong>Set the heading bug.</strong> Tap the HDG bug arrow on the HSI. Spin to runway heading (Rwy 17 or 35 at 1K1, depending on wind). For Rwy 35, set 350.</li>
+    <li><strong>Verify HSI source is GPS.</strong> Bottom of HSI should say <code>GPS</code> in magenta. If it says VLOC, tap the source button on the GTN to switch back to GPS.</li>
+    <li><strong>Turn on Synthetic Vision</strong> if not already on (PFD Menu → Synthetic Vision → ON). Useful even on a clear day for terrain awareness.</li>
+    <li><strong>Verify the EIS strip looks normal:</strong> RPM 0, MP near ambient (~29 in), oil temp low, oil pressure 0, fuel quantities reading your actual tank levels, CHTs cold.</li>
+  </ol>
+</div>
+
+<!-- ===== PHASE 4 ===== -->
+<div class="phase-card" id="phase4">
+  <div class="phase-num"><span class="phase-num-circle">4</span>Phase 4</div>
+  <div class="phase-title">Start, taxi, run-up</div>
+  <div class="phase-meta">~8 minutes · Brenda flies it · Chris monitors EIS</div>
+
+  <p>Brenda follows the engine start checklist from your POH. Chris's job during start is to watch the EIS strip.</p>
+
+  <ol class="steps">
+    <li><strong><span class="role-tag brenda">BRENDA</span>Standard 182Q start.</strong> "Clear prop!" out the window before turning the key.</li>
+    <li><strong><span class="role-tag chris">CHRIS</span>Eyes on oil pressure.</strong> The moment the engine fires, watch the oil pressure gauge on the EIS. <strong>It must rise within 30 seconds.</strong> If it doesn't, call out "No oil pressure" and Brenda will shut down.</li>
+    <li><strong><span class="role-tag brenda">BRENDA</span>Throttle to 1,000 RPM.</strong> Let oil warm. Check ammeter charging.</li>
+    <li><strong><span class="role-tag chris">CHRIS</span>Tune COM1 to CTAF.</strong> 1K1 CTAF is on the airport — verify the frequency on the airport diagram. Use GTN: press <span class="key">Home</span> → <span class="key">Flight Plan</span> → tap "1K1" → tap <span class="key">FREQ</span> → tap CTAF to load it into COM1 standby → flip-flop to active.</li>
+    <li><strong><span class="role-tag brenda">BRENDA</span>Self-announce taxi.</strong></li>
+  </ol>
+
+  <div class="radio-call">
+    <div class="speaker">Brenda · COM1</div>
+    "Stearman traffic, Cessna One Niner Niner Romeo Foxtrot, taxiing from <em>[your tiedown]</em> to runway <em>[35 or 17]</em>, Stearman."
+  </div>
+
+  <ol class="steps" start="6">
+    <li><strong><span class="role-tag brenda">BRENDA</span>Taxi to the run-up area.</strong> Standard run-up: brakes, 1700 RPM, mags L/R (max drop 175, differential 50), prop cycle, carb heat check, gauges green, ammeter positive.</li>
+    <li><strong><span class="role-tag chris">CHRIS</span>During run-up, do this:</strong>
+      <ul>
+        <li>Verify GTN flight plan is still loaded (press <span class="key">Home</span> → glance at active waypoint = 1K1, next = KEQA)</li>
+        <li>Squawk: GTX 345R should be on STBY. We'll go to ALT just before takeoff.</li>
+        <li>Tune COM2 (the GTR 205) to Wichita Approach (134.85) so we can monitor.</li>
+      </ul>
+    </li>
+    <li><strong><span class="role-tag brenda">BRENDA</span>Pre-takeoff brief out loud:</strong> "Departing runway 35, climb runway heading to 800 AGL, then right turn northeast to 3,500. V_R 55, V_X 59, V_Y 80. If engine fails before rotation: power idle, brakes, stop on the runway. After rotation below 500: land straight ahead, no turns. Above 500 with engine failure: pick a field, best glide 75."</li>
+  </ol>
+</div>
+
+<!-- ===== PHASE 5 ===== -->
+<div class="phase-card" id="phase5">
+  <div class="phase-num"><span class="phase-num-circle">5</span>Phase 5</div>
+  <div class="phase-title">Departure and climb</div>
+  <div class="phase-meta">~5 minutes</div>
+
+  <ol class="steps">
+    <li><strong><span class="role-tag brenda">BRENDA</span>Final lineup checks:</strong> Flaps as per POH (typically 0° or 10° for normal takeoff), lights on, transponder to <span class="key green">ALT</span> (Chris taps this on the GTN), heading bug on runway heading.</li>
+    <li><strong><span class="role-tag brenda">BRENDA</span>Position and hold, then full power.</strong> Self-announce: "Stearman traffic, One Niner Niner Romeo Foxtrot, departing runway 35, Stearman."</li>
+    <li><strong><span class="role-tag chris">CHRIS</span>Callouts during the roll:</strong> "Airspeed alive" at ~20 KIAS, "V_R" at 55, "Positive rate" once she has it. Watch RPM stays at full and EIS gauges all green.</li>
+    <li><strong><span class="role-tag brenda">BRENDA</span>Climb at V_Y (80 KIAS).</strong> Flaps up by 500 AGL.</li>
+    <li><strong><span class="role-tag brenda">BRENDA</span>At 800 AGL, turn right to ~030° (northeast)</strong> and continue the climb to 3,500 MSL.</li>
+    <li><strong><span class="role-tag chris">CHRIS</span>Once stable in climb, set up the panel for cruise:</strong>
+      <ul>
+        <li>Confirm altitude bug is set to 3,500</li>
+        <li>On the G3X, tap the map page once to glance at the route — confirm magenta line is visible</li>
+        <li>Note the wind direction/speed in the upper-left of the PFD</li>
+      </ul>
+    </li>
+  </ol>
+</div>
+
+<!-- ===== PHASE 6 ===== -->
+<div class="phase-card" id="phase6">
+  <div class="phase-num"><span class="phase-num-circle">6</span>Phase 6</div>
+  <div class="phase-title">Cruise to the Cassoday area</div>
+  <div class="phase-meta">~15 minutes · The fun part</div>
+
+  <p>You're climbing northeast over the prairie. This is the part where you actually <em>look out the window</em>. The Flint Hills are below — rolling tallgrass prairie. The town of Cassoday sits ~25 NM northeast of 1K1, right at the intersection of the Kansas Turnpike (I-35) and K-177.</p>
+
+  <ol class="steps">
+    <li><strong><span class="role-tag brenda">BRENDA</span>Level at 3,500.</strong> Power back to ~22"/2300 RPM (verify against your POH cruise table). Trim for hands-off.</li>
+    <li><strong><span class="role-tag chris">CHRIS</span>Lean the mixture.</strong> Pull mixture back slowly while watching the EIS EGT bar. Stop just rich of peak EGT, or per your CFI's leaning technique for this airplane.</li>
+    <li><strong><span class="role-tag chris">CHRIS</span>Show Brenda the ADS-B traffic display.</strong> On the G3X map, traffic targets appear as diamonds with relative altitude (e.g., "−05" means 500 ft below you). Point out any nearby. <em>Most of the time the area is quiet, but Wichita traffic occasionally passes overhead.</em></li>
+    <li><strong><span class="role-tag chris">CHRIS</span>Demonstrate Direct-To capability.</strong> Press the <span class="key">Direct-To</span> button on the GTN (D→ icon). Type <code>EQA</code> (El Dorado) just as a demo. Look at the distance and bearing. Tap <span class="key">Cancel</span> — don't activate it. You're showing how it works, not changing the route.</li>
+    <li><strong><span class="role-tag brenda">BRENDA</span>Enjoy the view.</strong> Look down. I-35 cuts through the Flint Hills like a knife. Cassoday is the small town at the intersection of I-35 and K-177. Take photos.</li>
+  </ol>
+
+  <div class="callout note">
+    <div class="callout-tag">Why this matters</div>
+    Cruise is where most of the panel work happens in real flying. Trimming the airplane, leaning the mixture, checking the engine, scanning for traffic, looking outside. The autopilot is great but right now we're doing it the old way so you both know how the airplane feels.
+  </div>
+</div>
+
+<!-- ===== PHASE 7 ===== -->
+<div class="phase-card" id="phase7">
+  <div class="phase-num"><span class="phase-num-circle">7</span>Phase 7</div>
+  <div class="phase-title">Turn east to El Dorado (KEQA)</div>
+  <div class="phase-meta">~10 minutes</div>
+
+  <p>You're abeam Cassoday-ish. Time to head to KEQA. El Dorado has <strong>two paved runways</strong> (4/22 and 15/33), each ~5,000 ft long, with PAPI lights on the main runways. Plenty of room for a relaxed approach.</p>
+
+  <ol class="steps">
+    <li><strong><span class="role-tag chris">CHRIS</span>Press <span class="key">Direct-To</span> on the GTN.</strong> Type <code>KEQA</code> → <span class="key green">Enter</span> → <span class="key">Activate</span>. The magenta line redraws toward El Dorado.</li>
+    <li><strong><span class="role-tag chris">CHRIS</span>Read out:</strong> "Direct-To KEQA. Bearing <em>[whatever]</em>, distance <em>[whatever]</em>, ETE <em>[whatever]</em>."</li>
+    <li><strong><span class="role-tag brenda">BRENDA</span>Turn to the new course.</strong> She'll use the magenta course needle on the HSI as her primary reference. Wings level on the line.</li>
+    <li><strong><span class="role-tag chris">CHRIS</span>Tune KEQA CTAF on COM1.</strong> Press <span class="key">Home</span> → <span class="key">Flight Plan</span> → tap KEQA → <span class="key">FREQ</span> → CTAF → load into COM1 standby → flip-flop to active. <em>Verify the frequency against the current chart.</em></li>
+    <li><strong><span class="role-tag chris">CHRIS</span>Get KEQA weather.</strong> Same screen, find the AWOS frequency → load into COM2 standby → listen briefly → note altimeter and wind. <em>KEQA has an on-field AWOS — verify frequency on the chart.</em></li>
+    <li><strong><span class="role-tag brenda">BRENDA</span>Begin descent</strong> when ~5 NM out. Power back to ~17", aim for 500 fpm down. Target traffic pattern altitude at KEQA (field elevation 1,378 + 1,000 = 2,378 MSL).</li>
+    <li><strong><span class="role-tag brenda">BRENDA</span>Self-announce 10 miles out:</strong></li>
+  </ol>
+
+  <div class="radio-call">
+    <div class="speaker">Brenda · COM1</div>
+    "El Dorado traffic, Cessna One Niner Niner Romeo Foxtrot, 10 miles west, inbound for the touch-and-go runway <em>[per wind — 4, 22, 15, or 33]</em>, El Dorado."
+  </div>
+</div>
+
+<!-- ===== PHASE 8 ===== -->
+<div class="phase-card" id="phase8">
+  <div class="phase-num"><span class="phase-num-circle">8</span>Phase 8</div>
+  <div class="phase-title">Touch-and-go at KEQA</div>
+  <div class="phase-meta">~5 minutes</div>
+
+  <ol class="steps">
+    <li><strong><span class="role-tag brenda">BRENDA</span>Enter the pattern</strong> at the appropriate 45° entry to the downwind for the active runway. Pattern altitude is 2,378 MSL.</li>
+    <li><strong><span class="role-tag brenda">BRENDA</span>Standard self-announcements:</strong> "El Dorado traffic, 199RF, midfield <em>[left or right]</em> downwind runway <em>[X]</em>, El Dorado" → base → final.</li>
+    <li><strong><span class="role-tag chris">CHRIS</span>Eyes outside.</strong> Look for traffic. Cross-reference the ADS-B traffic on the G3X, but eyes-outside is primary.</li>
+    <li><strong><span class="role-tag brenda">BRENDA</span>Configure on downwind:</strong> abeam the numbers, power back, flaps 10°, slow to 80. Base: flaps 20°, slow to 70. Final: flaps 30°, slow to 65 (V_REF).</li>
+    <li><strong><span class="role-tag brenda">BRENDA</span>Touch-and-go technique:</strong> Land normally. On the rollout, flaps to 10°, carb heat cold, full power. Climb out at V_Y. Self-announce departing 18 to the north.</li>
+    <li><strong><span class="role-tag chris">CHRIS</span>During the touch-and-go, do not touch any avionics.</strong> Brenda's hands and eyes are 100% on flying. You're a quiet observer here.</li>
+  </ol>
+
+  <div class="callout warn">
+    <div class="callout-tag">Decision point</div>
+    If anything feels off on approach — too high, too fast, traffic in your way, gusts you don't like — Brenda calls <strong>"Going around"</strong> and goes around. No questions, no debate. Full power, climb out, fly the pattern again.
+  </div>
+</div>
+
+<!-- ===== PHASE 9 ===== -->
+<div class="phase-card" id="phase9">
+  <div class="phase-num"><span class="phase-num-circle">9</span>Phase 9</div>
+  <div class="phase-title">Return to 1K1</div>
+  <div class="phase-meta">~10 minutes</div>
+
+  <ol class="steps">
+    <li><strong><span class="role-tag brenda">BRENDA</span>Climbing out of KEQA,</strong> turn west toward 1K1. It's ~22 NM, so you'll have a few minutes of cruise. Climb to 4,500 MSL for the return.</li>
+    <li><strong><span class="role-tag chris">CHRIS</span>Press <span class="key">Direct-To</span> → <code>1K1</code> → <span class="key green">Enter</span> → <span class="key">Activate</span>.</strong> The GTN now navigates you home.</li>
+    <li><strong><span class="role-tag chris">CHRIS</span>Tune 1K1 CTAF on COM1.</strong></li>
+    <li><strong><span class="role-tag brenda">BRENDA</span>Begin descent at ~10 NM out from 1K1.</strong> Pattern altitude at 1K1 is 2,364 MSL (1,000 AGL).</li>
+    <li><strong><span class="role-tag brenda">BRENDA</span>Self-announce inbound to 1K1:</strong></li>
+  </ol>
+
+  <div class="radio-call">
+    <div class="speaker">Brenda · COM1</div>
+    "Stearman traffic, Cessna One Niner Niner Romeo Foxtrot, 5 miles east, inbound for full stop runway <em>[35 or 17]</em>, Stearman."
+  </div>
+
+  <ol class="steps" start="6">
+    <li><strong><span class="role-tag brenda">BRENDA</span>Standard pattern entry, normal landing.</strong> Flaps 30°, V_REF 65 on final.</li>
+    <li><strong><span class="role-tag both">BOTH</span>Clear of the runway.</strong> Flaps up. Carb heat cold. Transponder to STBY. Self-announce clear: "Stearman traffic, 199RF, clear of runway <em>[X]</em>, Stearman."</li>
+  </ol>
+</div>
+
+<!-- ===== PHASE 10 ===== -->
+<div class="phase-card" id="phase10">
+  <div class="phase-num"><span class="phase-num-circle">10</span>Phase 10</div>
+  <div class="phase-title">Shutdown and debrief</div>
+  <div class="phase-meta">~10 minutes · The most important part</div>
+
+  <ol class="steps">
+    <li><strong><span class="role-tag brenda">BRENDA</span>Taxi back to tiedown.</strong> Standard 182Q shutdown: idle 1 minute to cool, avionics off, mixture idle cutoff, mags off, master off.</li>
+    <li><strong><span class="role-tag both">BOTH</span>Log Hobbs and tach.</strong></li>
+    <li><strong><span class="role-tag both">BOTH</span>Tie down and cover.</strong></li>
+    <li><strong><span class="role-tag both">BOTH</span>Walk to the Stearman Field Bar & Grill</strong> or wherever you're going for coffee. <strong>Debrief while it's fresh.</strong></li>
+  </ol>
+
+  <h3>Debrief questions — answer out loud to each other:</h3>
+  <ul>
+    <li>What went well?</li>
+    <li>What surprised you?</li>
+    <li>What did you have to look up that you should have known?</li>
+    <li>Brenda: what avionics step would have helped that Chris didn't do, or did too late?</li>
+    <li>Chris: what flying decision did Brenda make that you didn't expect?</li>
+    <li>What's one thing each of you wants to be smoother on next time?</li>
+  </ul>
+
+  <h3>Log it in the N199RF course app</h3>
+  <p>Open the course on your iPad and mark today's date in your notes. Specifically log: GTN flight plan creation ✓, Direct-To activation ✓, ADS-B traffic awareness ✓, unfamiliar field landing ✓.</p>
+</div>
+
+<hr class="divider">
+
+<!-- ===== APPENDIX ===== -->
+<h2><span class="h2-eyebrow">Reference</span>Quick reference card</h2>
+<p class="h2-sub">Print this. Tape it to your kneeboard.</p>
+
+<h3>Frequencies</h3>
+<ul class="bare">
+  <li><span>1K1 Stearman CTAF</span><span>VERIFY against current chart</span></li>
+  <li><span>KEQA El Dorado CTAF</span><span>VERIFY against current chart</span></li>
+  <li><span>KEQA AWOS</span><span>VERIFY against current chart</span></li>
+  <li><span>Wichita Approach</span><span>134.85</span></li>
+  <li><span>Wichita Departure</span><span>134.80</span></li>
+  <li><span>Emergency</span><span>121.50</span></li>
+</ul>
+
+<h3>N199RF V-speeds (verify POH)</h3>
+<ul class="bare">
+  <li><span>V_R Rotation</span><span>55 KIAS</span></li>
+  <li><span>V_X Best angle</span><span>59 KIAS</span></li>
+  <li><span>V_Y Best rate</span><span>80 KIAS</span></li>
+  <li><span>V_REF Final approach</span><span>65 KIAS</span></li>
+  <li><span>Best glide</span><span>75 KIAS</span></li>
+  <li><span>V_NE Never exceed</span><span>176 KIAS</span></li>
+</ul>
+
+<h3>Airport quick reference</h3>
+<ul class="bare">
+  <li><span>1K1 elevation</span><span>1,364 ft</span></li>
+  <li><span>1K1 pattern altitude</span><span>2,364 MSL</span></li>
+  <li><span>KEQA elevation</span><span>1,378 ft</span></li>
+  <li><span>KEQA pattern altitude</span><span>2,378 MSL</span></li>
+  <li><span>KEQA runways</span><span>4/22 and 15/33 · both paved · PAPI</span></li>
+  <li><span>KEQA note</span><span>Avoid flight over prison N of airport</span></li>
+</ul>
+
+<hr class="divider">
+
+<div class="callout">
+<div class="callout-tag">Next flight</div>
+<strong>Flight 2: KICT Class C Familiarization.</strong> Brenda flies, Chris on radios and avionics. You'll request flight following, transit Class C, and either touch-and-go or full stop at Eisenhower. Same playbook format — ask me to build it when you're ready.
+</div>
+
+</div>
+</body>
+</html>

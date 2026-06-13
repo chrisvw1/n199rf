@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>GFC 500 Autopilot · N199RF Reference</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #FBFBFD; --surface: #FFFFFF; --surface-2: #F5F5F7;
+  --ink: #1D1D1F; --ink-2: #424245; --ink-3: #86868B;
+  --line: #D2D2D7; --line-2: #E8E8ED;
+  --accent: #0071E3; --green: #34C759; --orange: #FF9500; --red: #FF3B30; --purple: #5856D6;
+  --shadow: 0 4px 16px rgba(0,0,0,0.06);
+  --shadow-lg: 0 12px 40px rgba(0,0,0,0.08);
+  --radius: 14px; --radius-lg: 22px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+body { background: var(--bg); color: var(--ink); font-family: 'Inter', -apple-system, sans-serif; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+.wrap { max-width: 900px; margin: 0 auto; padding: 40px 24px 80px; }
+
+/* HERO */
+.hero { text-align: center; padding: 24px 0 48px; border-bottom: 1px solid var(--line-2); margin-bottom: 48px; }
+.eyebrow { font-size: 12px; font-weight: 600; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 14px; }
+h1 { font-family: 'Fraunces', serif; font-size: clamp(36px, 6vw, 58px); font-weight: 400; letter-spacing: -0.03em; line-height: 1.05; margin-bottom: 18px; }
+h1 em { font-style: italic; color: var(--ink-2); font-weight: 300; }
+.lede { color: var(--ink-2); font-size: 17px; max-width: 620px; margin: 0 auto; }
+
+/* TABS */
+.tabs { display: flex; gap: 4px; background: var(--surface-2); padding: 4px; border-radius: 12px; margin-bottom: 32px; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+.tabs::-webkit-scrollbar { display: none; }
+.tab { flex: 1; min-width: max-content; padding: 10px 18px; border: none; background: transparent; font-family: inherit; font-size: 14px; font-weight: 500; color: var(--ink-2); border-radius: 8px; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
+.tab.active { background: var(--surface); color: var(--ink); box-shadow: 0 1px 2px rgba(0,0,0,0.04); }
+
+.view { display: none; }
+.view.active { display: block; animation: fadeIn 0.3s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+h2 { font-family: 'Fraunces', serif; font-size: 30px; font-weight: 500; letter-spacing: -0.02em; margin: 48px 0 8px; line-height: 1.2; }
+h3 { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 500; letter-spacing: -0.015em; margin: 28px 0 10px; }
+.h2-sub { color: var(--ink-3); font-size: 15px; margin-bottom: 28px; }
+p { margin-bottom: 14px; color: var(--ink-2); }
+strong { color: var(--ink); font-weight: 600; }
+ul:not(.bare) { padding-left: 22px; margin-bottom: 14px; }
+ul:not(.bare) li { color: var(--ink-2); margin-bottom: 6px; }
+
+/* CONTROLLER MOCKUP */
+.controller-section { background: linear-gradient(180deg, #2A2A2D 0%, #1A1A1D 100%); border-radius: var(--radius-lg); padding: 36px 28px; margin: 24px 0 40px; box-shadow: var(--shadow-lg); }
+.controller-label { color: rgba(255,255,255,0.55); font-size: 11px; letter-spacing: 0.12em; font-weight: 600; text-transform: uppercase; text-align: center; margin-bottom: 20px; }
+.controller-caption { color: rgba(255,255,255,0.55); font-size: 12px; text-align: center; font-style: italic; margin-top: 22px; }
+
+.gmc {
+  background: linear-gradient(180deg, #1A1A1D 0%, #0A0A0A 100%);
+  border-radius: 14px; padding: 22px 20px;
+  border: 1px solid rgba(255,255,255,0.06);
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  gap: 14px;
+  max-width: 720px; margin: 0 auto;
+  position: relative;
+}
+.gmc::before {
+  content: 'GARMIN'; position: absolute; top: 6px; left: 50%; transform: translateX(-50%);
+  color: rgba(255,255,255,0.3); font-size: 9px; letter-spacing: 0.15em; font-weight: 700;
+}
+.gmc-btn {
+  background: linear-gradient(180deg, #2A2A2E, #1A1A1E);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 6px; padding: 10px 6px;
+  color: #fff; font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 700;
+  letter-spacing: 0.05em; cursor: pointer; transition: all 0.15s;
+  display: flex; align-items: center; justify-content: center;
+  min-height: 50px; text-align: center; line-height: 1.2;
+  position: relative;
+}
+.gmc-btn:hover { border-color: rgba(64,150,255,0.5); transform: translateY(-1px); background: linear-gradient(180deg, #34343A, #24242A); }
+.gmc-btn.active { background: linear-gradient(180deg, #0077ED, #0058C0); border-color: #0094FF; box-shadow: 0 0 12px rgba(0,150,255,0.4); }
+.gmc-btn.ap { background: linear-gradient(180deg, #2D7A2D, #1F5A1F); border-color: #34C759; }
+.gmc-btn.lvl { background: linear-gradient(180deg, #1466B8, #0D4F8F); border-color: #4A9EFF; color: #fff; }
+.gmc-btn.knob { background: radial-gradient(circle at 30% 30%, #4A4A50, #1A1A1E); border-radius: 50%; min-height: 56px; aspect-ratio: 1; max-width: 56px; margin: 0 auto; font-size: 10px; }
+.gmc-row-label { grid-column: 1/-1; font-size: 9px; color: rgba(255,255,255,0.35); letter-spacing: 0.15em; font-weight: 700; text-transform: uppercase; text-align: center; margin: 8px 0 -4px; }
+
+/* BUTTON DETAILS */
+.btn-detail {
+  background: var(--surface); border: 1px solid var(--line-2); border-radius: var(--radius-lg);
+  padding: 24px 28px; margin-bottom: 16px; scroll-margin-top: 80px;
+}
+.btn-detail-head { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
+.btn-chip {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 6px 14px; background: var(--ink); color: #fff;
+  font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 700;
+  border-radius: 6px; letter-spacing: 0.05em; min-width: 50px;
+}
+.btn-chip.lvl { background: #0077ED; }
+.btn-chip.ap { background: #2D7A2D; }
+.btn-chip.red { background: var(--red); }
+.btn-chip.knob { background: #4A4A50; border-radius: 50%; aspect-ratio: 1; min-width: 36px; padding: 8px; font-size: 10px; }
+.btn-name { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 500; letter-spacing: -0.015em; flex: 1; }
+.btn-axis { font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 4px; letter-spacing: 0.05em; background: var(--surface-2); color: var(--ink-2); text-transform: uppercase; }
+.btn-axis.lat { background: #EAF2FB; color: #0071E3; }
+.btn-axis.vert { background: #F5E8FC; color: #5856D6; }
+.btn-detail-body { color: var(--ink-2); font-size: 15px; line-height: 1.65; margin-bottom: 14px; }
+.btn-detail-body strong { color: var(--ink); }
+.btn-detail-extras { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0; border: 1px solid var(--line-2); border-radius: 10px; overflow: hidden; }
+.btn-detail-extra { padding: 12px 14px; border-right: 1px solid var(--line-2); }
+.btn-detail-extra:last-child { border-right: 0; }
+.btn-detail-extra-label { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 4px; }
+.btn-detail-extra-value { font-size: 14px; color: var(--ink); font-weight: 500; }
+.btn-detail-extra.green { background: #F0FBF4; }
+.btn-detail-extra.green .btn-detail-extra-label { color: var(--green); }
+
+/* SCENARIO CARDS */
+.scenario {
+  background: var(--surface); border: 1px solid var(--line-2); border-radius: var(--radius-lg);
+  padding: 28px; margin-bottom: 20px;
+}
+.scenario-num { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 12px; font-size: 12px; font-weight: 700; letter-spacing: 0.1em; color: var(--accent); text-transform: uppercase; }
+.scenario-num-circle { width: 28px; height: 28px; border-radius: 50%; background: var(--accent); color: #fff; display: inline-flex; align-items: center; justify-content: center; font-family: 'Fraunces', serif; font-size: 14px; font-weight: 500; }
+.scenario-title { font-family: 'Fraunces', serif; font-size: 26px; font-weight: 500; letter-spacing: -0.02em; margin-bottom: 4px; }
+.scenario-when { color: var(--ink-3); font-size: 13px; margin-bottom: 20px; font-weight: 500; }
+.scenario-context { background: var(--surface-2); border-radius: 10px; padding: 16px 18px; margin-bottom: 18px; font-size: 14px; color: var(--ink-2); line-height: 1.55; border-left: 3px solid var(--accent); }
+.scenario-context strong { color: var(--ink); }
+
+.steps { counter-reset: step; list-style: none; padding: 0; }
+.steps > li {
+  counter-increment: step; padding-left: 52px; position: relative;
+  margin-bottom: 16px; min-height: 36px;
+}
+.steps > li::before {
+  content: counter(step); position: absolute; left: 0; top: 0;
+  width: 32px; height: 32px; border-radius: 50%; background: var(--ink); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Fraunces', serif; font-weight: 500; font-size: 14px;
+}
+.steps li strong { color: var(--ink); }
+
+.press { display: inline-block; padding: 3px 9px; border-radius: 6px; background: var(--ink); color: #fff; font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.05em; margin: 0 2px; }
+.press.lvl { background: #0077ED; }
+.press.ap { background: #2D7A2D; }
+.press.red { background: var(--red); }
+
+.annunciator { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; background: var(--ink); color: #34C759; border-radius: 4px; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.05em; }
+.annunciator.armed { color: #fff; }
+.annunciator.captured { color: #34C759; }
+
+/* CALLOUTS */
+.callout { padding: 18px 22px; border-radius: var(--radius); margin: 16px 0; font-size: 14px; line-height: 1.55; border-left: 3px solid var(--accent); background: #EAF2FB; color: var(--ink-2); }
+.callout strong { color: var(--ink); }
+.callout-tag { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; color: var(--accent); text-transform: uppercase; margin-bottom: 6px; }
+.callout.warn { background: #FFF8EF; border-left-color: var(--orange); }
+.callout.warn .callout-tag { color: var(--orange); }
+.callout.danger { background: #FFF1F0; border-left-color: var(--red); }
+.callout.danger .callout-tag { color: var(--red); }
+.callout.note { background: #F0FBF4; border-left-color: var(--green); }
+.callout.note .callout-tag { color: var(--green); }
+
+/* MODE TABLES */
+.mode-grid { display: grid; grid-template-columns: 1fr; gap: 0; border: 1px solid var(--line-2); border-radius: var(--radius); overflow: hidden; margin: 18px 0; }
+.mode-row { display: grid; grid-template-columns: 90px 1fr; gap: 16px; padding: 14px 18px; border-bottom: 1px solid var(--line-2); align-items: baseline; }
+.mode-row:last-child { border-bottom: 0; }
+.mode-row:nth-child(even) { background: var(--surface-2); }
+.mode-key { font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 700; color: var(--ink); letter-spacing: 0.04em; }
+.mode-desc { color: var(--ink-2); font-size: 14px; line-height: 1.5; }
+
+/* QUICK REFERENCE */
+.qref-card {
+  background: var(--surface); border: 1px solid var(--line-2);
+  border-radius: var(--radius-lg); padding: 24px 28px; margin-bottom: 16px;
+}
+.qref-title { font-family: 'Fraunces', serif; font-size: 20px; font-weight: 500; letter-spacing: -0.01em; margin-bottom: 14px; }
+.qref-list { display: grid; gap: 8px; }
+.qref-item { display: grid; grid-template-columns: 90px 1fr; gap: 14px; padding: 8px 0; border-bottom: 1px solid var(--line-2); align-items: baseline; }
+.qref-item:last-child { border-bottom: 0; }
+.qref-key { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 700; color: var(--ink); letter-spacing: 0.05em; }
+.qref-val { color: var(--ink-2); font-size: 14px; line-height: 1.5; }
+
+@media (max-width: 640px) {
+  .gmc { grid-template-columns: 1fr 1fr 1fr; gap: 10px; padding: 16px; }
+  .scenario { padding: 22px; }
+  .steps > li { padding-left: 44px; }
+  .btn-detail { padding: 20px; }
+}
+</style>
+<link rel="manifest" href="/manifest.json"><meta name="theme-color" content="#0071E3"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="apple-mobile-web-app-title" content="N199RF"><script>if("serviceWorker" in navigator){window.addEventListener("load",()=>{navigator.serviceWorker.register("/service-worker.js").catch(e=>console.log("SW failed:",e));});}</script></head>
+<body>
+<div class="wrap">
+
+<div class="hero">
+  <div class="eyebrow">N199RF · Autopilot reference</div>
+  <h1>The GFC 500</h1>
+  <p class="lede">A complete reference for the Garmin GFC 500 autopilot and the GMC 507 mode controller in your 182Q. Tap any tab to switch between the visual controller, button-by-button reference, real flight scenarios, and quick reference.</p>
+</div>
+
+<!-- TABS -->
+<div class="tabs">
+  <button class="tab active" data-view="overview">Overview</button>
+  <button class="tab" data-view="controller">Controller</button>
+  <button class="tab" data-view="buttons">Every button</button>
+  <button class="tab" data-view="scenarios">Scenarios</button>
+  <button class="tab" data-view="qref">Quick reference</button>
+</div>
+
+<!-- ====== OVERVIEW ====== -->
+<section class="view active" id="view-overview">
+  <h2>What you're working with</h2>
+  <p class="h2-sub">A two-axis autopilot with yaw damper, mode controller, and direct integration with your Garmin glass panel.</p>
+
+  <p>The <strong>GFC 500</strong> is the autopilot itself — three servos under the panel and behind the firewall (roll, pitch, pitch-trim), plus an optional yaw-damper servo. You'll never see those. What you interact with is the <strong>GMC 507</strong> mode controller — the panel of buttons and a knob to the right of your G3X.</p>
+
+  <p>The autopilot has <strong>two independent axes:</strong></p>
+  <ul>
+    <li><strong>Lateral</strong> (left/right) — controls where the airplane is pointing or tracking</li>
+    <li><strong>Vertical</strong> (up/down) — controls altitude, climb, descent</li>
+  </ul>
+  <p>You can run them in different modes simultaneously. For example: <em>NAV laterally</em> (following the GPS course) + <em>ALT vertically</em> (holding altitude). That's a cruise configuration. Or <em>HDG laterally</em> + <em>VS vertically</em> for a heading-and-vertical-speed climb to altitude.</p>
+
+  <h3>The three rules</h3>
+  <div class="callout">
+    <div class="callout-tag">Rule 1</div>
+    <strong>The autopilot is a tool, not a co-pilot.</strong> It flies what you tell it to fly. If you set the wrong altitude bug, it climbs to the wrong altitude. If you press NAV without a flight plan loaded, it does nothing useful. You are always the pilot in command.
+  </div>
+  <div class="callout warn">
+    <div class="callout-tag">Rule 2</div>
+    <strong>Trim before you engage.</strong> The autopilot expects a stable, trimmed airplane. If you engage it while you're holding back-pressure or wing-low, it inherits that imbalance and fights to correct. Always trim first.
+  </div>
+  <div class="callout danger">
+    <div class="callout-tag">Rule 3</div>
+    <strong>Know how to turn it off — instantly.</strong> The red <span class="press red">AP DISC</span> button on the yoke is your immediate kill switch. Press it any time the airplane is doing something you don't understand or didn't expect. Disconnect first, troubleshoot second.
+  </div>
+
+  <h3>Lateral modes (left-right)</h3>
+  <div class="mode-grid">
+    <div class="mode-row"><div class="mode-key">ROL</div><div class="mode-desc"><strong>Roll hold</strong> — default when you engage AP. Wings level. Use when you just want it to stop flying for a minute.</div></div>
+    <div class="mode-row"><div class="mode-key">HDG</div><div class="mode-desc"><strong>Heading mode</strong> — follows the heading bug on your PFD. You spin the bug, airplane turns.</div></div>
+    <div class="mode-row"><div class="mode-key">TRK</div><div class="mode-desc"><strong>Track mode</strong> — same as HDG but for ground track. Compensates for wind drift automatically.</div></div>
+    <div class="mode-row"><div class="mode-key">NAV</div><div class="mode-desc"><strong>Navigation</strong> — follows the magenta GPS course from the GTN. Sequences waypoints automatically.</div></div>
+    <div class="mode-row"><div class="mode-key">APR</div><div class="mode-desc"><strong>Approach mode</strong> — couples to a loaded approach (GPS, VOR, or ILS). Lateral + vertical guidance to minimums.</div></div>
+    <div class="mode-row"><div class="mode-key">BC</div><div class="mode-desc"><strong>Back course</strong> — flies the back course of a localizer. Niche but available.</div></div>
+  </div>
+
+  <h3>Vertical modes (up-down)</h3>
+  <div class="mode-grid">
+    <div class="mode-row"><div class="mode-key">PIT</div><div class="mode-desc"><strong>Pitch hold</strong> — default when you engage AP. Holds whatever pitch attitude you had at engagement.</div></div>
+    <div class="mode-row"><div class="mode-key">ALT</div><div class="mode-desc"><strong>Altitude hold</strong> — holds current altitude. The most-used vertical mode.</div></div>
+    <div class="mode-row"><div class="mode-key">VS</div><div class="mode-desc"><strong>Vertical speed</strong> — climbs or descends at a fixed feet-per-minute rate set with the V/S knob.</div></div>
+    <div class="mode-row"><div class="mode-key">IAS</div><div class="mode-desc"><strong>Airspeed hold</strong> — climbs or descends to maintain a target airspeed. Best for climbs (engine can't overspeed).</div></div>
+    <div class="mode-row"><div class="mode-key">VNV</div><div class="mode-desc"><strong>VNAV</strong> — vertical navigation using altitudes set in the GTN flight plan. Advanced.</div></div>
+    <div class="mode-row"><div class="mode-key">GS</div><div class="mode-desc"><strong>Glideslope</strong> — captured automatically during APR mode. Flies you down the approach.</div></div>
+  </div>
+</section>
+
+<!-- ====== CONTROLLER ====== -->
+<section class="view" id="view-controller">
+  <h2>The GMC 507</h2>
+  <p class="h2-sub">A clean illustration of your mode controller. Tap any button to jump to its detailed reference.</p>
+
+  <div class="controller-section">
+    <div class="controller-label">GMC 507 · Autopilot Mode Controller</div>
+
+    <div class="gmc">
+      <div class="gmc-row-label">— Top row —</div>
+      <button class="gmc-btn" onclick="goToButton('hdg')">HDG<br>TRK</button>
+      <button class="gmc-btn" onclick="goToButton('nav')">NAV</button>
+      <button class="gmc-btn" onclick="goToButton('apr')">APR</button>
+      <button class="gmc-btn" onclick="goToButton('alt')">ALT</button>
+      <button class="gmc-btn" onclick="goToButton('ias')">IAS</button>
+
+      <div class="gmc-row-label">— Middle row —</div>
+      <button class="gmc-btn ap" onclick="goToButton('ap')">AP</button>
+      <button class="gmc-btn" onclick="goToButton('fd')">FD</button>
+      <button class="gmc-btn lvl" onclick="goToButton('lvl')">LVL</button>
+      <button class="gmc-btn" onclick="goToButton('vs')">VS</button>
+      <button class="gmc-btn knob" onclick="goToButton('vsknob')">V/S<br>ALT SEL</button>
+
+      <div class="gmc-row-label">— Bottom row —</div>
+      <button class="gmc-btn" onclick="goToButton('yd')">YD</button>
+      <button class="gmc-btn" onclick="goToButton('fd')">FD</button>
+      <button class="gmc-btn" onclick="goToButton('bc')">BC</button>
+      <button class="gmc-btn" onclick="goToButton('vnv')">VNV</button>
+      <button class="gmc-btn knob" onclick="goToButton('hdgknob')">HDG</button>
+    </div>
+
+    <div class="controller-caption">Layout is representative. Your actual GMC 507 button arrangement may vary slightly. Refer to your airplane.</div>
+  </div>
+
+  <h3>The yoke disconnect</h3>
+  <p>One critical control isn't on the GMC 507 — it's on the pilot's yoke. The <strong>AP DISC button</strong> (red) instantly disconnects the autopilot. Press it any time. It also silences pitch-trim warnings.</p>
+
+  <div class="callout danger">
+    <div class="callout-tag">Memorize the location</div>
+    <strong>The red AP DISC button is on the pilot's yoke, usually on the left horn.</strong> Find it by feel before every flight. You should be able to press it without looking, in turbulence, with eyes closed. This is muscle memory you build deliberately.
+  </div>
+</section>
+
+<!-- ====== BUTTONS ====== -->
+<section class="view" id="view-buttons">
+  <h2>Every button, explained</h2>
+  <p class="h2-sub">Tap any button on the controller (previous tab) to jump here. Each entry includes what it does, when to press it, and what to expect.</p>
+
+  <div id="buttonDetails"></div>
+</section>
+
+<!-- ====== SCENARIOS ====== -->
+<section class="view" id="view-scenarios">
+  <h2>Real-flight scenarios</h2>
+  <p class="h2-sub">Common situations and exactly what to press. Each scenario builds from the previous — start at #1 if new.</p>
+
+  <div id="scenarioContainer"></div>
+</section>
+
+<!-- ====== QUICK REFERENCE ====== -->
+<section class="view" id="view-qref">
+  <h2>Quick reference</h2>
+  <p class="h2-sub">In-flight cheat sheet. The stuff you'll glance at while doing it for real.</p>
+
+  <div class="qref-card">
+    <div class="qref-title">Pre-engagement checklist</div>
+    <div class="qref-list">
+      <div class="qref-item"><div class="qref-key">TRIM</div><div class="qref-val">Airplane trimmed for hands-off flight</div></div>
+      <div class="qref-item"><div class="qref-key">BUGS</div><div class="qref-val">Altitude bug set, heading bug set, baro set</div></div>
+      <div class="qref-item"><div class="qref-key">SOURCE</div><div class="qref-val">HSI source correct (GPS or VLOC as needed)</div></div>
+      <div class="qref-item"><div class="qref-key">MODE</div><div class="qref-val">Know what mode you want before engaging</div></div>
+      <div class="qref-item"><div class="qref-key">ALT</div><div class="qref-val">Above 800 AGL minimum (Garmin spec)</div></div>
+    </div>
+  </div>
+
+  <div class="qref-card">
+    <div class="qref-title">Standard cruise engagement</div>
+    <div class="qref-list">
+      <div class="qref-item"><div class="qref-key">STEP 1</div><div class="qref-val">Set altitude bug to cruise altitude</div></div>
+      <div class="qref-item"><div class="qref-key">STEP 2</div><div class="qref-val">Press AP (engages with ROL + PIT defaults)</div></div>
+      <div class="qref-item"><div class="qref-key">STEP 3</div><div class="qref-val">Press ALT (holds current altitude)</div></div>
+      <div class="qref-item"><div class="qref-key">STEP 4</div><div class="qref-val">Press NAV or HDG (whichever lateral mode you want)</div></div>
+      <div class="qref-item"><div class="qref-key">STEP 5</div><div class="qref-val">Press YD (yaw damper on)</div></div>
+      <div class="qref-item"><div class="qref-key">STEP 6</div><div class="qref-val">Verify green annunciators on PFD</div></div>
+    </div>
+  </div>
+
+  <div class="qref-card">
+    <div class="qref-title">Annunciator decoder</div>
+    <div class="qref-list">
+      <div class="qref-item"><div class="qref-key">GREEN</div><div class="qref-val">Captured — actively flying this mode</div></div>
+      <div class="qref-item"><div class="qref-key">WHITE</div><div class="qref-val">Armed — waiting to intercept or trigger</div></div>
+      <div class="qref-item"><div class="qref-key">YELLOW</div><div class="qref-val">Caution — mode degraded or limit approaching</div></div>
+      <div class="qref-item"><div class="qref-key">FLASHING</div><div class="qref-val">Action required from pilot</div></div>
+    </div>
+  </div>
+
+  <div class="qref-card">
+    <div class="qref-title">If something feels wrong</div>
+    <div class="qref-list">
+      <div class="qref-item"><div class="qref-key">1.</div><div class="qref-val">Press AP DISC (red on yoke) — disconnect immediately</div></div>
+      <div class="qref-item"><div class="qref-key">2.</div><div class="qref-val">Hand-fly the airplane to stable wings-level</div></div>
+      <div class="qref-item"><div class="qref-key">3.</div><div class="qref-val">Identify what mode you were in</div></div>
+      <div class="qref-item"><div class="qref-key">4.</div><div class="qref-val">Re-engage with correct mode if appropriate</div></div>
+      <div class="qref-item"><div class="qref-key">5.</div><div class="qref-val">If still wrong, leave it off, hand-fly the rest</div></div>
+    </div>
+  </div>
+
+  <div class="qref-card">
+    <div class="qref-title">Hard limits — when NOT to use AP</div>
+    <div class="qref-list">
+      <div class="qref-item"><div class="qref-key">BELOW</div><div class="qref-val">800 AGL on departure (Garmin minimum)</div></div>
+      <div class="qref-item"><div class="qref-key">PATTERN</div><div class="qref-val">Traffic pattern — hand-fly always</div></div>
+      <div class="qref-item"><div class="qref-key">FINAL</div><div class="qref-val">Below minimums on an approach — you fly the landing</div></div>
+      <div class="qref-item"><div class="qref-key">TRIM</div><div class="qref-val">When airplane is grossly out of trim</div></div>
+      <div class="qref-item"><div class="qref-key">CLIMBING</div><div class="qref-val">In a stall buffet or near stall warning</div></div>
+      <div class="qref-item"><div class="qref-key">FOCUS</div><div class="qref-val">When you can't monitor it — don't engage and walk away mentally</div></div>
+    </div>
+  </div>
+
+  <div class="qref-card">
+    <div class="qref-title">Memory items — emergency</div>
+    <div class="qref-list">
+      <div class="qref-item"><div class="qref-key">CONFUSED</div><div class="qref-val">Press AP DISC on yoke. Fly the airplane.</div></div>
+      <div class="qref-item"><div class="qref-key">DISORIENTED</div><div class="qref-val">Press LVL — blue button. Wings level, recover.</div></div>
+      <div class="qref-item"><div class="qref-key">RUNAWAY TRIM</div><div class="qref-val">AP DISC, then hold electric trim disconnect, then manual trim</div></div>
+      <div class="qref-item"><div class="qref-key">UNUSUAL ATTITUDE</div><div class="qref-val">LVL button — let it recover, then disconnect and hand-fly</div></div>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<script>
+// ====== Button data ======
+const buttons = [
+  {
+    id: 'ap', label: 'AP', axis: 'engagement', name: 'AP (Autopilot engage)',
+    body: '<p>The master on/off switch for the autopilot. First button you press in any sequence, last one you press when shutting down.</p><p><strong>When you press it:</strong> the autopilot engages in default modes — <strong>ROL</strong> (wings level) laterally and <strong>PIT</strong> (pitch hold) vertically. It will hold whatever pitch attitude you were in at the moment of engagement, so trim first.</p><p><strong>Press again to disconnect.</strong> You\'ll hear an alert tone. The same disconnect happens when you press the red <span class="press red">AP DISC</span> button on the yoke.</p>',
+    extras: [['Default lateral', 'ROL (wings level)'], ['Default vertical', 'PIT (pitch hold)'], ['Disconnect tone', '"Boop boop boop"'], ['Min altitude', '800 ft AGL']],
+  },
+  {
+    id: 'lvl', label: 'LVL', axis: 'emergency', name: 'LVL (Level)',
+    body: '<p>The "save my life" button. When pressed, the autopilot engages, rolls the airplane wings level, and pitches to a safe climb. Designed for spatial disorientation, inadvertent IMC, or any moment where you don\'t trust your own attitude perception.</p><p><strong>You don\'t need to be in cruise or stable to press it.</strong> If you\'re in a graveyard spiral or unusual attitude, LVL will work to recover you. The system will limit bank to 30°, pitch to safe values, and stabilize.</p><p>Once stable, take back control — disconnect with the red yoke button, or fly through the AP, or re-engage in a known mode. LVL is recovery, not cruise.</p>',
+    extras: [['Use when', 'Disoriented, IMC entered, unusual attitude'], ['Limits', 'Bank 30°, pitch stabilized'], ['After recovery', 'Take back control'], ['Annunciator', 'LVL on PFD']],
+  },
+  {
+    id: 'hdg', label: 'HDG/TRK', axis: 'lat', name: 'HDG / TRK (Heading or Track)',
+    body: '<p>Tells the autopilot to fly the heading bug (or track bug) you set on the PFD. Most-used lateral mode after NAV.</p><p><strong>HDG mode:</strong> follows the compass heading you set. Wind drifts you off course but you stay on your set heading.</p><p><strong>TRK mode:</strong> follows the ground track you set. Autopilot crabs into the wind automatically to maintain track. Useful for VFR navigation, less common for IFR.</p><p><strong>To use:</strong> spin the heading bug to where you want, then press <span class="press">HDG</span>. Airplane turns. Spin the bug again to change the heading — autopilot follows.</p>',
+    extras: [['Source', 'Heading bug on PFD'], ['Press to engage', 'HDG button'], ['Annunciator', 'HDG (green)'], ['Pair with', 'ALT, VS, or IAS']],
+  },
+  {
+    id: 'nav', label: 'NAV', axis: 'lat', name: 'NAV (Navigation)',
+    body: '<p>The "follow the magenta line" mode. Couples the autopilot to the active GPS course in the GTN 750Xi.</p><p><strong>Requires a flight plan</strong> or Direct-To active in the GTN. Without a course to follow, NAV mode does nothing useful (it\'ll wait but won\'t track anything).</p><p><strong>To use:</strong> Make sure the GTN shows a magenta course line and that your HSI source is set to GPS. Press <span class="press">NAV</span>. If you\'re already on or near the course, mode goes <span class="annunciator captured">NAV</span> green and starts tracking. If you\'re intercepting from a distance, it shows <span class="annunciator armed">NAV</span> white (armed) until intercept.</p><p><strong>Waypoint sequencing:</strong> As you cross each waypoint, autopilot automatically turns to the next leg. No action needed.</p>',
+    extras: [['Source', 'GTN active flight plan'], ['HSI source', 'Must be GPS'], ['Armed', 'White NAV'], ['Captured', 'Green NAV']],
+  },
+  {
+    id: 'apr', label: 'APR', axis: 'lat', name: 'APR (Approach)',
+    body: '<p>The mode that flies a coupled approach. Lateral + vertical guidance from the loaded approach in the GTN.</p><p><strong>Pre-requisites:</strong></p><ul><li>Approach loaded in the GTN (RNAV, ILS, VOR, etc.)</li><li>HSI source correct for the approach type (GPS for RNAV/GPS, VLOC for ILS/VOR)</li><li>Within range of the approach</li></ul><p><strong>How to use:</strong> Once the approach is loaded and you\'re inbound: press <span class="press">AP</span>, then <span class="press">NAV</span> or <span class="press">APR</span>. APR arms both lateral and vertical guidance. At the FAF (final approach fix), the glideslope/glidepath captures and the airplane descends on the approach to minimums.</p><p><strong>Critical:</strong> At minimums, you fly the landing. Disconnect with <span class="press red">AP DISC</span> at MDA/DA. Autopilot is not certified to land.</p>',
+    extras: [['Requires', 'Approach loaded in GTN'], ['Lateral source', 'GPS or VLOC'], ['Vertical', 'GS or GP captured at FAF'], ['Disconnect at', 'Minimums (MDA/DA)']],
+  },
+  {
+    id: 'bc', label: 'BC', axis: 'lat', name: 'BC (Back Course)',
+    body: '<p>Niche mode for flying a back-course localizer approach. Almost never used in modern GPS-based flying.</p><p>If you ever fly a published back-course approach: tune the localizer frequency, set HSI to VLOC, ensure the front-course is set correctly on the OBS, press <span class="press">BC</span>. The autopilot will fly the reverse-sense localizer needles.</p><p>For the 99% case: ignore this button.</p>',
+    extras: [['Use when', 'Flying back-course localizer'], ['Modern alternative', 'Use an RNAV approach instead']],
+  },
+  {
+    id: 'alt', label: 'ALT', axis: 'vert', name: 'ALT (Altitude hold)',
+    body: '<p>Holds the current altitude. The most-used vertical mode — every cruise leg uses this.</p><p><strong>What it actually does:</strong> When pressed, the autopilot captures whatever altitude you\'re at and holds it. So if you press it at 5,500, it holds 5,500. <strong>Important:</strong> ALT does NOT capture the altitude bug automatically. To climb to the altitude bug, you use VS or IAS first, and ALT auto-captures at the bug.</p><p><strong>Standard cruise sequence:</strong> level off at altitude → press <span class="press">ALT</span> → green ALT annunciator. Done.</p>',
+    extras: [['Holds', 'Current altitude'], ['Annunciator', 'ALT (green)'], ['Auto-capture', 'When climbing/descending into bug']],
+  },
+  {
+    id: 'vs', label: 'VS', axis: 'vert', name: 'VS (Vertical Speed)',
+    body: '<p>Climbs or descends at a fixed rate in feet per minute. Set the rate with the V/S knob (clockwise = climb, counterclockwise = descend).</p><p><strong>Best use:</strong> descending to a lower altitude. Set the V/S knob to -500 fpm, press <span class="press">VS</span>, airplane descends to your bug.</p><p><strong>Less ideal for climbs:</strong> the airplane will hold the rate regardless of airspeed. In a climb, if you set VS too high, the airplane slows down toward stall trying to maintain rate. Use IAS for climbs instead.</p>',
+    extras: [['Set rate', 'V/S knob'], ['Climb', 'Positive value (+500)'], ['Descent', 'Negative value (-500)'], ['Risk', 'Can stall the airplane in climb']],
+  },
+  {
+    id: 'ias', label: 'IAS', axis: 'vert', name: 'IAS (Airspeed hold)',
+    body: '<p>Climbs or descends to maintain a target airspeed. Best mode for climbs — engine power determines rate, not pilot input.</p><p><strong>To climb:</strong> set altitude bug to target altitude, press <span class="press">IAS</span>, set target airspeed with the V/S knob (rotated in IAS context, it changes target speed). Push throttle to climb power. Airplane climbs at that airspeed, captures altitude at the bug.</p><p><strong>Why IAS is safer than VS in climbs:</strong> if performance degrades (loss of power, density altitude), the airplane just climbs slower — it doesn\'t stall. The autopilot always has a known airspeed margin above stall.</p>',
+    extras: [['Best for', 'Climbs'], ['Set airspeed', 'V/S knob (in IAS context)'], ['Annunciator', 'IAS (green)'], ['Stall protection', 'Yes — pitches down if slow']],
+  },
+  {
+    id: 'vnv', label: 'VNV', axis: 'vert', name: 'VNV (Vertical Navigation)',
+    body: '<p>Advanced mode that uses altitude restrictions set in the GTN flight plan to descend automatically. The autopilot will fly the published altitudes at each fix.</p><p><strong>Setup:</strong> In the GTN flight plan, set altitudes at each waypoint where appropriate. Press <span class="press">VNV</span>. The autopilot armed light shows. At the calculated top-of-descent, vertical guidance captures and starts the descent.</p><p><strong>Honest take:</strong> Until you\'re IFR-rated and flying real arrivals, you won\'t use this much. Stick to VS and IAS for now. VNV becomes valuable in complex IFR flying.</p>',
+    extras: [['Requires', 'Altitudes in GTN flight plan'], ['Use', 'IFR arrivals, complex profiles'], ['Skill level', 'Advanced']],
+  },
+  {
+    id: 'fd', label: 'FD', axis: 'guidance', name: 'FD (Flight Director)',
+    body: '<p>The flight director shows you on the PFD where the autopilot wants the airplane to fly — usually as a magenta or green "command bar" or "V-bar." Even when the autopilot is OFF, the flight director can be on, giving you visual guidance to hand-fly precisely.</p><p><strong>Why pilots use FD without AP:</strong> some pilots fly approaches with the FD on but autopilot off. They see the command bars and hand-fly to keep them centered. It\'s like a visual coach for hand-flying.</p><p><strong>Most of the time:</strong> when you press AP, the FD comes on automatically. When you press AP off, the FD stays on. Press FD button to toggle it off if you want a clean PFD.</p>',
+    extras: [['Shows', 'AP guidance commands'], ['Works with', 'AP on or off'], ['Toggle', 'FD button']],
+  },
+  {
+    id: 'yd', label: 'YD', axis: 'engagement', name: 'YD (Yaw Damper)',
+    body: '<p>The fourth servo — a yaw damper that reduces side-to-side oscillations. Makes the airplane fly cleaner, especially in turbulence.</p><p><strong>When to use:</strong> turn it on with the autopilot. Leave it on for all autopilot-on flight. Some pilots also turn it on while hand-flying in turbulence — perfectly fine.</p><p><strong>Quick toggle:</strong> press <span class="press">YD</span> to engage or disengage independently of the autopilot.</p>',
+    extras: [['Function', 'Reduces yaw oscillations'], ['Use', 'On with AP, optional alone'], ['Notice it most', 'In turbulence']],
+  },
+  {
+    id: 'vsknob', label: 'V/S', axis: 'knob', name: 'V/S knob (vertical speed)',
+    body: '<p>The rotary knob on the GMC 507 — its function depends on the active vertical mode:</p><ul><li><strong>In VS mode:</strong> sets the climb/descent rate in fpm</li><li><strong>In IAS mode:</strong> sets the target airspeed</li><li><strong>In ALT mode:</strong> adjusts the altitude target if pressed</li></ul><p><strong>Pull the knob:</strong> on some configurations, pulling the knob sets the altitude pre-selector. Verify with your installation.</p>',
+    extras: [['VS mode', 'Sets fpm (rate)'], ['IAS mode', 'Sets target KIAS'], ['Direction', 'Clockwise = up/faster']],
+  },
+  {
+    id: 'hdgknob', label: 'HDG', axis: 'knob', name: 'HDG knob',
+    body: '<p>Some GMC 507 configurations have a heading knob directly on the controller. Most installations (including most G3X setups) use the heading bug on the PFD instead.</p><p><strong>If yours has one:</strong> turn the knob to set the heading bug. Push to sync to current heading.</p><p><strong>If yours doesn\'t:</strong> set the heading bug via the PFD touchscreen.</p>',
+    extras: [['Function', 'Sets heading bug'], ['Push to', 'Sync to current heading']],
+  },
+];
+
+function renderButtons() {
+  const html = buttons.map(b => `
+    <div class="btn-detail" id="btn-${b.id}">
+      <div class="btn-detail-head">
+        <div class="btn-chip ${b.axis === 'emergency' ? 'lvl' : b.axis === 'engagement' && b.id === 'ap' ? 'ap' : b.axis === 'knob' ? 'knob' : ''}">${b.label}</div>
+        <div class="btn-name">${b.name}</div>
+        <div class="btn-axis ${b.axis === 'lat' ? 'lat' : b.axis === 'vert' ? 'vert' : ''}">${b.axis === 'lat' ? 'Lateral' : b.axis === 'vert' ? 'Vertical' : b.axis === 'engagement' ? 'Engage' : b.axis === 'emergency' ? 'Emergency' : b.axis === 'knob' ? 'Knob' : b.axis === 'guidance' ? 'Guidance' : ''}</div>
+      </div>
+      <div class="btn-detail-body">${b.body}</div>
+      <div class="btn-detail-extras">
+        ${b.extras.map((e, i) => `
+          <div class="btn-detail-extra ${i === 0 ? 'green' : ''}">
+            <div class="btn-detail-extra-label">${e[0]}</div>
+            <div class="btn-detail-extra-value">${e[1]}</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `).join('');
+  document.getElementById('buttonDetails').innerHTML = html;
+}
+
+function goToButton(id) {
+  showView('buttons');
+  setTimeout(() => {
+    const el = document.getElementById('btn-' + id);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 100);
+}
+
+// ====== Scenarios ======
+const scenarios = [
+  {
+    num: 1, title: 'First engagement — cruise', when: 'After takeoff, climbing to cruise altitude, 1,000+ AGL, stable',
+    context: '<strong>Setting:</strong> Departed 1K1, climbing through 2,500 toward 4,500 cruise. Heading 080° toward KEQA. Airplane trimmed, both hands free.',
+    steps: [
+      '<strong>Verify the altitude bug is set to 4,500</strong> on the PFD. If not, tap and spin to 4,500.',
+      '<strong>Verify the heading bug is on your current heading</strong> (080° in this scenario). If you want the AP to hold your current direction, the bug should match the heading.',
+      '<strong>Press</strong> <span class="press ap">AP</span>. Engagement tone plays. Airplane is now under autopilot in <span class="annunciator armed">ROL</span> + <span class="annunciator armed">PIT</span>.',
+      '<strong>Press</strong> <span class="press">IAS</span>. The current airspeed becomes the target. Airplane continues climbing at that airspeed.',
+      '<strong>Press</strong> <span class="press">HDG</span>. <span class="annunciator captured">HDG</span> turns green. Airplane tracks the heading bug.',
+      '<strong>As you approach 4,500</strong>, the AP automatically captures <span class="annunciator captured">ALT</span>. IAS mode drops out. You\'re now in HDG + ALT — standard cruise configuration.',
+      '<strong>Press</strong> <span class="press">YD</span> for yaw damper. Smoother ride.',
+    ],
+  },
+  {
+    num: 2, title: 'Switching to GPS course tracking', when: 'In cruise, want autopilot to follow flight plan instead of heading bug',
+    context: '<strong>Setting:</strong> Flying HDG + ALT toward KEQA on a 080° heading. You realize you should let the GTN navigate instead of hand-setting the heading.',
+    steps: [
+      '<strong>Verify the GTN shows a magenta course line</strong> to KEQA. Active flight plan or Direct-To both work.',
+      '<strong>Verify HSI source is GPS</strong> (bottom of HSI says GPS in magenta). If it says VLOC, you\'ll need to switch source first.',
+      '<strong>Press</strong> <span class="press">NAV</span>. If you\'re already on the course, <span class="annunciator captured">NAV</span> goes green immediately and the autopilot tracks the magenta line.',
+      '<strong>If you\'re off course</strong>, you\'ll see <span class="annunciator armed">NAV</span> white (armed). The autopilot will hold current heading until it intercepts the course, then capture and turn to track.',
+      '<strong>ALT stays in the vertical channel</strong> — you\'re now in NAV + ALT. The autopilot will sequence waypoints automatically.',
+      '<strong>Watch for waypoint turns</strong> — at each waypoint, the AP turns to the next leg. You don\'t do anything.',
+    ],
+  },
+  {
+    num: 3, title: 'Climbing to a higher cruise altitude', when: 'In cruise at 4,500, ATC clears you to 6,500 (or you want to climb VFR for smoother air)',
+    context: '<strong>Setting:</strong> At 4,500 ft, autopilot in NAV + ALT. Want to climb to 6,500.',
+    steps: [
+      '<strong>Set the altitude bug to 6,500</strong>. Tap the bug on the PFD, spin to 6,500.',
+      '<strong>Add climb power</strong> — push throttle to full or climb setting. (AP doesn\'t do throttle.)',
+      '<strong>Press</strong> <span class="press">IAS</span>. Current airspeed becomes target — usually too slow for climb. Spin V/S knob to set target IAS to about 90 KIAS (good 182 climb speed).',
+      '<strong>Airplane pitches up</strong> to maintain 90 KIAS. ALT annunciator goes white (armed at 6,500).',
+      '<strong>At 6,500, ALT captures automatically</strong> — <span class="annunciator captured">ALT</span> green. Airplane levels off.',
+      '<strong>Reduce power back to cruise setting.</strong> Airplane will hold altitude as airspeed builds.',
+    ],
+  },
+  {
+    num: 4, title: 'Descending into your destination', when: '~15-20 NM from destination, need to start coming down for the pattern',
+    context: '<strong>Setting:</strong> At 6,500 cruise, in NAV + ALT, 18 NM east of 1K1 returning home. Pattern altitude at 1K1 is 2,364.',
+    steps: [
+      '<strong>Set the altitude bug to your descent target</strong> — say, 3,000 MSL (above pattern altitude but starting the descent).',
+      '<strong>Spin the V/S knob to -500 fpm</strong> (500 ft per minute descent).',
+      '<strong>Press</strong> <span class="press">VS</span>. <span class="annunciator captured">VS</span> green. Airplane noses over, starts descending at 500 fpm.',
+      '<strong>Reduce throttle</strong> to maintain a reasonable airspeed (not above V_NO). Typical 182 descent: 17-19" MP at descent.',
+      '<strong>At 3,000, ALT captures</strong>. Airplane levels off. Reduce more power if descending further.',
+      '<strong>Disconnect AP for the pattern</strong> — press <span class="press red">AP DISC</span> on the yoke before pattern entry. You hand-fly the pattern, every time.',
+    ],
+  },
+  {
+    num: 5, title: 'The emergency LVL recovery', when: 'You\'ve become disoriented, are in an unusual attitude, or accidentally entered IMC',
+    context: '<strong>Setting:</strong> VFR-rated pilot, day flight, somehow you\'re in cloud or you\'ve lost your spatial reference. Bank angle increasing, altitude changing fast, heart rate spiking.',
+    steps: [
+      '<strong>Press</strong> <span class="press lvl">LVL</span>. Just press it. Don\'t analyze first.',
+      '<strong>Autopilot engages immediately.</strong> Bank reduces to wings level. Pitch stabilizes to a climb attitude.',
+      '<strong>Trust the airplane.</strong> Hands off the controls. Let LVL recover.',
+      '<strong>Once wings level and stable</strong>, take stock: where are you, where\'s a safe heading, what\'s the altitude?',
+      '<strong>Set the heading bug</strong> to a safe direction (back toward VFR, away from terrain, etc.).',
+      '<strong>Press</strong> <span class="press">HDG</span> + <span class="press">ALT</span> to take controlled command of the AP. Or disconnect with <span class="press red">AP DISC</span> and hand-fly.',
+      '<strong>Tell ATC if you have one, or call 121.50.</strong> Help is one radio call away.',
+    ],
+  },
+  {
+    num: 6, title: 'Touch-and-go practice — autopilot OFF', when: 'You\'re doing pattern work at Jabara or El Dorado',
+    context: '<strong>Setting:</strong> Doing touch-and-goes. Autopilot has no place in pattern work — but it\'s worth understanding why and what to do.',
+    steps: [
+      '<strong>Autopilot OFF before entering downwind.</strong> If it\'s on from cruise, press <span class="press red">AP DISC</span> on the yoke.',
+      '<strong>Trim the airplane.</strong> The trim position changes between cruise and approach configs. Re-trim by feel.',
+      '<strong>Fly the pattern by hand.</strong> All pattern work is hand-flown — it\'s where you build stick-and-rudder skill.',
+      '<strong>On the touch-and-go roll</strong>: flaps to 10°, carb heat off, throttle full, prop verified full forward, climb out hand-flown.',
+      '<strong>Once stable above 800 AGL and clean</strong>, re-engage AP if you want to climb back to pattern altitude on autopilot. But honestly: pattern work is hand-flying time. Use it.',
+    ],
+  },
+  {
+    num: 7, title: 'Coupled approach (the killer feature)', when: 'IFR-rated pilot flying an instrument approach',
+    context: '<strong>Setting:</strong> ILS or RNAV approach loaded in the GTN. Inbound to FAF. This scenario assumes you\'re instrument-rated and current. This is the gold-standard use of the GFC 500.',
+    steps: [
+      '<strong>Approach loaded in the GTN</strong>, vectors-to-final or full procedure as cleared.',
+      '<strong>HSI source set correctly</strong>: GPS for RNAV/GPS approach, VLOC for ILS/VOR. Verify the source button on the GTN.',
+      '<strong>Airplane configured</strong>: approach flaps in, gear if applicable, stable airspeed.',
+      '<strong>Press</strong> <span class="press">AP</span> if not already engaged.',
+      '<strong>Press</strong> <span class="press">NAV</span>. Autopilot intercepts the lateral course. <span class="annunciator captured">NAV</span> green.',
+      '<strong>Press</strong> <span class="press">APR</span>. <span class="annunciator armed">APR</span> arms vertical guidance. <span class="annunciator armed">GS</span> or <span class="annunciator armed">GP</span> shows white.',
+      '<strong>At the FAF</strong>, glideslope or glidepath captures: <span class="annunciator captured">GS</span> or <span class="annunciator captured">GP</span> green. Airplane descends on the approach.',
+      '<strong>Reduce power</strong> to maintain target airspeed in the descent. AP handles pitch, you handle power.',
+      '<strong>At minimums (DA or MDA)</strong>: visual on the runway → <span class="press red">AP DISC</span> → hand-fly the landing. No visual → execute missed approach.',
+    ],
+  },
+];
+
+function renderScenarios() {
+  const html = scenarios.map(s => `
+    <div class="scenario">
+      <div class="scenario-num"><span class="scenario-num-circle">${s.num}</span>Scenario ${s.num}</div>
+      <div class="scenario-title">${s.title}</div>
+      <div class="scenario-when">${s.when}</div>
+      <div class="scenario-context">${s.context}</div>
+      <ol class="steps">
+        ${s.steps.map(st => `<li>${st}</li>`).join('')}
+      </ol>
+    </div>
+  `).join('');
+  document.getElementById('scenarioContainer').innerHTML = html;
+}
+
+// ====== Navigation ======
+function showView(v) {
+  document.querySelectorAll('.view').forEach(el => el.classList.remove('active'));
+  document.getElementById('view-' + v).classList.add('active');
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.view === v));
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+document.querySelectorAll('.tab').forEach(t => {
+  t.addEventListener('click', () => showView(t.dataset.view));
+});
+
+// ====== Init ======
+renderButtons();
+renderScenarios();
+</script>
+</body>
+</html>

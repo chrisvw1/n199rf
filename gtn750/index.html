@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GTN 750Xi · N199RF Reference</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #FBFBFD; --surface: #FFFFFF; --surface-2: #F5F5F7;
+  --ink: #1D1D1F; --ink-2: #424245; --ink-3: #86868B;
+  --line: #D2D2D7; --line-2: #E8E8ED;
+  --accent: #0071E3; --green: #34C759; --orange: #FF9500; --red: #FF3B30; --purple: #5856D6;
+  --magenta: #E91E63;
+  --shadow: 0 4px 16px rgba(0,0,0,0.06); --shadow-lg: 0 12px 40px rgba(0,0,0,0.08);
+  --radius: 14px; --radius-lg: 22px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+body { background: var(--bg); color: var(--ink); font-family: 'Inter', -apple-system, sans-serif; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+.wrap { max-width: 900px; margin: 0 auto; padding: 40px 24px 80px; }
+
+.hero { text-align: center; padding: 24px 0 48px; border-bottom: 1px solid var(--line-2); margin-bottom: 48px; }
+.eyebrow { font-size: 12px; font-weight: 600; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 14px; }
+h1 { font-family: 'Fraunces', serif; font-size: clamp(36px, 6vw, 58px); font-weight: 400; letter-spacing: -0.03em; line-height: 1.05; margin-bottom: 18px; }
+h1 em { font-style: italic; color: var(--ink-2); font-weight: 300; }
+.lede { color: var(--ink-2); font-size: 17px; max-width: 620px; margin: 0 auto; }
+
+.tabs { display: flex; gap: 4px; background: var(--surface-2); padding: 4px; border-radius: 12px; margin-bottom: 32px; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+.tabs::-webkit-scrollbar { display: none; }
+.tab { flex: 1; min-width: max-content; padding: 10px 18px; border: none; background: transparent; font-family: inherit; font-size: 14px; font-weight: 500; color: var(--ink-2); border-radius: 8px; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
+.tab.active { background: var(--surface); color: var(--ink); box-shadow: 0 1px 2px rgba(0,0,0,0.04); }
+
+.view { display: none; }
+.view.active { display: block; animation: fadeIn 0.3s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+h2 { font-family: 'Fraunces', serif; font-size: 30px; font-weight: 500; letter-spacing: -0.02em; margin: 48px 0 8px; line-height: 1.2; }
+h3 { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 500; letter-spacing: -0.015em; margin: 28px 0 10px; }
+.h2-sub { color: var(--ink-3); font-size: 15px; margin-bottom: 28px; }
+p { margin-bottom: 14px; color: var(--ink-2); }
+strong { color: var(--ink); font-weight: 600; }
+ul:not(.bare) { padding-left: 22px; margin-bottom: 14px; }
+ul:not(.bare) li { color: var(--ink-2); margin-bottom: 6px; }
+
+/* GTN MOCKUP */
+.gtn-section { background: linear-gradient(180deg, #2A2A2D 0%, #1A1A1D 100%); border-radius: var(--radius-lg); padding: 32px 24px; margin: 24px 0 40px; box-shadow: var(--shadow-lg); }
+.gtn-label { color: rgba(255,255,255,0.55); font-size: 11px; letter-spacing: 0.12em; font-weight: 600; text-transform: uppercase; text-align: center; margin-bottom: 18px; }
+.gtn-caption { color: rgba(255,255,255,0.55); font-size: 12px; text-align: center; font-style: italic; margin-top: 18px; }
+
+.gtn {
+  background: #000; border-radius: 8px;
+  border: 2px solid #2A2A2D;
+  padding: 12px;
+  max-width: 560px; margin: 0 auto;
+  display: flex; flex-direction: column; gap: 8px;
+}
+.gtn-topbar {
+  background: linear-gradient(180deg, #1a1a1a, #0a0a0a);
+  border-radius: 4px; padding: 8px 10px;
+  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;
+  font-family: 'JetBrains Mono', monospace; font-size: 11px;
+  border: 1px solid rgba(255,255,255,0.06);
+}
+.gtn-top-cell { display: flex; flex-direction: column; align-items: center; }
+.gtn-top-label { color: rgba(255,255,255,0.4); font-size: 9px; letter-spacing: 0.08em; font-weight: 700; }
+.gtn-top-val { color: #4DD0E1; font-weight: 700; font-size: 14px; margin-top: 2px; }
+.gtn-top-val.standby { color: rgba(255,255,255,0.5); }
+
+.gtn-screen {
+  background: linear-gradient(180deg, #001428, #000);
+  border: 1px solid rgba(64,150,255,0.2);
+  border-radius: 4px;
+  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px;
+  padding: 12px;
+  min-height: 240px;
+}
+.gtn-tile {
+  background: linear-gradient(180deg, rgba(40,80,140,0.3), rgba(20,40,80,0.2));
+  border: 1px solid rgba(64,150,255,0.25);
+  border-radius: 4px; padding: 12px 8px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  color: #fff; font-size: 11px; font-weight: 600; cursor: pointer; transition: all 0.2s;
+  min-height: 70px; text-align: center;
+}
+.gtn-tile:hover { background: linear-gradient(180deg, rgba(60,120,200,0.4), rgba(30,60,120,0.3)); border-color: rgba(64,200,255,0.6); transform: translateY(-1px); }
+.gtn-tile-icon { font-size: 16px; margin-bottom: 4px; opacity: 0.8; }
+
+.gtn-bezel {
+  background: linear-gradient(180deg, #1A1A1D, #0A0A0A);
+  border-radius: 4px; padding: 8px;
+  display: flex; justify-content: space-between; align-items: center;
+  border: 1px solid rgba(255,255,255,0.06);
+}
+.gtn-knob {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #4A4A50, #1A1A1E);
+  cursor: pointer;
+}
+.gtn-bezel-btns { display: flex; gap: 6px; }
+.gtn-bezel-btn {
+  background: linear-gradient(180deg, #2A2A2E, #1A1A1E);
+  color: #fff; border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 4px; padding: 4px 12px;
+  font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 700;
+  cursor: pointer; letter-spacing: 0.05em;
+}
+.gtn-bezel-btn:hover { border-color: rgba(64,150,255,0.5); }
+.gtn-bezel-btn.dto { background: linear-gradient(180deg, #FF1493, #C2185B); border-color: #FF4081; }
+
+/* FEATURE DETAILS */
+.feat-detail {
+  background: var(--surface); border: 1px solid var(--line-2); border-radius: var(--radius-lg);
+  padding: 24px 28px; margin-bottom: 16px; scroll-margin-top: 80px;
+}
+.feat-head { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
+.feat-chip {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 6px 14px; background: var(--ink); color: #fff;
+  font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 700;
+  border-radius: 6px; letter-spacing: 0.05em; min-width: 60px;
+}
+.feat-chip.magenta { background: var(--magenta); }
+.feat-chip.gps { background: var(--accent); }
+.feat-name { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 500; letter-spacing: -0.015em; flex: 1; }
+.feat-tag { font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 4px; letter-spacing: 0.05em; background: var(--surface-2); color: var(--ink-2); text-transform: uppercase; }
+.feat-body { color: var(--ink-2); font-size: 15px; line-height: 1.65; }
+.feat-body strong { color: var(--ink); }
+.feat-body ol { padding-left: 22px; margin: 8px 0; }
+.feat-body li { margin-bottom: 5px; }
+
+/* SCENARIO CARDS (reused style) */
+.scenario {
+  background: var(--surface); border: 1px solid var(--line-2); border-radius: var(--radius-lg);
+  padding: 28px; margin-bottom: 20px;
+}
+.scenario-num { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 12px; font-size: 12px; font-weight: 700; letter-spacing: 0.1em; color: var(--accent); text-transform: uppercase; }
+.scenario-num-circle { width: 28px; height: 28px; border-radius: 50%; background: var(--accent); color: #fff; display: inline-flex; align-items: center; justify-content: center; font-family: 'Fraunces', serif; font-size: 14px; font-weight: 500; }
+.scenario-title { font-family: 'Fraunces', serif; font-size: 26px; font-weight: 500; letter-spacing: -0.02em; margin-bottom: 4px; }
+.scenario-when { color: var(--ink-3); font-size: 13px; margin-bottom: 20px; font-weight: 500; }
+.scenario-context { background: var(--surface-2); border-radius: 10px; padding: 16px 18px; margin-bottom: 18px; font-size: 14px; color: var(--ink-2); line-height: 1.55; border-left: 3px solid var(--accent); }
+.scenario-context strong { color: var(--ink); }
+
+.steps { counter-reset: step; list-style: none; padding: 0; }
+.steps > li {
+  counter-increment: step; padding-left: 52px; position: relative;
+  margin-bottom: 16px; min-height: 36px;
+}
+.steps > li::before {
+  content: counter(step); position: absolute; left: 0; top: 0;
+  width: 32px; height: 32px; border-radius: 50%; background: var(--ink); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Fraunces', serif; font-weight: 500; font-size: 14px;
+}
+.steps li strong { color: var(--ink); }
+
+.press { display: inline-block; padding: 3px 9px; border-radius: 6px; background: var(--ink); color: #fff; font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.05em; margin: 0 2px; }
+.press.dto { background: var(--magenta); }
+.press.green { background: #34C759; }
+
+.callout { padding: 18px 22px; border-radius: var(--radius); margin: 16px 0; font-size: 14px; line-height: 1.55; border-left: 3px solid var(--accent); background: #EAF2FB; color: var(--ink-2); }
+.callout strong { color: var(--ink); }
+.callout-tag { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; color: var(--accent); text-transform: uppercase; margin-bottom: 6px; }
+.callout.warn { background: #FFF8EF; border-left-color: var(--orange); }
+.callout.warn .callout-tag { color: var(--orange); }
+.callout.note { background: #F0FBF4; border-left-color: var(--green); }
+.callout.note .callout-tag { color: var(--green); }
+.callout.danger { background: #FFF1F0; border-left-color: var(--red); }
+.callout.danger .callout-tag { color: var(--red); }
+
+.qref-card { background: var(--surface); border: 1px solid var(--line-2); border-radius: var(--radius-lg); padding: 24px 28px; margin-bottom: 16px; }
+.qref-title { font-family: 'Fraunces', serif; font-size: 20px; font-weight: 500; letter-spacing: -0.01em; margin-bottom: 14px; }
+.qref-list { display: grid; gap: 8px; }
+.qref-item { display: grid; grid-template-columns: 110px 1fr; gap: 14px; padding: 8px 0; border-bottom: 1px solid var(--line-2); align-items: baseline; }
+.qref-item:last-child { border-bottom: 0; }
+.qref-key { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 700; color: var(--ink); letter-spacing: 0.05em; }
+.qref-val { color: var(--ink-2); font-size: 14px; line-height: 1.5; }
+
+@media (max-width: 640px) {
+  .gtn-screen { grid-template-columns: 1fr 1fr; }
+}
+</style>
+<link rel="manifest" href="/manifest.json"><meta name="theme-color" content="#0071E3"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="apple-mobile-web-app-title" content="N199RF"><script>if("serviceWorker" in navigator){window.addEventListener("load",()=>{navigator.serviceWorker.register("/service-worker.js").catch(e=>console.log("SW failed:",e));});}</script></head>
+<body>
+<div class="wrap">
+
+<div class="hero">
+  <div class="eyebrow">N199RF · Navigator reference</div>
+  <h1>The GTN 750Xi</h1>
+  <p class="lede">A complete reference for your Garmin GTN 750Xi — GPS, NAV, COM, and the brain of your nav stack. Five tabs: overview, the home screen, every key feature, real flight scenarios, and quick reference.</p>
+</div>
+
+<div class="tabs">
+  <button class="tab active" data-view="overview">Overview</button>
+  <button class="tab" data-view="home">Home screen</button>
+  <button class="tab" data-view="features">Features</button>
+  <button class="tab" data-view="scenarios">Scenarios</button>
+  <button class="tab" data-view="qref">Quick reference</button>
+</div>
+
+<!-- OVERVIEW -->
+<section class="view active" id="view-overview">
+  <h2>What you're working with</h2>
+  <p class="h2-sub">The GTN 750Xi is a touchscreen GPS/NAV/COM that combines three radios and a moving-map navigator into one box.</p>
+
+  <p>It's the brain of your nav stack. Everything that involves <em>where you are, where you're going, and who you're talking to</em> on COM1 happens here.</p>
+
+  <h3>What it actually contains</h3>
+  <ul>
+    <li><strong>WAAS GPS</strong> — your primary position source. Approach-certified.</li>
+    <li><strong>NAV radio</strong> — VOR and ILS reception (NAV1)</li>
+    <li><strong>COM radio</strong> — voice communication (COM1)</li>
+    <li><strong>Moving map</strong> — sectional and approach charts, weather, traffic overlays</li>
+    <li><strong>Flight planning</strong> — multi-waypoint routes, procedures, holds</li>
+    <li><strong>Procedure library</strong> — every published SID, STAR, and approach in the database</li>
+    <li><strong>Charts library</strong> — geo-referenced approach plates and airport diagrams</li>
+  </ul>
+
+  <h3>The three things you'll do most</h3>
+  <div class="callout">
+    <div class="callout-tag">1 — Direct-To</div>
+    <strong>Direct-To anywhere.</strong> Press the magenta <span class="press dto">D→</span> button, type an identifier, hit Enter, Activate. Magenta line draws to your destination. The single most-used GTN function.
+  </div>
+  <div class="callout">
+    <div class="callout-tag">2 — Build a flight plan</div>
+    Multi-waypoint route entry on the touchscreen, or import from ForeFlight via the GTX 345R Bluetooth. Activate it and the autopilot can follow it.
+  </div>
+  <div class="callout">
+    <div class="callout-tag">3 — Load an approach</div>
+    From the procedure library, pick your approach type (RNAV, ILS, VOR), select transition, activate. Autopilot in APR mode flies it down to minimums.
+  </div>
+
+  <h3>How you'll interact with it</h3>
+  <p>Your GTN 750Xi is 100% <strong>touchscreen</strong> for navigation but has <strong>physical bezel buttons</strong> for the most-used functions:</p>
+  <ul>
+    <li><strong>HOME</strong> — always takes you back to the seven-tile home screen</li>
+    <li><strong>D→ (Direct-To)</strong> — magenta button, the fastest way to go anywhere</li>
+    <li><strong>MENU</strong> — context-sensitive menus per screen</li>
+    <li><strong>BACK</strong> — back up one level</li>
+    <li><strong>Outer knob</strong> — scrolls lists, zoom level on map</li>
+    <li><strong>Inner knob</strong> — fine adjustment, character entry</li>
+  </ul>
+</section>
+
+<!-- HOME -->
+<section class="view" id="view-home">
+  <h2>The home screen</h2>
+  <p class="h2-sub">Press <span class="press">HOME</span> from anywhere to return here. Tap any tile to jump to that function. Tap a tile in the diagram below to read about it.</p>
+
+  <div class="gtn-section">
+    <div class="gtn-label">GTN 750Xi · Home Screen</div>
+
+    <div class="gtn">
+      <div class="gtn-topbar">
+        <div class="gtn-top-cell"><div class="gtn-top-label">COM</div><div class="gtn-top-val">122.70</div><div class="gtn-top-val standby">134.02</div></div>
+        <div class="gtn-top-cell"><div class="gtn-top-label">XPDR</div><div class="gtn-top-val" style="color:#fff;">1200 ALT</div></div>
+        <div class="gtn-top-cell"><div class="gtn-top-label">NAV</div><div class="gtn-top-val">111.70</div><div class="gtn-top-val standby">112.80</div></div>
+      </div>
+
+      <div class="gtn-screen">
+        <div class="gtn-tile" onclick="goToFeature('map')"><div class="gtn-tile-icon">🗺</div>Map</div>
+        <div class="gtn-tile" onclick="goToFeature('fpl')"><div class="gtn-tile-icon">✈</div>Flight Plan</div>
+        <div class="gtn-tile" onclick="goToFeature('proc')"><div class="gtn-tile-icon">⤵</div>Procedures</div>
+        <div class="gtn-tile" onclick="goToFeature('nrst')"><div class="gtn-tile-icon">📍</div>Nearest</div>
+        <div class="gtn-tile" onclick="goToFeature('wpt')"><div class="gtn-tile-icon">📌</div>Waypoint Info</div>
+        <div class="gtn-tile" onclick="goToFeature('charts')"><div class="gtn-tile-icon">📄</div>Charts</div>
+        <div class="gtn-tile" onclick="goToFeature('traffic')"><div class="gtn-tile-icon">⚠</div>Traffic</div>
+        <div class="gtn-tile" onclick="goToFeature('weather')"><div class="gtn-tile-icon">☁</div>Weather</div>
+        <div class="gtn-tile" onclick="goToFeature('utilities')"><div class="gtn-tile-icon">⚙</div>Utilities</div>
+      </div>
+
+      <div class="gtn-bezel">
+        <div class="gtn-knob"></div>
+        <div class="gtn-bezel-btns">
+          <button class="gtn-bezel-btn" onclick="goToFeature('home')">HOME</button>
+          <button class="gtn-bezel-btn dto" onclick="goToFeature('dto')">D→</button>
+          <button class="gtn-bezel-btn">MENU</button>
+          <button class="gtn-bezel-btn">BACK</button>
+        </div>
+        <div class="gtn-knob"></div>
+      </div>
+    </div>
+
+    <div class="gtn-caption">Illustration of the home screen layout. Tile arrangement may vary slightly with software version.</div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="view" id="view-features">
+  <h2>Every feature, explained</h2>
+  <p class="h2-sub">Tap a tile on the home screen (previous tab) to jump here. Each entry covers what it does, when to use it, and the exact button sequence.</p>
+  <div id="featureDetails"></div>
+</section>
+
+<!-- SCENARIOS -->
+<section class="view" id="view-scenarios">
+  <h2>Real-flight scenarios</h2>
+  <p class="h2-sub">Common GTN tasks, step by step. Practice each in the free Garmin PC Trainer before using them in the airplane.</p>
+  <div id="scenarioContainer"></div>
+</section>
+
+<!-- QREF -->
+<section class="view" id="view-qref">
+  <h2>Quick reference</h2>
+  <p class="h2-sub">In-flight cheat sheet.</p>
+
+  <div class="qref-card">
+    <div class="qref-title">Direct-To anywhere — the fastest possible navigation</div>
+    <div class="qref-list">
+      <div class="qref-item"><div class="qref-key">1.</div><div class="qref-val">Press <span class="press dto">D→</span> (magenta bezel button)</div></div>
+      <div class="qref-item"><div class="qref-key">2.</div><div class="qref-val">Type identifier on keyboard (airport, VOR, fix, GPS waypoint)</div></div>
+      <div class="qref-item"><div class="qref-key">3.</div><div class="qref-val">Tap the result that matches</div></div>
+      <div class="qref-item"><div class="qref-key">4.</div><div class="qref-val">Tap <span class="press green">Activate</span></div></div>
+      <div class="qref-item"><div class="qref-key">RESULT</div><div class="qref-val">Magenta line draws to destination. Active leg in flight plan is now Direct-To.</div></div>
+    </div>
+  </div>
+
+  <div class="qref-card">
+    <div class="qref-title">Build a basic flight plan</div>
+    <div class="qref-list">
+      <div class="qref-item"><div class="qref-key">1.</div><div class="qref-val"><span class="press">HOME</span> → tap <span class="press">Flight Plan</span></div></div>
+      <div class="qref-item"><div class="qref-key">2.</div><div class="qref-val">Menu → Delete Flight Plan (if old one loaded)</div></div>
+      <div class="qref-item"><div class="qref-key">3.</div><div class="qref-val">Tap "Add Waypoint" → type identifier → Enter</div></div>
+      <div class="qref-item"><div class="qref-key">4.</div><div class="qref-val">Repeat for each waypoint in order</div></div>
+      <div class="qref-item"><div class="qref-key">5.</div><div class="qref-val">Menu → <span class="press green">Activate</span></div></div>
+    </div>
+  </div>
+
+  <div class="qref-card">
+    <div class="qref-title">Frequency lookup and tune</div>
+    <div class="qref-list">
+      <div class="qref-item"><div class="qref-key">1.</div><div class="qref-val">In Flight Plan, tap the airport name</div></div>
+      <div class="qref-item"><div class="qref-key">2.</div><div class="qref-val">Tap <span class="press">FREQ</span></div></div>
+      <div class="qref-item"><div class="qref-key">3.</div><div class="qref-val">Tap the frequency you want (e.g., CTAF, AWOS, Tower)</div></div>
+      <div class="qref-item"><div class="qref-key">4.</div><div class="qref-val">Choose: Load to COM standby, NAV standby, or transmit</div></div>
+      <div class="qref-item"><div class="qref-key">5.</div><div class="qref-val">Flip-flop at COM bar at top of GTN to make active</div></div>
+    </div>
+  </div>
+
+  <div class="qref-card">
+    <div class="qref-title">Nearest airport (emergency or diversion)</div>
+    <div class="qref-list">
+      <div class="qref-item"><div class="qref-key">1.</div><div class="qref-val">Press <span class="press">HOME</span> → tap <span class="press">Nearest</span></div></div>
+      <div class="qref-item"><div class="qref-key">2.</div><div class="qref-val">Tap <span class="press">Airport</span> (or VOR, fix, intersection)</div></div>
+      <div class="qref-item"><div class="qref-key">3.</div><div class="qref-val">List sorted by distance — tap to select</div></div>
+      <div class="qref-item"><div class="qref-key">4.</div><div class="qref-val"><span class="press dto">D→</span> to navigate immediately, or load to flight plan</div></div>
+    </div>
+  </div>
+
+  <div class="qref-card">
+    <div class="qref-title">Load an approach</div>
+    <div class="qref-list">
+      <div class="qref-item"><div class="qref-key">1.</div><div class="qref-val">Flight plan must have destination loaded</div></div>
+      <div class="qref-item"><div class="qref-key">2.</div><div class="qref-val">Press <span class="press">HOME</span> → tap <span class="press">Procedures</span></div></div>
+      <div class="qref-item"><div class="qref-key">3.</div><div class="qref-val">Tap <span class="press">Approach</span></div></div>
+      <div class="qref-item"><div class="qref-key">4.</div><div class="qref-val">Pick the approach (RNAV, ILS, VOR)</div></div>
+      <div class="qref-item"><div class="qref-key">5.</div><div class="qref-val">Pick the transition (IAF, vectors, etc.)</div></div>
+      <div class="qref-item"><div class="qref-key">6.</div><div class="qref-val">Tap <span class="press">Load</span> or <span class="press green">Activate</span></div></div>
+    </div>
+  </div>
+
+  <div class="qref-card">
+    <div class="qref-title">Emergency squawk codes (transponder via GTN)</div>
+    <div class="qref-list">
+      <div class="qref-item"><div class="qref-key">7700</div><div class="qref-val">General emergency</div></div>
+      <div class="qref-item"><div class="qref-key">7600</div><div class="qref-val">Lost communications</div></div>
+      <div class="qref-item"><div class="qref-key">7500</div><div class="qref-val">Hijack</div></div>
+      <div class="qref-item"><div class="qref-key">1200</div><div class="qref-val">VFR default</div></div>
+      <div class="qref-item"><div class="qref-key">TUNE</div><div class="qref-val">Tap XPDR field at top of GTN → type code → Enter</div></div>
+    </div>
+  </div>
+
+  <div class="qref-card">
+    <div class="qref-title">When you don't know what frequency to use</div>
+    <div class="qref-list">
+      <div class="qref-item"><div class="qref-key">OPTION 1</div><div class="qref-val">Nearest → Airport → Frequencies</div></div>
+      <div class="qref-item"><div class="qref-key">OPTION 2</div><div class="qref-val">121.50 (emergency, always monitored)</div></div>
+      <div class="qref-item"><div class="qref-key">OPTION 3</div><div class="qref-val">122.20 Flight Service Station</div></div>
+      <div class="qref-item"><div class="qref-key">OPTION 4</div><div class="qref-val">Squawk 7600 lost comm</div></div>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<script>
+const features = [
+  { id: 'dto', label: 'D→', name: 'Direct-To', tag: 'Most-used',
+    body: '<p>The magenta bezel button. The single fastest way to navigate anywhere on the planet.</p><ol><li>Press <span class="press dto">D→</span></li><li>Type an identifier — airport (1K1, KEQA), VOR (ICT), intersection name, or fix</li><li>Tap the matching result</li><li>Tap <span class="press green">Activate</span></li></ol><p>The GTN draws a <strong>magenta line</strong> from your current position to the destination and starts navigating. If you have a flight plan loaded, Direct-To temporarily overrides it — you can return to the flight plan later.</p><p><strong>Cancel Direct-To:</strong> Press D→ again → tap Cancel.</p>' },
+  { id: 'home', label: 'HOME', name: 'Home button', tag: 'Bezel',
+    body: '<p>Always returns you to the seven-tile home screen. If you\'re lost in menus, press HOME to get back to a known state.</p>' },
+  { id: 'map', label: 'MAP', name: 'Moving Map', tag: 'View',
+    body: '<p>Your tactical navigation display — sectional or terrain map showing your position, magenta course line, traffic, weather, and airspace.</p><p><strong>Configure overlays:</strong> Menu → Map Setup → toggle Traffic, Weather, Terrain, Airspace as you like.</p><p><strong>Pan and zoom:</strong> Use the outer knob to zoom, drag with finger to pan. Tap any point on the map to query that location.</p><p><strong>Tap any object</strong> (airport, VOR, traffic target) for details about it.</p>' },
+  { id: 'fpl', label: 'FPL', name: 'Flight Plan', tag: 'Planning',
+    body: '<p>Build, edit, and activate multi-waypoint flight plans.</p><p><strong>Build a new plan:</strong></p><ol><li>HOME → Flight Plan</li><li>Menu → Delete (clear any old plan)</li><li>Tap "Add Waypoint" → type identifier → Enter</li><li>Repeat for each waypoint</li><li>Menu → Activate</li></ol><p><strong>Edit in flight:</strong></p><ul><li>Add a waypoint mid-route: tap the line where you want to insert</li><li>Delete a waypoint: tap it → Delete</li><li>Activate a specific leg: tap the leg → Activate Leg</li></ul><p><strong>Import from ForeFlight:</strong> Build the plan in ForeFlight on iPad, tap "Send to Avionics" — the GTN prompts you to accept.</p>' },
+  { id: 'proc', label: 'PROC', name: 'Procedures', tag: 'Planning',
+    body: '<p>Load published departures, arrivals, and approaches.</p><p><strong>Three procedure types:</strong></p><ul><li><strong>Departure (SID):</strong> structured way to leave a busy airport</li><li><strong>Arrival (STAR):</strong> structured way to enter a busy airport</li><li><strong>Approach:</strong> the procedure to land in instrument conditions</li></ul><p><strong>To load an approach:</strong></p><ol><li>Flight plan must have your destination as the last waypoint</li><li>HOME → Procedures → Approach</li><li>Pick the approach type (RNAV, ILS, VOR, etc.)</li><li>Pick a transition: an IAF (initial approach fix), vectors-to-final, or DME arc</li><li>Tap Load (add to flight plan) or Activate (start flying it now)</li></ol>' },
+  { id: 'nrst', label: 'NRST', name: 'Nearest', tag: 'Emergency',
+    body: '<p>Lists the closest airports, VORs, intersections, fixes, ATC frequencies, and airspace — all sorted by distance.</p><p><strong>Most valuable for:</strong></p><ul><li>Engine emergency — fastest airport in your direction</li><li>Lost frequency — nearest ATC frequency</li><li>Weather diversion — nearby alternates with services</li><li>Sightseeing — what\'s that airport down there?</li></ul><p><strong>Workflow:</strong> HOME → Nearest → pick category → list sorted by distance. Tap an airport for details, runway info, frequencies, and a Direct-To option.</p>' },
+  { id: 'wpt', label: 'WPT', name: 'Waypoint Info', tag: 'Reference',
+    body: '<p>Look up information about any waypoint — airports, VORs, intersections, fixes.</p><p><strong>What you get:</strong></p><ul><li>Identifier, name, type, elevation</li><li>Runways (length, surface, lighting)</li><li>Frequencies (CTAF, Tower, Ground, AWOS, etc.)</li><li>Distance and bearing from your current position</li><li>Airport diagram (if geo-referenced charts loaded)</li></ul><p><strong>Workflow:</strong> HOME → Waypoint Info → type identifier or pick from list.</p>' },
+  { id: 'charts', label: 'CHARTS', name: 'Charts', tag: 'IFR reference',
+    body: '<p>Geo-referenced approach plates, airport diagrams, and SID/STAR charts.</p><p><strong>Critical IFR tool:</strong> when you load an approach, the chart is available for viewing right on the GTN. Your position icon shows on the approach chart, so you can see exactly where you are relative to the procedure.</p><p><strong>Requires:</strong> chart subscription (FliteCharts or ChartView) — verify what Dwayne installed.</p>' },
+  { id: 'traffic', label: 'TRAFFIC', name: 'Traffic', tag: 'Safety',
+    body: '<p>Dedicated traffic display showing other airplanes from ADS-B (via your GTX 345R).</p><p><strong>Targets shown:</strong></p><ul><li><strong>White/cyan diamond</strong> — non-threat traffic</li><li><strong>Yellow diamond</strong> — caution (close in distance and altitude)</li><li><strong>Red square</strong> — traffic alert (collision threat)</li></ul><p><strong>Each target shows:</strong> relative altitude (e.g., -05 = 500 ft below you), direction arrow, sometimes track and altitude trend.</p><p><strong>Remember:</strong> ADS-B only sees airplanes equipped with ADS-B Out. Older airplanes can be invisible. See-and-avoid is primary.</p>' },
+  { id: 'weather', label: 'WEATHER', name: 'Weather', tag: 'Planning',
+    body: '<p>FIS-B weather products via ADS-B In (from your GTX 345R):</p><ul><li><strong>NEXRAD:</strong> precipitation radar overlay</li><li><strong>METARs:</strong> current weather at airports</li><li><strong>TAFs:</strong> terminal forecasts</li><li><strong>AIRMETs / SIGMETs:</strong> weather advisories</li><li><strong>TFRs:</strong> temporary flight restrictions</li><li><strong>Winds aloft:</strong> upper-level winds</li></ul><p><strong>Important limitation:</strong> NEXRAD on ADS-B can be 5-15 minutes old. Don\'t use it to penetrate weather. Use it for strategic awareness, not tactical avoidance.</p>' },
+  { id: 'utilities', label: 'UTILITIES', name: 'Utilities', tag: 'Setup',
+    body: '<p>Calculators, system setup, database info, and configuration.</p><p><strong>Useful tools:</strong></p><ul><li>Fuel planning (range/endurance/wind calc)</li><li>Trip planning (ETE, ETA, fuel burn)</li><li>Density altitude calculator</li><li>Crosswind component calculator</li><li>System settings (units, audio, display)</li><li>Database currency check</li></ul>' },
+];
+
+function renderFeatures() {
+  document.getElementById('featureDetails').innerHTML = features.map(f => `
+    <div class="feat-detail" id="feat-${f.id}">
+      <div class="feat-head">
+        <div class="feat-chip ${f.id === 'dto' ? 'magenta' : f.id === 'fpl' || f.id === 'proc' ? 'gps' : ''}">${f.label}</div>
+        <div class="feat-name">${f.name}</div>
+        <div class="feat-tag">${f.tag}</div>
+      </div>
+      <div class="feat-body">${f.body}</div>
+    </div>
+  `).join('');
+}
+
+function goToFeature(id) {
+  showView('features');
+  setTimeout(() => {
+    const el = document.getElementById('feat-' + id);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 100);
+}
+
+const scenarios = [
+  { num: 1, title: 'Build a flight plan from scratch', when: 'On the ground, before engine start',
+    context: '<strong>Setting:</strong> Sitting in N199RF at 1K1. You want to fly to KEQA with a stop at the Cassoday area, then back. Master on, GTN booted.',
+    steps: [
+      'Press <span class="press">HOME</span> → tap <span class="press">Flight Plan</span>.',
+      'If a previous flight plan is showing, tap <span class="press">Menu</span> → <span class="press">Delete Flight Plan</span>.',
+      'Tap the first empty waypoint line ("Add Waypoint"). On-screen keyboard appears.',
+      'Type <strong>1K1</strong>. As you type, suggestions appear. Tap "1K1 LLOYD STEARMAN FIELD" → <span class="press green">Enter</span>.',
+      'Tap the next empty line. Type <strong>KEQA</strong> → tap "KEQA CAPT JACK THOMAS MEML" → <span class="press green">Enter</span>.',
+      'Tap the next empty line. Type <strong>1K1</strong> → <span class="press green">Enter</span>. (Return leg.)',
+      'Tap <span class="press">Menu</span> → <span class="press green">Activate</span>. The magenta line draws on the map.',
+      'Press <span class="press">HOME</span> → <span class="press">Map</span> to verify the route looks right.',
+    ],
+  },
+  { num: 2, title: 'Direct-To a destination', when: 'In cruise, want to head somewhere new',
+    context: '<strong>Setting:</strong> Cruising at 4,500. Brenda decides she wants to swing by Wichita Eisenhower (KICT) for a touch-and-go.',
+    steps: [
+      'Press <span class="press dto">D→</span> on the bezel.',
+      'Type <strong>KICT</strong> on the keyboard.',
+      'Tap "KICT WICHITA EISENHOWER NATIONAL" from the list.',
+      'Tap <span class="press green">Activate</span>.',
+      'Magenta line redraws toward KICT. ETE and bearing update on the PFD.',
+      'If you\'re on autopilot in NAV mode, it auto-turns toward the new destination.',
+    ],
+  },
+  { num: 3, title: 'Look up frequencies for a destination', when: 'Inbound to an unfamiliar airport',
+    context: '<strong>Setting:</strong> 20 NM out from KEQA, you need to tune CTAF and AWOS.',
+    steps: [
+      'Press <span class="press">HOME</span> → tap <span class="press">Flight Plan</span>.',
+      'Tap "KEQA" in the flight plan list.',
+      'Tap <span class="press">FREQ</span>.',
+      'Frequency list appears — tap the CTAF frequency.',
+      'Choose <span class="press">Load to COM standby</span>.',
+      'At the top of the GTN, flip-flop COM to make it active when ready.',
+      'Repeat for AWOS — tap KEQA → FREQ → AWOS → Load to COM standby (or to COM2 on the GTR 205 manually).',
+    ],
+  },
+  { num: 4, title: 'Use Nearest for engine emergency', when: 'Engine fails or rough — need a runway now',
+    context: '<strong>Setting:</strong> En route at 3,500 ft. Engine starts running rough. You need the nearest airport.',
+    steps: [
+      'Aviate first: pitch for best glide (75 KIAS), trim hands-off.',
+      'Press <span class="press">HOME</span> → tap <span class="press">Nearest</span>.',
+      'Tap <span class="press">Airport</span>. List sorted by distance, with bearing and runway lengths.',
+      'Tap the closest suitable airport.',
+      'Tap <span class="press dto">D→</span> on the airport detail page.',
+      'Tap <span class="press green">Activate</span>. Magenta line points to the runway.',
+      'Look up tower or CTAF frequency from the same screen, tune COM, make a call.',
+      'Aviate, navigate, communicate. In that order.',
+    ],
+  },
+  { num: 5, title: 'Load and fly an approach', when: 'IFR-rated: instrument approach to your destination',
+    context: '<strong>Setting:</strong> 25 NM from KAAO (Jabara), cleared for the RNAV 18 approach.',
+    steps: [
+      'Verify KAAO is the last waypoint in your flight plan. If not, add it.',
+      'Press <span class="press">HOME</span> → tap <span class="press">Procedures</span>.',
+      'Tap <span class="press">Approach</span>.',
+      'Pick "RNAV (GPS) 18" from the list.',
+      'Pick a transition — usually the IAF cleared by ATC (e.g., HIDOW or vectors).',
+      'Tap <span class="press">Load</span> to add to flight plan (don\'t activate yet — fly to the IAF first).',
+      'When ready: Menu → <span class="press green">Activate Approach</span>. Magenta line shows the approach path.',
+      'Verify HSI source is GPS (magenta). On the autopilot: AP, NAV, APR.',
+      'Autopilot flies the approach. You handle power and configure for landing.',
+      'At minimums: AP DISC, visual on runway, land. Or go missed.',
+    ],
+  },
+  { num: 6, title: 'Use ADS-B traffic awareness', when: 'In busier airspace, want to spot traffic before ATC calls it',
+    context: '<strong>Setting:</strong> Departing 1K1, climbing through 2,500. Wichita Class C is to the west, you\'re going east.',
+    steps: [
+      'Glance at the map page — traffic diamonds should appear automatically (if enabled in Map Setup).',
+      'For a dedicated view: press <span class="press">HOME</span> → tap <span class="press">Traffic</span>.',
+      'Range ring shows traffic out to your selected distance (start at 10 NM, can expand).',
+      'Tap a traffic target for altitude, distance, track, and trend.',
+      'If a yellow or red alert appears, eyes outside immediately. See and avoid.',
+      'If alert clears (other airplane diverges), continue normally.',
+    ],
+  },
+  { num: 7, title: 'Get weather en route', when: 'Cross-country VFR, want to check destination weather',
+    context: '<strong>Setting:</strong> 30 NM out from destination, want to confirm conditions are still VFR.',
+    steps: [
+      'Press <span class="press">HOME</span> → tap <span class="press">Weather</span>.',
+      'Tap <span class="press">METAR</span>.',
+      'Type destination identifier (e.g., KEQA) or pick from list.',
+      'Read the most recent METAR — verify ceiling, visibility, wind, altimeter.',
+      'For radar: back out, tap <span class="press">NEXRAD</span> on the map overlay.',
+      'Remember: ADS-B weather can be 5-15 minutes old. Don\'t fly through it tactically. Use for strategic decisions.',
+    ],
+  },
+];
+
+function renderScenarios() {
+  document.getElementById('scenarioContainer').innerHTML = scenarios.map(s => `
+    <div class="scenario">
+      <div class="scenario-num"><span class="scenario-num-circle">${s.num}</span>Scenario ${s.num}</div>
+      <div class="scenario-title">${s.title}</div>
+      <div class="scenario-when">${s.when}</div>
+      <div class="scenario-context">${s.context}</div>
+      <ol class="steps">${s.steps.map(st => `<li>${st}</li>`).join('')}</ol>
+    </div>
+  `).join('');
+}
+
+function showView(v) {
+  document.querySelectorAll('.view').forEach(el => el.classList.remove('active'));
+  document.getElementById('view-' + v).classList.add('active');
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.view === v));
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => showView(t.dataset.view)));
+
+renderFeatures();
+renderScenarios();
+</script>
+</body>
+</html>

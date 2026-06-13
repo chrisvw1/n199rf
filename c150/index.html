@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cessna 150 (1966) Reference · N199RF</title>
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#0071E3">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="C150">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<script>if("serviceWorker" in navigator){window.addEventListener("load",()=>{navigator.serviceWorker.register("/service-worker.js").catch(e=>console.log("SW failed:",e));});}</script>
+<style>
+:root {
+  --bg: #FBFBFD; --surface: #FFFFFF; --surface-2: #F5F5F7;
+  --ink: #1D1D1F; --ink-2: #424245; --ink-3: #86868B;
+  --line: #D2D2D7; --line-2: #E8E8ED;
+  --accent: #0071E3; --green: #34C759; --orange: #FF9500; --red: #FF3B30;
+  --shadow: 0 4px 16px rgba(0,0,0,0.06);
+  --radius: 14px; --radius-lg: 22px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+body { background: var(--bg); color: var(--ink); font-family: 'Inter', -apple-system, sans-serif; line-height: 1.6; -webkit-font-smoothing: antialiased; min-height: 100vh; }
+.wrap { max-width: 860px; margin: 0 auto; padding: 32px 24px 80px; }
+
+.head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 36px; padding-bottom: 24px; border-bottom: 1px solid var(--line-2); }
+.head-back { font-size: 13px; color: var(--ink-3); text-decoration: none; display: flex; align-items: center; gap: 6px; }
+.head-back:hover { color: var(--accent); }
+.head-title { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 500; letter-spacing: -0.015em; }
+.head-meta { font-size: 11px; color: var(--ink-3); font-family: 'JetBrains Mono', monospace; letter-spacing: 0.04em; }
+
+.hero { text-align: center; padding: 24px 0 48px; }
+.eyebrow { font-size: 11px; font-weight: 700; color: var(--accent); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 14px; }
+h1 { font-family: 'Fraunces', serif; font-size: clamp(38px, 6vw, 60px); font-weight: 400; letter-spacing: -0.03em; line-height: 1.05; margin-bottom: 18px; }
+h1 em { font-style: italic; color: var(--ink-2); font-weight: 300; }
+.lede { color: var(--ink-2); font-size: 17px; max-width: 580px; margin: 0 auto; }
+
+h2 { font-family: 'Fraunces', serif; font-size: 28px; font-weight: 500; letter-spacing: -0.02em; margin: 56px 0 6px; }
+h2:first-child { margin-top: 0; }
+.h2-sub { color: var(--ink-3); font-size: 14px; margin-bottom: 24px; }
+
+.card { background: var(--surface); border: 1px solid var(--line-2); border-radius: var(--radius-lg); padding: 28px; margin-bottom: 16px; box-shadow: var(--shadow); }
+
+.kvtable { border: 1px solid var(--line-2); border-radius: var(--radius); overflow: hidden; margin: 8px 0; }
+.kv-row { display: grid; grid-template-columns: 200px 1fr; padding: 14px 18px; border-bottom: 1px solid var(--line-2); align-items: baseline; gap: 14px; }
+.kv-row:last-child { border-bottom: 0; }
+.kv-row:nth-child(even) { background: var(--surface-2); }
+.kv-key { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--accent); letter-spacing: 0.04em; }
+.kv-val { font-size: 14px; color: var(--ink); line-height: 1.55; }
+.kv-val strong { font-weight: 600; }
+.kv-val .mph { color: var(--ink-3); font-size: 12px; font-family: 'JetBrains Mono', monospace; }
+
+.vspeed-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+.vspeed { background: var(--surface-2); border-radius: var(--radius); padding: 18px; border-left: 3px solid var(--accent); }
+.vspeed.red { border-left-color: var(--red); }
+.vspeed.orange { border-left-color: var(--orange); }
+.vspeed.green { border-left-color: var(--green); }
+.vspeed-name { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; color: var(--accent); letter-spacing: 0.06em; margin-bottom: 4px; }
+.vspeed.red .vspeed-name { color: var(--red); }
+.vspeed.orange .vspeed-name { color: var(--orange); }
+.vspeed.green .vspeed-name { color: var(--green); }
+.vspeed-val { font-family: 'Fraunces', serif; font-size: 30px; font-weight: 500; letter-spacing: -0.02em; line-height: 1; margin-bottom: 4px; }
+.vspeed-val small { font-size: 16px; color: var(--ink-3); font-weight: 400; margin-left: 6px; }
+.vspeed-desc { color: var(--ink-2); font-size: 13px; line-height: 1.4; }
+.vspeed-mph { color: var(--ink-3); font-size: 11px; font-family: 'JetBrains Mono', monospace; margin-top: 4px; }
+
+.callout { padding: 16px 20px; border-radius: var(--radius); margin: 14px 0; font-size: 14px; line-height: 1.55; border-left: 3px solid var(--accent); background: #EAF2FB; color: var(--ink-2); }
+.callout-tag { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; color: var(--accent); text-transform: uppercase; margin-bottom: 4px; }
+.callout strong { color: var(--ink); }
+.callout.warn { background: #FFF8EF; border-left-color: var(--orange); }
+.callout.warn .callout-tag { color: var(--orange); }
+.callout.danger { background: #FFF1F0; border-left-color: var(--red); }
+.callout.danger .callout-tag { color: var(--red); }
+.callout.note { background: #F0FBF4; border-left-color: var(--green); }
+.callout.note .callout-tag { color: var(--green); }
+
+.compare { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid var(--line-2); border-radius: var(--radius); overflow: hidden; margin: 8px 0; }
+.compare-head { padding: 12px 18px; background: var(--surface-2); font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); border-bottom: 1px solid var(--line-2); }
+.compare-head:first-child { border-right: 1px solid var(--line-2); }
+.compare-cell { padding: 14px 18px; font-size: 14px; color: var(--ink); border-bottom: 1px solid var(--line-2); }
+.compare-cell:nth-child(odd) { border-right: 1px solid var(--line-2); background: var(--surface-2); font-weight: 600; font-size: 13px; }
+.compare-row:last-child .compare-cell { border-bottom: 0; }
+
+ul { padding-left: 22px; margin: 8px 0 14px; }
+li { color: var(--ink-2); margin-bottom: 6px; }
+strong { color: var(--ink); font-weight: 600; }
+
+@media (max-width: 640px) {
+  .kv-row { grid-template-columns: 1fr; gap: 4px; }
+  .compare { grid-template-columns: 1fr; }
+  .compare-cell:nth-child(odd) { border-right: 0; border-bottom: 1px solid var(--line); padding-bottom: 4px; }
+  .compare-cell:nth-child(even) { padding-top: 4px; padding-bottom: 14px; }
+  .compare-head:first-child { border-right: 0; border-bottom: 1px solid var(--line-2); }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="head">
+  <a href="/" class="head-back">← Reference home</a>
+  <div class="head-title">Cessna 150</div>
+  <div class="head-meta">1966 · 150F</div>
+</div>
+
+<div class="hero">
+  <div class="eyebrow">Trainer · Two-seat single-engine</div>
+  <h1>The <em>1966</em> Cessna 150.</h1>
+  <p class="lede">Quick reference for V-speeds, basic specs, and key differences from your 182Q. Built around the 150F variant — the year with the swept tail introduction.</p>
+</div>
+
+<h2>The airplane</h2>
+<p class="h2-sub">Basic identification and specs</p>
+
+<div class="card">
+  <div class="kvtable">
+    <div class="kv-row"><div class="kv-key">Model</div><div class="kv-val"><strong>Cessna 150F</strong> (1966 model year)</div></div>
+    <div class="kv-row"><div class="kv-key">Type</div><div class="kv-val">Two-seat, high-wing, fixed-tricycle gear, all-metal trainer</div></div>
+    <div class="kv-row"><div class="kv-key">Engine</div><div class="kv-val"><strong>Continental O-200-A</strong> · 100 HP @ 2,750 RPM · 4-cylinder, horizontally opposed, air-cooled, carbureted</div></div>
+    <div class="kv-row"><div class="kv-key">Propeller</div><div class="kv-val"><strong>Fixed-pitch</strong> McCauley · Two-blade · No constant-speed governor</div></div>
+    <div class="kv-row"><div class="kv-key">Fuel</div><div class="kv-val"><strong>100LL avgas</strong> (blue) · 26 gal total · ~22.5 gal usable</div></div>
+    <div class="kv-row"><div class="kv-key">Wingspan</div><div class="kv-val">33 ft 4 in</div></div>
+    <div class="kv-row"><div class="kv-key">Length</div><div class="kv-val">23 ft 9 in</div></div>
+    <div class="kv-row"><div class="kv-key">Height</div><div class="kv-val">8 ft 6 in</div></div>
+    <div class="kv-row"><div class="kv-key">Wing area</div><div class="kv-val">159.5 sq ft</div></div>
+  </div>
+</div>
+
+<h2>V-speeds</h2>
+<p class="h2-sub">From the 1966 Owner's Manual. <strong>Verify against the airplane's actual POH</strong> — early-year POHs used MPH primarily; later updates converted to KIAS.</p>
+
+<div class="vspeed-grid">
+  <div class="vspeed red">
+    <div class="vspeed-name">V_NE — Never exceed</div>
+    <div class="vspeed-val">141<small>KIAS</small></div>
+    <div class="vspeed-desc">Red line. Do not exceed in any condition.</div>
+    <div class="vspeed-mph">162 mph</div>
+  </div>
+  <div class="vspeed orange">
+    <div class="vspeed-name">V_NO — Max structural cruise</div>
+    <div class="vspeed-val">109<small>KIAS</small></div>
+    <div class="vspeed-desc">Yellow arc begins. Caution range — smooth air only.</div>
+    <div class="vspeed-mph">125 mph</div>
+  </div>
+  <div class="vspeed orange">
+    <div class="vspeed-name">V_A — Maneuvering (gross)</div>
+    <div class="vspeed-val">96<small>KIAS</small></div>
+    <div class="vspeed-desc">Full control deflection safe at or below. Decreases with weight.</div>
+    <div class="vspeed-mph">110 mph</div>
+  </div>
+  <div class="vspeed">
+    <div class="vspeed-name">V_FE — Max flap extension</div>
+    <div class="vspeed-val">87<small>KIAS</small></div>
+    <div class="vspeed-desc">Max speed with flaps extended any setting.</div>
+    <div class="vspeed-mph">100 mph</div>
+  </div>
+  <div class="vspeed">
+    <div class="vspeed-name">V_Y — Best rate of climb</div>
+    <div class="vspeed-val">67<small>KIAS</small></div>
+    <div class="vspeed-desc">Maximum altitude gain per minute. Sea level, gross weight.</div>
+    <div class="vspeed-mph">77 mph</div>
+  </div>
+  <div class="vspeed">
+    <div class="vspeed-name">V_X — Best angle of climb</div>
+    <div class="vspeed-val">56<small>KIAS</small></div>
+    <div class="vspeed-desc">Maximum altitude per horizontal distance. Use for obstacle clearance.</div>
+    <div class="vspeed-mph">65 mph</div>
+  </div>
+  <div class="vspeed green">
+    <div class="vspeed-name">V_S1 — Stall, clean</div>
+    <div class="vspeed-val">48<small>KIAS</small></div>
+    <div class="vspeed-desc">Power-off stall, flaps up, gross weight.</div>
+    <div class="vspeed-mph">55 mph</div>
+  </div>
+  <div class="vspeed green">
+    <div class="vspeed-name">V_S0 — Stall, landing config</div>
+    <div class="vspeed-val">42<small>KIAS</small></div>
+    <div class="vspeed-desc">Power-off stall, full flaps (40°), gross weight.</div>
+    <div class="vspeed-mph">48 mph</div>
+  </div>
+</div>
+
+<div class="callout warn" style="margin-top:20px">
+  <div class="callout-tag">Verify with the actual POH</div>
+  Cessna's documentation evolved during 1966. Some 150F airplanes carry POH supplements that adjust these values. Cross-check the airspeed indicator's color arcs and the placards in your specific airframe.
+</div>
+
+<h2>Weights &amp; capacity</h2>
+<p class="h2-sub">The C150 is famously useful-load limited. Plan carefully.</p>
+
+<div class="card">
+  <div class="kvtable">
+    <div class="kv-row"><div class="kv-key">Max gross</div><div class="kv-val"><strong>1,500 lbs</strong></div></div>
+    <div class="kv-row"><div class="kv-key">Typical empty weight</div><div class="kv-val">~975 to 1,025 lbs (varies with equipment)</div></div>
+    <div class="kv-row"><div class="kv-key">Typical useful load</div><div class="kv-val"><strong>~475 to 525 lbs</strong></div></div>
+    <div class="kv-row"><div class="kv-key">Full fuel weight</div><div class="kv-val">22.5 gal × 6 lb/gal = <strong>135 lbs</strong></div></div>
+    <div class="kv-row"><div class="kv-key">Available for occupants + bags</div><div class="kv-val">~340 to 390 lbs with full fuel</div></div>
+    <div class="kv-row"><div class="kv-key">Max baggage</div><div class="kv-val">80 lbs (with rear-seat restriction in utility category)</div></div>
+  </div>
+</div>
+
+<div class="callout danger">
+  <div class="callout-tag">The useful load reality</div>
+  Two average adults (170 lb each = 340) plus full fuel (135) = 475 lbs. That's at or above useful load for most C150s. <strong>You'll often need to reduce fuel below tabs for a two-person flight.</strong> Always run W&B before flight.
+</div>
+
+<h2>Performance</h2>
+
+<div class="card">
+  <div class="kvtable">
+    <div class="kv-row"><div class="kv-key">Cruise speed</div><div class="kv-val"><strong>~100 KTAS</strong> at 75% power, 7,500 ft (115 mph TAS)</div></div>
+    <div class="kv-row"><div class="kv-key">Range</div><div class="kv-val">~340 NM with 45-min reserve at 75% power</div></div>
+    <div class="kv-row"><div class="kv-key">Service ceiling</div><div class="kv-val">~12,650 ft</div></div>
+    <div class="kv-row"><div class="kv-key">Rate of climb (sea level, gross)</div><div class="kv-val">~670 fpm</div></div>
+    <div class="kv-row"><div class="kv-key">Takeoff over 50 ft obstacle</div><div class="kv-val">~1,385 ft (sea level, gross, no wind)</div></div>
+    <div class="kv-row"><div class="kv-key">Landing over 50 ft obstacle</div><div class="kv-val">~1,075 ft (sea level, gross, no wind)</div></div>
+    <div class="kv-row"><div class="kv-key">Fuel burn (75% cruise)</div><div class="kv-val">~5.5 to 6.0 GPH</div></div>
+    <div class="kv-row"><div class="kv-key">Endurance</div><div class="kv-val">~3.5 to 4 hours (full tanks, 75% power, no reserve)</div></div>
+  </div>
+</div>
+
+<h2>Differences from your 182Q</h2>
+<p class="h2-sub">Where the airplanes diverge — what changes when you swap cockpits</p>
+
+<div class="compare">
+  <div class="compare-head">Cessna 150 (1966)</div>
+  <div class="compare-head">Cessna 182Q (N199RF)</div>
+
+  <div class="compare-cell">Engine</div>
+  <div class="compare-cell">Engine</div>
+  <div class="compare-cell">O-200-A · 100 HP · 4 cyl</div>
+  <div class="compare-cell">O-470-U · 230 HP · 6 cyl</div>
+
+  <div class="compare-cell">Propeller</div>
+  <div class="compare-cell">Propeller</div>
+  <div class="compare-cell"><strong>Fixed pitch</strong> — throttle controls RPM directly</div>
+  <div class="compare-cell"><strong>Constant speed</strong> — throttle = MP, prop = RPM</div>
+
+  <div class="compare-cell">Cockpit controls</div>
+  <div class="compare-cell">Cockpit controls</div>
+  <div class="compare-cell">Throttle + mixture only</div>
+  <div class="compare-cell">Throttle + prop + mixture (3 levers)</div>
+
+  <div class="compare-cell">Fuel selector</div>
+  <div class="compare-cell">Fuel selector</div>
+  <div class="compare-cell"><strong>BOTH or OFF</strong> only — no left/right tank selection</div>
+  <div class="compare-cell">BOTH, LEFT, RIGHT, or OFF</div>
+
+  <div class="compare-cell">Fuel capacity (usable)</div>
+  <div class="compare-cell">Fuel capacity (usable)</div>
+  <div class="compare-cell">22.5 gal</div>
+  <div class="compare-cell">~88 gal</div>
+
+  <div class="compare-cell">Gross weight</div>
+  <div class="compare-cell">Gross weight</div>
+  <div class="compare-cell">1,500 lbs</div>
+  <div class="compare-cell">3,100 lbs</div>
+
+  <div class="compare-cell">Cruise speed</div>
+  <div class="compare-cell">Cruise speed</div>
+  <div class="compare-cell">~100 KTAS</div>
+  <div class="compare-cell">~140 KTAS</div>
+
+  <div class="compare-cell">Useful load</div>
+  <div class="compare-cell">Useful load</div>
+  <div class="compare-cell">~500 lbs (tight)</div>
+  <div class="compare-cell">~1,100 lbs (very comfortable)</div>
+
+  <div class="compare-cell">Flap system</div>
+  <div class="compare-cell">Flap system</div>
+  <div class="compare-cell"><strong>Manual lever</strong> — pull handle to extend</div>
+  <div class="compare-cell">Electric — flap switch on panel</div>
+
+  <div class="compare-cell">Max flap deflection</div>
+  <div class="compare-cell">Max flap deflection</div>
+  <div class="compare-cell">40° (early flap models)</div>
+  <div class="compare-cell">30° (electric flap models)</div>
+
+  <div class="compare-cell">Stall speed (V_S0)</div>
+  <div class="compare-cell">Stall speed (V_S0)</div>
+  <div class="compare-cell">42 KIAS</div>
+  <div class="compare-cell">~49 KIAS</div>
+
+  <div class="compare-cell">V_Y best rate</div>
+  <div class="compare-cell">V_Y best rate</div>
+  <div class="compare-cell">67 KIAS</div>
+  <div class="compare-cell">80 KIAS</div>
+
+  <div class="compare-cell">High-performance endorsement</div>
+  <div class="compare-cell">High-performance endorsement</div>
+  <div class="compare-cell">Not required (under 200 HP)</div>
+  <div class="compare-cell">Required (230 HP)</div>
+</div>
+
+<h2>Operational notes</h2>
+<p class="h2-sub">Habit changes when you fly the 150 after flying the 182</p>
+
+<div class="callout warn">
+  <div class="callout-tag">Fixed-pitch prop habits</div>
+  No prop lever to push or pull. <strong>Throttle alone controls everything</strong> — there's nothing to "set high" before landing. RPM rises and falls with airspeed and throttle. Don't reach for the prop control out of muscle memory.
+</div>
+
+<div class="callout warn">
+  <div class="callout-tag">Carb heat in the O-200</div>
+  The O-200 is <strong>highly susceptible to carb ice</strong> — even more than the O-470. Same temperature range (20-70°F with humidity) but smaller engine, easier to ice up. <strong>Apply carb heat before every power reduction for descent and landing.</strong>
+</div>
+
+<div class="callout warn">
+  <div class="callout-tag">Power management</div>
+  100 HP feels noticeably lighter than 230 HP. <strong>Climb rates are modest</strong> (~670 fpm at sea level, less at altitude). Density altitude matters more — Benton on a summer day at gross is a real performance limit, not a theoretical one.
+</div>
+
+<div class="callout note">
+  <div class="callout-tag">The good news</div>
+  <strong>Forgiving handling.</strong> Stall speeds are very low (42 KIAS landing config). Slow approach speeds. Short ground roll. Excellent visibility. The 150 was designed to teach — it does that well.
+</div>
+
+<div class="callout">
+  <div class="callout-tag">Pattern speeds (typical)</div>
+  Downwind: <strong>80 KIAS</strong> · Base: <strong>70 KIAS</strong> · Final: <strong>60-65 KIAS</strong> · Over the fence: <strong>55-60 KIAS</strong>. Compare to your 182Q's roughly 90/80/70/65 pattern.
+</div>
+
+<h2>Pre-flight quick reference</h2>
+
+<div class="card">
+  <div class="kvtable">
+    <div class="kv-row"><div class="kv-key">Oil — minimum</div><div class="kv-val">4 quarts</div></div>
+    <div class="kv-row"><div class="kv-key">Oil — capacity</div><div class="kv-val">6 quarts</div></div>
+    <div class="kv-row"><div class="kv-key">Oil — recommended</div><div class="kv-val">5 quarts for normal ops</div></div>
+    <div class="kv-row"><div class="kv-key">Tire pressure (main)</div><div class="kv-val">21 psi typical (verify placard)</div></div>
+    <div class="kv-row"><div class="kv-key">Tire pressure (nose)</div><div class="kv-val">20 psi typical (verify placard)</div></div>
+    <div class="kv-row"><div class="kv-key">Fuel sumps</div><div class="kv-val">Each wing root + gascolator on belly</div></div>
+    <div class="kv-row"><div class="kv-key">Mag check</div><div class="kv-val">1,700 RPM · Max drop 125 RPM · Max diff 50 RPM between mags</div></div>
+    <div class="kv-row"><div class="kv-key">Carb heat check</div><div class="kv-val">At runup — slight RPM drop (~75-100), engine runs slightly rough = normal</div></div>
+  </div>
+</div>
+
+<div class="callout danger" style="margin-top:24px">
+  <div class="callout-tag">Reminder</div>
+  This is a quick-reference summary, not the POH. <strong>Always defer to the actual airplane's POH and supplements.</strong> 1966 documentation varies between airframes due to STCs, modifications, and POH revisions. When in doubt, the placard wins, then the POH, then this reference.
+</div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,2020 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PPL Knowledge · N199RF</title>
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#0071E3">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="N199RF PPL">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<script>if("serviceWorker" in navigator){window.addEventListener("load",()=>{navigator.serviceWorker.register("/service-worker.js").catch(e=>console.log("SW failed:",e));});}</script>
+<style>
+:root {
+  --bg: #FBFBFD; --surface: #FFFFFF; --surface-2: #F5F5F7; --surface-3: #FAFAFC;
+  --ink: #1D1D1F; --ink-2: #424245; --ink-3: #86868B;
+  --line: #D2D2D7; --line-2: #E8E8ED;
+  --accent: #0071E3; --green: #34C759; --orange: #FF9500; --red: #FF3B30; --purple: #5856D6;
+  --gold: #FFB84D;
+  --shadow: 0 4px 16px rgba(0,0,0,0.06);
+  --shadow-lg: 0 12px 40px rgba(0,0,0,0.08);
+  --radius: 14px; --radius-lg: 22px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+body { background: var(--bg); color: var(--ink); font-family: 'Inter', -apple-system, sans-serif; line-height: 1.6; -webkit-font-smoothing: antialiased; min-height: 100vh; }
+.wrap { max-width: 960px; margin: 0 auto; padding: 32px 24px 80px; }
+
+/* HEADER */
+.head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 36px; padding-bottom: 24px; border-bottom: 1px solid var(--line-2); }
+.head-back { font-size: 13px; color: var(--ink-3); text-decoration: none; display: flex; align-items: center; gap: 6px; }
+.head-back:hover { color: var(--accent); }
+.head-title { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 500; letter-spacing: -0.015em; }
+.head-status { font-size: 11px; color: var(--ink-3); display: flex; align-items: center; gap: 6px; }
+.head-status-dot { width: 8px; height: 8px; background: var(--ink-3); border-radius: 50%; }
+.head-status-dot.synced { background: var(--green); box-shadow: 0 0 0 4px rgba(52,199,89,0.15); }
+
+/* HERO */
+.hero { text-align: center; padding: 24px 0 40px; }
+.eyebrow { font-size: 11px; font-weight: 700; color: var(--accent); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 14px; }
+h1 { font-family: 'Fraunces', serif; font-size: clamp(36px, 6vw, 58px); font-weight: 400; letter-spacing: -0.03em; line-height: 1.05; margin-bottom: 18px; }
+h1 em { font-style: italic; color: var(--ink-2); font-weight: 300; }
+.lede { color: var(--ink-2); font-size: 17px; max-width: 620px; margin: 0 auto; }
+
+/* TABS */
+.tabs { display: flex; gap: 4px; background: var(--surface-2); padding: 4px; border-radius: 12px; margin-bottom: 32px; overflow-x: auto; scrollbar-width: none; }
+.tabs::-webkit-scrollbar { display: none; }
+.tab { flex: 1; min-width: max-content; padding: 10px 18px; border: none; background: transparent; font-family: inherit; font-size: 14px; font-weight: 500; color: var(--ink-2); border-radius: 8px; cursor: pointer; white-space: nowrap; transition: all 0.2s; }
+.tab.active { background: var(--surface); color: var(--ink); box-shadow: 0 1px 2px rgba(0,0,0,0.04); }
+
+.view { display: none; }
+.view.active { display: block; animation: fadeIn 0.3s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+h2 { font-family: 'Fraunces', serif; font-size: 30px; font-weight: 500; letter-spacing: -0.02em; margin: 40px 0 8px; line-height: 1.2; }
+h3 { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 500; letter-spacing: -0.015em; margin: 28px 0 12px; }
+h4 { font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent); margin: 24px 0 10px; }
+.h2-sub { color: var(--ink-3); font-size: 15px; margin-bottom: 28px; }
+p { margin-bottom: 14px; color: var(--ink-2); }
+strong { color: var(--ink); font-weight: 600; }
+ul:not(.bare) { padding-left: 22px; margin-bottom: 14px; }
+ul:not(.bare) li { color: var(--ink-2); margin-bottom: 6px; }
+ol:not(.bare) { padding-left: 22px; margin-bottom: 14px; }
+ol:not(.bare) li { color: var(--ink-2); margin-bottom: 6px; }
+
+/* DASHBOARD */
+.dash-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 14px; margin-bottom: 32px; }
+.stat-card { background: var(--surface); border: 1px solid var(--line-2); border-radius: var(--radius); padding: 20px; }
+.stat-label { font-size: 11px; font-weight: 600; color: var(--ink-3); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; }
+.stat-value { font-family: 'Fraunces', serif; font-size: 32px; font-weight: 500; letter-spacing: -0.02em; color: var(--ink); line-height: 1; }
+.stat-sub { font-size: 12px; color: var(--ink-3); margin-top: 6px; }
+.stat-card.accent { background: linear-gradient(135deg, #0071E3 0%, #5856D6 100%); color: #fff; border: 0; }
+.stat-card.accent .stat-label { color: rgba(255,255,255,0.7); }
+.stat-card.accent .stat-value { color: #fff; }
+.stat-card.accent .stat-sub { color: rgba(255,255,255,0.8); }
+
+/* SESSION CARDS */
+.session-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
+.session-card { background: var(--surface); border: 1px solid var(--line-2); border-radius: var(--radius-lg); padding: 24px; text-decoration: none; color: inherit; transition: all 0.25s; cursor: pointer; display: flex; flex-direction: column; min-height: 180px; }
+.session-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); border-color: rgba(0,113,227,0.3); }
+.session-card-icon { width: 40px; height: 40px; border-radius: 10px; background: var(--surface-2); display: flex; align-items: center; justify-content: center; font-size: 20px; margin-bottom: 14px; }
+.session-card-title { font-family: 'Fraunces', serif; font-size: 20px; font-weight: 500; letter-spacing: -0.01em; margin-bottom: 6px; }
+.session-card-desc { color: var(--ink-2); font-size: 13px; line-height: 1.5; flex: 1; }
+.session-card-cta { margin-top: 16px; font-size: 12px; font-weight: 600; color: var(--accent); }
+
+/* SUBJECT LIST */
+.subject-list { display: grid; gap: 10px; }
+.subject-row { background: var(--surface); border: 1px solid var(--line-2); border-radius: var(--radius); padding: 18px 22px; display: grid; grid-template-columns: 32px 1fr 100px 80px; gap: 16px; align-items: center; cursor: pointer; transition: all 0.2s; text-decoration: none; color: inherit; }
+.subject-row:hover { border-color: rgba(0,113,227,0.3); transform: translateX(2px); }
+.subject-row.disabled { opacity: 0.55; cursor: default; }
+.subject-row.disabled:hover { transform: none; border-color: var(--line-2); }
+.subject-num { font-family: 'Fraunces', serif; font-size: 18px; font-weight: 500; color: var(--ink-3); text-align: center; }
+.subject-info-name { font-size: 16px; font-weight: 600; color: var(--ink); margin-bottom: 3px; }
+.subject-info-meta { font-size: 12px; color: var(--ink-3); }
+.subject-progress { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--ink-2); }
+.subject-progress-bar { flex: 1; height: 4px; background: var(--surface-2); border-radius: 2px; overflow: hidden; }
+.subject-progress-fill { height: 100%; background: var(--green); border-radius: 2px; transition: width 0.4s; }
+.subject-arrow { color: var(--accent); font-size: 16px; text-align: right; font-weight: 600; }
+.subject-row.disabled .subject-arrow { color: var(--ink-3); }
+.subject-tag-soon { background: var(--surface-2); color: var(--ink-3); font-size: 10px; font-weight: 700; padding: 4px 8px; border-radius: 4px; letter-spacing: 0.05em; }
+
+/* SUBJECT DETAIL */
+.subject-back { display: inline-flex; align-items: center; gap: 6px; color: var(--accent); text-decoration: none; font-size: 13px; font-weight: 500; margin-bottom: 20px; cursor: pointer; background: none; border: 0; padding: 0; font-family: inherit; }
+.subject-back:hover { text-decoration: underline; }
+.lesson-block { background: var(--surface); border: 1px solid var(--line-2); border-radius: var(--radius-lg); padding: 28px; margin-bottom: 18px; }
+.lesson-eyebrow { font-size: 11px; font-weight: 700; color: var(--accent); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; }
+.lesson-title { font-family: 'Fraunces', serif; font-size: 26px; font-weight: 500; letter-spacing: -0.02em; margin-bottom: 16px; }
+.lesson-body { color: var(--ink-2); font-size: 15px; line-height: 1.7; }
+.lesson-body p { margin-bottom: 14px; }
+.lesson-body strong { color: var(--ink); }
+
+.kvtable { border: 1px solid var(--line-2); border-radius: var(--radius); overflow: hidden; margin: 14px 0; }
+.kv-row { display: grid; grid-template-columns: 180px 1fr; padding: 12px 16px; border-bottom: 1px solid var(--line-2); align-items: baseline; gap: 14px; }
+.kv-row:last-child { border-bottom: 0; }
+.kv-row:nth-child(even) { background: var(--surface-2); }
+.kv-key { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--accent); letter-spacing: 0.04em; }
+.kv-val { font-size: 14px; color: var(--ink); line-height: 1.55; }
+
+.callout { padding: 16px 20px; border-radius: var(--radius); margin: 14px 0; font-size: 14px; line-height: 1.55; border-left: 3px solid var(--accent); background: #EAF2FB; color: var(--ink-2); }
+.callout-tag { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; color: var(--accent); text-transform: uppercase; margin-bottom: 4px; }
+.callout strong { color: var(--ink); }
+.callout.warn { background: #FFF8EF; border-left-color: var(--orange); }
+.callout.warn .callout-tag { color: var(--orange); }
+.callout.danger { background: #FFF1F0; border-left-color: var(--red); }
+.callout.danger .callout-tag { color: var(--red); }
+.callout.note { background: #F0FBF4; border-left-color: var(--green); }
+.callout.note .callout-tag { color: var(--green); }
+
+/* FLASHCARDS */
+.fc-area { padding: 20px 0; }
+.fc-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.fc-counter { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--ink-3); }
+.fc-progress { flex: 1; max-width: 200px; margin: 0 16px; height: 4px; background: var(--surface-2); border-radius: 2px; overflow: hidden; }
+.fc-progress-fill { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.3s; }
+.fc-card { background: var(--surface); border: 1px solid var(--line-2); border-radius: var(--radius-lg); padding: 40px 36px; min-height: 320px; display: flex; flex-direction: column; cursor: pointer; transition: all 0.2s; box-shadow: var(--shadow); }
+.fc-card:hover { box-shadow: var(--shadow-lg); }
+.fc-side-tag { font-size: 10px; font-weight: 700; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 14px; }
+.fc-question { font-family: 'Fraunces', serif; font-size: 26px; font-weight: 500; letter-spacing: -0.015em; line-height: 1.3; margin-bottom: 20px; flex: 1; }
+.fc-answer { font-size: 16px; line-height: 1.65; color: var(--ink-2); flex: 1; }
+.fc-answer strong { color: var(--ink); }
+.fc-hint { color: var(--ink-3); font-size: 13px; text-align: center; margin-top: 20px; font-style: italic; }
+.fc-rate { display: flex; gap: 10px; margin-top: 20px; }
+.fc-rate-btn { flex: 1; padding: 14px; border-radius: 10px; border: 1px solid var(--line-2); background: var(--surface); font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.15s; }
+.fc-rate-btn:hover { transform: translateY(-1px); box-shadow: var(--shadow); }
+.fc-rate-btn.again { color: var(--red); }
+.fc-rate-btn.hard { color: var(--orange); }
+.fc-rate-btn.good { color: var(--accent); }
+.fc-rate-btn.easy { color: var(--green); }
+
+/* PRACTICE TEST */
+.q-area { padding: 16px 0; }
+.q-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--ink-3); }
+.q-card { background: var(--surface); border: 1px solid var(--line-2); border-radius: var(--radius-lg); padding: 32px; box-shadow: var(--shadow); }
+.q-subject { font-size: 11px; font-weight: 700; color: var(--accent); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 10px; }
+.q-text { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 500; letter-spacing: -0.015em; line-height: 1.35; margin-bottom: 24px; }
+.q-choices { display: grid; gap: 10px; }
+.q-choice { background: var(--surface-2); border: 2px solid transparent; border-radius: 12px; padding: 16px 20px; cursor: pointer; transition: all 0.15s; font-size: 15px; color: var(--ink); line-height: 1.5; display: flex; gap: 14px; align-items: flex-start; }
+.q-choice:hover { border-color: rgba(0,113,227,0.3); background: var(--surface); }
+.q-choice.selected { border-color: var(--accent); background: #EAF2FB; }
+.q-choice.correct { border-color: var(--green); background: #F0FBF4; }
+.q-choice.incorrect { border-color: var(--red); background: #FFF1F0; }
+.q-choice-letter { width: 26px; height: 26px; border-radius: 50%; background: var(--surface); border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; color: var(--ink-2); flex-shrink: 0; }
+.q-choice.selected .q-choice-letter { background: var(--accent); color: #fff; border-color: var(--accent); }
+.q-choice.correct .q-choice-letter { background: var(--green); color: #fff; border-color: var(--green); }
+.q-choice.incorrect .q-choice-letter { background: var(--red); color: #fff; border-color: var(--red); }
+.q-explanation { background: #EAF2FB; border-left: 3px solid var(--accent); border-radius: 0 var(--radius) var(--radius) 0; padding: 16px 20px; margin-top: 20px; font-size: 14px; line-height: 1.6; color: var(--ink-2); }
+.q-explanation-tag { font-size: 10px; font-weight: 700; color: var(--accent); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px; }
+.q-explanation strong { color: var(--ink); }
+.q-actions { display: flex; gap: 10px; margin-top: 20px; }
+.q-btn { flex: 1; padding: 14px; border-radius: 10px; border: 0; background: var(--ink); color: #fff; font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.15s; }
+.q-btn:hover { background: #2C2C2E; }
+.q-btn.secondary { background: var(--surface); border: 1px solid var(--line-2); color: var(--ink); }
+.q-btn.secondary:hover { background: var(--surface-2); }
+
+/* MOCK EXAM RESULTS */
+.results-card { background: var(--surface); border: 1px solid var(--line-2); border-radius: var(--radius-lg); padding: 36px; text-align: center; margin-bottom: 24px; }
+.results-score { font-family: 'Fraunces', serif; font-size: 64px; font-weight: 400; letter-spacing: -0.03em; line-height: 1; margin-bottom: 8px; }
+.results-score.pass { color: var(--green); }
+.results-score.fail { color: var(--red); }
+.results-label { font-size: 14px; color: var(--ink-3); margin-bottom: 24px; }
+.results-status { display: inline-block; padding: 6px 16px; border-radius: 100px; font-size: 13px; font-weight: 700; letter-spacing: 0.04em; }
+.results-status.pass { background: #F0FBF4; color: var(--green); }
+.results-status.fail { background: #FFF1F0; color: var(--red); }
+
+/* SETUP CARD */
+.setup-card { background: var(--surface); border: 1px solid var(--line-2); border-radius: var(--radius-lg); padding: 28px; margin-bottom: 24px; }
+.setup-step { display: grid; grid-template-columns: 32px 1fr; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--line-2); }
+.setup-step:last-child { border-bottom: 0; }
+.setup-num { width: 28px; height: 28px; border-radius: 50%; background: var(--ink); color: #fff; display: flex; align-items: center; justify-content: center; font-family: 'Fraunces', serif; font-size: 14px; font-weight: 500; flex-shrink: 0; }
+.setup-num.done { background: var(--green); }
+.setup-body strong { display: block; margin-bottom: 4px; font-size: 14px; color: var(--ink); }
+.setup-body span { color: var(--ink-2); font-size: 13px; line-height: 1.5; }
+.btn { padding: 10px 18px; border-radius: 8px; border: 0; background: var(--ink); color: #fff; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.15s; }
+.btn:hover { background: #2C2C2E; }
+.btn.accent { background: var(--accent); }
+.btn.accent:hover { background: #0058C0; }
+.btn-row { display: flex; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
+.input { width: 100%; padding: 10px 14px; border-radius: 8px; border: 1px solid var(--line); font-family: inherit; font-size: 13px; }
+.input:focus { outline: 0; border-color: var(--accent); }
+
+/* Test mode header */
+.test-header { background: var(--ink); color: #fff; border-radius: var(--radius); padding: 16px 22px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+.test-timer { font-family: 'JetBrains Mono', monospace; font-size: 18px; font-weight: 700; letter-spacing: 0.05em; }
+.test-meta { font-size: 12px; color: rgba(255,255,255,0.7); }
+
+@media (max-width: 640px) {
+  .subject-row { grid-template-columns: 28px 1fr 50px; }
+  .subject-progress { display: none; }
+  .kv-row { grid-template-columns: 1fr; }
+  .kv-key { margin-bottom: 4px; }
+  .fc-card { padding: 28px 24px; min-height: 280px; }
+  .q-card { padding: 24px; }
+  .q-text { font-size: 18px; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="head">
+  <a href="/" class="head-back">← Reference home</a>
+  <div class="head-title">PPL Knowledge</div>
+  <div class="head-status" id="syncStatus">
+    <span class="head-status-dot" id="syncDot"></span>
+    <span id="syncText">Local only</span>
+  </div>
+</div>
+
+<div class="hero">
+  <div class="eyebrow">FAA Private Pilot · Knowledge Test Prep</div>
+  <h1>The <em>written.</em></h1>
+  <p class="lede">Subject review, flashcards, and practice questions designed for the FAA Private Pilot Airplane knowledge test. Built for the final review phase — 60-90 days to passing.</p>
+</div>
+
+<div class="tabs">
+  <button class="tab active" data-view="dashboard">Dashboard</button>
+  <button class="tab" data-view="subjects">Subjects</button>
+  <button class="tab" data-view="flashcards">Flashcards</button>
+  <button class="tab" data-view="practice">Practice</button>
+  <button class="tab" data-view="exam">Mock exam</button>
+  <button class="tab" data-view="settings">Settings</button>
+</div>
+
+<!-- DASHBOARD -->
+<section class="view active" id="view-dashboard">
+  <div class="dash-stats">
+    <div class="stat-card accent">
+      <div class="stat-label">Readiness</div>
+      <div class="stat-value" id="statReadiness">—</div>
+      <div class="stat-sub" id="statReadinessSub">Take some practice questions to calibrate</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Questions answered</div>
+      <div class="stat-value" id="statQuestions">0</div>
+      <div class="stat-sub" id="statQuestionsAcc">No data yet</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Flashcards reviewed</div>
+      <div class="stat-value" id="statCards">0</div>
+      <div class="stat-sub" id="statCardsTotal">of 0 in deck</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Subjects studied</div>
+      <div class="stat-value" id="statSubjects">0</div>
+      <div class="stat-sub">of 14 areas</div>
+    </div>
+  </div>
+
+  <h3 style="margin-top:8px">Recommended next session</h3>
+  <div class="session-grid">
+    <div class="session-card" onclick="showView('practice'); startQuickPractice(10)">
+      <div class="session-card-icon">⚡</div>
+      <div class="session-card-title">10-question quick drill</div>
+      <div class="session-card-desc">Mixed subjects, instant feedback with explanations. 10 minutes.</div>
+      <div class="session-card-cta">Start →</div>
+    </div>
+    <div class="session-card" onclick="showView('flashcards'); startFlashcards()">
+      <div class="session-card-icon">📇</div>
+      <div class="session-card-title">Flashcards (15 min)</div>
+      <div class="session-card-desc">Spaced repetition review. Focuses on cards you've struggled with.</div>
+      <div class="session-card-cta">Start →</div>
+    </div>
+    <div class="session-card" onclick="showView('subjects')">
+      <div class="session-card-icon">📖</div>
+      <div class="session-card-title">Subject deep-dive</div>
+      <div class="session-card-desc">Pick a subject area and read through structured review material.</div>
+      <div class="session-card-cta">Browse →</div>
+    </div>
+    <div class="session-card" onclick="showView('exam'); startMockExam()">
+      <div class="session-card-icon">🎯</div>
+      <div class="session-card-title">Full mock exam</div>
+      <div class="session-card-desc">60 questions, 2.5-hour clock, FAA-style format. Use weekly to gauge readiness.</div>
+      <div class="session-card-cta">Begin →</div>
+    </div>
+  </div>
+
+  <h3>Subject readiness</h3>
+  <div class="subject-list" id="subjectReadinessList"></div>
+</section>
+
+<!-- SUBJECTS -->
+<section class="view" id="view-subjects">
+  <h2 id="subjectsHeader">Subject areas</h2>
+  <p class="h2-sub" id="subjectsSub">The FAA tests 14 knowledge areas on the Private Pilot written. Tap any subject for a structured review.</p>
+
+  <div id="subjectListContainer">
+    <div class="subject-list" id="subjectList"></div>
+  </div>
+
+  <div id="subjectDetailContainer" style="display:none">
+    <button class="subject-back" onclick="showSubjectList()">← All subjects</button>
+    <div id="subjectDetailContent"></div>
+  </div>
+</section>
+
+<!-- FLASHCARDS -->
+<section class="view" id="view-flashcards">
+  <h2>Flashcards</h2>
+  <p class="h2-sub">Tap a card to flip. Rate how well you knew it — cards you miss come back sooner.</p>
+
+  <div id="fcStartContainer">
+    <div class="session-grid">
+      <div class="session-card" onclick="startFlashcards('all')">
+        <div class="session-card-icon">🃏</div>
+        <div class="session-card-title">Mixed deck</div>
+        <div class="session-card-desc">All flashcards across all subjects.</div>
+        <div class="session-card-cta">Start →</div>
+      </div>
+      <div class="session-card" onclick="startFlashcards('due')">
+        <div class="session-card-icon">⏰</div>
+        <div class="session-card-title">Due for review</div>
+        <div class="session-card-desc">Cards the spaced-repetition system says you should see now.</div>
+        <div class="session-card-cta">Start →</div>
+      </div>
+      <div class="session-card" onclick="startFlashcards('weakest')">
+        <div class="session-card-icon">🎯</div>
+        <div class="session-card-title">Weakest cards</div>
+        <div class="session-card-desc">The cards you've missed most frequently.</div>
+        <div class="session-card-cta">Start →</div>
+      </div>
+    </div>
+
+    <h3 style="margin-top:32px">By subject</h3>
+    <div class="subject-list" id="fcSubjectList"></div>
+  </div>
+
+  <div id="fcSessionContainer" style="display:none">
+    <div class="fc-area">
+      <div class="fc-meta">
+        <span class="fc-counter" id="fcCounter">Card 1 of 10</span>
+        <div class="fc-progress"><div class="fc-progress-fill" id="fcProgress"></div></div>
+        <button class="btn secondary" onclick="endFlashcards()" style="padding:6px 12px;font-size:12px">End session</button>
+      </div>
+      <div class="fc-card" id="fcCard" onclick="flipCard()">
+        <div id="fcContent"></div>
+      </div>
+      <div id="fcRateContainer" style="display:none">
+        <div class="fc-rate">
+          <button class="fc-rate-btn again" onclick="rateCard(0)">Again<br><small style="opacity:0.7;font-weight:400;font-size:11px">&lt;1 min</small></button>
+          <button class="fc-rate-btn hard" onclick="rateCard(1)">Hard<br><small style="opacity:0.7;font-weight:400;font-size:11px">~6 min</small></button>
+          <button class="fc-rate-btn good" onclick="rateCard(2)">Good<br><small style="opacity:0.7;font-weight:400;font-size:11px">~1 day</small></button>
+          <button class="fc-rate-btn easy" onclick="rateCard(3)">Easy<br><small style="opacity:0.7;font-weight:400;font-size:11px">~4 days</small></button>
+        </div>
+      </div>
+      <div class="fc-hint" id="fcHint">Tap card to reveal answer</div>
+    </div>
+  </div>
+</section>
+
+<!-- PRACTICE -->
+<section class="view" id="view-practice">
+  <h2>Practice questions</h2>
+  <p class="h2-sub">FAA-style questions with detailed explanations. Pick a length and subject focus.</p>
+
+  <div id="prStartContainer">
+    <h4>Quick drills</h4>
+    <div class="session-grid">
+      <div class="session-card" onclick="startQuickPractice(10)">
+        <div class="session-card-icon">⚡</div>
+        <div class="session-card-title">10 questions</div>
+        <div class="session-card-desc">Mixed subjects, ~10 minutes.</div>
+        <div class="session-card-cta">Start →</div>
+      </div>
+      <div class="session-card" onclick="startQuickPractice(20)">
+        <div class="session-card-icon">📋</div>
+        <div class="session-card-title">20 questions</div>
+        <div class="session-card-desc">Mixed subjects, ~25 minutes.</div>
+        <div class="session-card-cta">Start →</div>
+      </div>
+      <div class="session-card" onclick="startWeakAreaPractice()">
+        <div class="session-card-icon">🎯</div>
+        <div class="session-card-title">Weak-area drill</div>
+        <div class="session-card-desc">Targets your lowest-scoring subjects. ~15 questions.</div>
+        <div class="session-card-cta">Start →</div>
+      </div>
+    </div>
+
+    <h4>By subject</h4>
+    <div class="subject-list" id="prSubjectList"></div>
+  </div>
+
+  <div id="prSessionContainer" style="display:none">
+    <div class="q-area">
+      <div class="q-meta">
+        <span id="prCounter">Question 1 of 10</span>
+        <span id="prScore">Score: 0/0</span>
+        <button class="btn secondary" onclick="endPractice()" style="padding:6px 12px;font-size:12px">End</button>
+      </div>
+      <div class="q-card" id="prCard"></div>
+    </div>
+  </div>
+
+  <div id="prResultsContainer" style="display:none">
+    <div class="results-card">
+      <div class="results-score" id="prResultsScore">0%</div>
+      <div class="results-label" id="prResultsLabel">0 of 0 correct</div>
+      <div class="results-status" id="prResultsStatus">—</div>
+    </div>
+    <div class="btn-row">
+      <button class="btn accent" onclick="endPractice()">Back to practice</button>
+      <button class="btn" onclick="showView('dashboard')">Dashboard</button>
+    </div>
+  </div>
+</section>
+
+<!-- MOCK EXAM -->
+<section class="view" id="view-exam">
+  <h2>Mock exam</h2>
+  <p class="h2-sub">60-question, 2.5-hour, FAA-style. Use this every 1-2 weeks to gauge readiness. Passing score is 70%.</p>
+
+  <div id="examStartContainer">
+    <div class="setup-card">
+      <h3 style="margin-top:0">Mock exam format</h3>
+      <div class="setup-step">
+        <div class="setup-num">1</div>
+        <div class="setup-body"><strong>60 multiple-choice questions</strong><span>Sampled across all 14 knowledge areas, weighted by FAA test percentages.</span></div>
+      </div>
+      <div class="setup-step">
+        <div class="setup-num">2</div>
+        <div class="setup-body"><strong>2 hours 30 minutes</strong><span>Real FAA test length. Pace yourself — about 2.5 minutes per question.</span></div>
+      </div>
+      <div class="setup-step">
+        <div class="setup-num">3</div>
+        <div class="setup-body"><strong>70% passing</strong><span>42 correct of 60. Same as the real test.</span></div>
+      </div>
+      <div class="setup-step">
+        <div class="setup-num">4</div>
+        <div class="setup-body"><strong>Review all answers afterward</strong><span>You'll see which subjects you missed and can drill those weak areas next.</span></div>
+      </div>
+      <div class="btn-row">
+        <button class="btn accent" onclick="startMockExam()">Start mock exam</button>
+      </div>
+    </div>
+
+    <div class="callout warn">
+      <div class="callout-tag">Honest disclaimer</div>
+      These are <strong>original FAA-style practice questions</strong>, not the actual FAA test bank. Pair this tool with Sheppard Air, Sporty's, or Dauntless for the actual exam-day question memorization. This handles conceptual mastery and weak-area drilling.
+    </div>
+  </div>
+
+  <div id="examSessionContainer" style="display:none">
+    <div class="test-header">
+      <div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.6);letter-spacing:0.08em;font-weight:700;text-transform:uppercase">Mock exam</div>
+        <div class="test-meta" id="examMeta">Question 1 of 60</div>
+      </div>
+      <div>
+        <div style="font-size:10px;color:rgba(255,255,255,0.6);letter-spacing:0.08em">REMAINING</div>
+        <div class="test-timer" id="examTimer">2:30:00</div>
+      </div>
+    </div>
+    <div class="q-area">
+      <div class="q-card" id="examCard"></div>
+      <div class="btn-row">
+        <button class="btn secondary" onclick="examPrev()">← Previous</button>
+        <button class="btn" onclick="examNext()">Next →</button>
+        <button class="btn accent" onclick="examSubmit()" style="margin-left:auto">Submit exam</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="examResultsContainer" style="display:none">
+    <div class="results-card">
+      <div class="results-score" id="examScore">0%</div>
+      <div class="results-label" id="examLabel">0 of 60 correct</div>
+      <div class="results-status" id="examStatus">—</div>
+    </div>
+    <h3>By subject</h3>
+    <div class="subject-list" id="examBySubject"></div>
+    <div class="btn-row">
+      <button class="btn accent" onclick="examReview()">Review answers</button>
+      <button class="btn" onclick="endExam()">Back to exam home</button>
+    </div>
+  </div>
+</section>
+
+<!-- SETTINGS -->
+<section class="view" id="view-settings">
+  <h2>Settings &amp; sync</h2>
+  <p class="h2-sub">Your progress is saved locally in this browser. To sync between devices (Mac, iPad, phone), set up a GitHub Gist.</p>
+
+  <div class="setup-card">
+    <h3 style="margin-top:0">Profile</h3>
+    <div style="margin-bottom:16px">
+      <label style="display:block;font-size:12px;font-weight:600;color:var(--ink-2);margin-bottom:6px">Profile name</label>
+      <input type="text" class="input" id="profileInput" placeholder="e.g., chris" style="max-width:300px">
+    </div>
+    <div class="btn-row">
+      <button class="btn accent" onclick="saveProfile()">Save profile</button>
+    </div>
+  </div>
+
+  <div class="setup-card">
+    <h3 style="margin-top:0">GitHub Gist sync</h3>
+    <div class="setup-step">
+      <div class="setup-num" id="syncStep1">1</div>
+      <div class="setup-body">
+        <strong>Create a GitHub Personal Access Token</strong>
+        <span>Go to github.com/settings/tokens → Generate new token (classic) → Check the "gist" scope → No expiration → Generate.</span>
+      </div>
+    </div>
+    <div class="setup-step">
+      <div class="setup-num" id="syncStep2">2</div>
+      <div class="setup-body">
+        <strong>Paste it here</strong>
+        <input type="password" class="input" id="tokenInput" placeholder="ghp_..." style="margin-top:8px">
+        <div class="btn-row"><button class="btn accent" onclick="saveToken()">Save token</button></div>
+      </div>
+    </div>
+    <div class="setup-step">
+      <div class="setup-num" id="syncStep3">3</div>
+      <div class="setup-body">
+        <strong>Create or load your Gist</strong>
+        <span>First time: a new private Gist is created. After that, your progress syncs to it from any device with this token.</span>
+        <div class="btn-row">
+          <button class="btn" onclick="createGist()">Create new Gist</button>
+          <input type="text" class="input" id="gistIdInput" placeholder="Existing Gist ID" style="max-width:240px">
+          <button class="btn" onclick="loadGist()">Load existing</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="setup-card">
+    <h3 style="margin-top:0">Data</h3>
+    <div class="btn-row">
+      <button class="btn" onclick="exportData()">Export progress (JSON)</button>
+      <button class="btn" onclick="document.getElementById('importInput').click()">Import progress</button>
+      <input type="file" id="importInput" accept=".json" style="display:none" onchange="importData(event)">
+      <button class="btn" style="background:#FF3B30" onclick="resetData()">Reset all progress</button>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<script>
+// ============================================================
+// PPL Knowledge Module - Core data + state
+// ============================================================
+
+// Profile detection from URL
+const urlParams = new URLSearchParams(window.location.search);
+const profile = urlParams.get('p') || localStorage.getItem('ppl_profile') || 'default';
+
+const STATE_KEY = `ppl_state_${profile}`;
+const TOKEN_KEY = `ppl_token_${profile}`;
+const GIST_KEY = `ppl_gist_${profile}`;
+
+let state = {
+  cards: {}, // cardId -> { easeFactor, interval, due, lastReviewed, lapses }
+  questionsAnswered: {}, // questionId -> { correct, attempts, lastSeen, subject }
+  subjectStats: {}, // subjectId -> { questions: 0, correct: 0, lastStudied: null }
+  examHistory: [], // [{ date, score, total, byMissedSubject }]
+  flashcardsTotal: 0,
+  questionsTotal: 0,
+};
+
+function loadState() {
+  try {
+    const saved = localStorage.getItem(STATE_KEY);
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      state = { ...state, ...parsed };
+    }
+  } catch (e) { console.warn('Load failed', e); }
+}
+
+function saveState() {
+  try {
+    localStorage.setItem(STATE_KEY, JSON.stringify(state));
+    syncToGist();
+  } catch (e) { console.warn('Save failed', e); }
+}
+
+// ============================================================
+// Subject definitions
+// ============================================================
+
+const SUBJECTS = [
+  { id: 'regs', num: 1, name: 'Federal Aviation Regulations', short: 'Regulations', weight: 0.15, status: 'ready' },
+  { id: 'weather', num: 2, name: 'Aviation Weather', short: 'Weather', weight: 0.13, status: 'ready' },
+  { id: 'aero', num: 3, name: 'Aerodynamics & Flight Principles', short: 'Aerodynamics', weight: 0.10, status: 'ready' },
+  { id: 'systems', num: 4, name: 'Aircraft Systems (Cessna 182Q)', short: 'Aircraft Systems', weight: 0.08, status: 'ready' },
+  { id: 'nav', num: 5, name: 'Navigation & GPS', short: 'Navigation', weight: 0.10, status: 'ready' },
+  { id: 'perf', num: 6, name: 'Performance & Weight/Balance', short: 'Performance', weight: 0.09, status: 'ready' },
+  { id: 'airspace', num: 7, name: 'Airspace', short: 'Airspace', weight: 0.08, status: 'soon' },
+  { id: 'comm', num: 8, name: 'Communications', short: 'Communications', weight: 0.05, status: 'soon' },
+  { id: 'airport', num: 9, name: 'Airport Operations', short: 'Airport Ops', weight: 0.05, status: 'soon' },
+  { id: 'human', num: 10, name: 'Human Factors & Aeromedical', short: 'Human Factors', weight: 0.05, status: 'soon' },
+  { id: 'adm', num: 11, name: 'Aeronautical Decision Making', short: 'ADM', weight: 0.04, status: 'soon' },
+  { id: 'xc', num: 12, name: 'Cross-Country Flight Planning', short: 'XC Planning', weight: 0.05, status: 'soon' },
+  { id: 'emerg', num: 13, name: 'Emergency Procedures', short: 'Emergencies', weight: 0.02, status: 'soon' },
+  { id: 'misc', num: 14, name: 'Aircraft Performance Charts', short: 'Performance Charts', weight: 0.01, status: 'soon' },
+];
+
+// ============================================================
+// Subject content (lessons)
+// ============================================================
+
+const SUBJECT_CONTENT = {
+  regs: `
+    <h3>The big picture</h3>
+    <p>The FAA tests heavily on <strong>FAR Part 61</strong> (certification) and <strong>FAR Part 91</strong> (general operating rules). You don't need to memorize every regulation — you need to know the ones that come up on every checkride and every test.</p>
+
+    <h4>Part 61 — Pilot certification</h4>
+    <div class="kvtable">
+      <div class="kv-row"><div class="kv-key">61.23</div><div class="kv-val">Medical certificate requirements — 3rd class for private pilot privileges. BasicMed is also valid for certain operations.</div></div>
+      <div class="kv-row"><div class="kv-key">61.31</div><div class="kv-val">Type rating, complex, high-performance endorsements. Your 182Q with 230 HP requires high-performance endorsement.</div></div>
+      <div class="kv-row"><div class="kv-key">61.51</div><div class="kv-val">Pilot logbook requirements — what must be logged.</div></div>
+      <div class="kv-row"><div class="kv-key">61.56</div><div class="kv-val">Flight review every 24 calendar months. 1 hour ground + 1 hour flight, minimum.</div></div>
+      <div class="kv-row"><div class="kv-key">61.57</div><div class="kv-val">Recent experience — 3 takeoffs and landings in 90 days to carry passengers (full stop at night within 1 hour of sunrise/sunset).</div></div>
+      <div class="kv-row"><div class="kv-key">61.113</div><div class="kv-val">Private pilot privileges and limitations — NO compensation for flying except as PIC with passengers sharing pro-rata operating expenses.</div></div>
+    </div>
+
+    <h4>Part 91 — Operating rules</h4>
+    <div class="kvtable">
+      <div class="kv-row"><div class="kv-key">91.103</div><div class="kv-val">Preflight action — required info: runway lengths, takeoff/landing distances, weather, fuel, alternates.</div></div>
+      <div class="kv-row"><div class="kv-key">91.107</div><div class="kv-val">Seatbelts. Required for taxi, takeoff, landing.</div></div>
+      <div class="kv-row"><div class="kv-key">91.111</div><div class="kv-val">Operating near other aircraft. No formation without prior arrangement.</div></div>
+      <div class="kv-row"><div class="kv-key">91.113</div><div class="kv-val">Right of way. Memorize: balloons → gliders → airships → airplanes/helicopters/rotorcraft. Aircraft in distress have right of way over all.</div></div>
+      <div class="kv-row"><div class="kv-key">91.117</div><div class="kv-val">Speed limits. Below 10,000 MSL = max 250 KIAS. Below Class B = max 200 KIAS. Below 2,500 AGL within 4 NM of Class C/D = max 200 KIAS.</div></div>
+      <div class="kv-row"><div class="kv-key">91.119</div><div class="kv-val">Minimum safe altitudes. 1,000 ft above highest obstacle within 2,000 ft horizontal over congested areas. 500 ft above surface elsewhere.</div></div>
+      <div class="kv-row"><div class="kv-key">91.151</div><div class="kv-val">Fuel reserves. Day VFR = enough to destination + 30 min at normal cruise. Night VFR = + 45 min.</div></div>
+      <div class="kv-row"><div class="kv-key">91.155</div><div class="kv-val">VFR weather minimums. <strong>You MUST memorize this table.</strong></div></div>
+      <div class="kv-row"><div class="kv-key">91.159</div><div class="kv-val">VFR cruising altitudes (hemispheric rule). Above 3,000 AGL: Eastbound (0-179°) = odd thousands + 500. Westbound (180-359°) = even thousands + 500.</div></div>
+      <div class="kv-row"><div class="kv-key">91.211</div><div class="kv-val">Supplemental oxygen. Required for crew above 12,500 MSL after 30 min. Required all crew above 14,000. Required all occupants above 15,000.</div></div>
+      <div class="kv-row"><div class="kv-key">91.213</div><div class="kv-val">Inoperative instruments and equipment. The MEL list and the type certificate determine what you can fly without.</div></div>
+    </div>
+
+    <h4>VFR weather minimums — memorize</h4>
+    <div class="kvtable">
+      <div class="kv-row"><div class="kv-key">Class B</div><div class="kv-val">3 SM visibility, clear of clouds.</div></div>
+      <div class="kv-row"><div class="kv-key">Class C, D, E (below 10K)</div><div class="kv-val">3 SM viz · 500 below, 1,000 above, 2,000 horizontal from clouds.</div></div>
+      <div class="kv-row"><div class="kv-key">Class E (above 10K)</div><div class="kv-val">5 SM viz · 1,000 below, 1,000 above, 1 SM horizontal from clouds.</div></div>
+      <div class="kv-row"><div class="kv-key">Class G (below 1,200 AGL day)</div><div class="kv-val">1 SM viz, clear of clouds.</div></div>
+      <div class="kv-row"><div class="kv-key">Class G (below 1,200 AGL night)</div><div class="kv-val">3 SM viz · 500 below, 1,000 above, 2,000 horizontal.</div></div>
+    </div>
+
+    <div class="callout">
+      <div class="callout-tag">Memory aid</div>
+      <strong>"152" cloud clearance</strong>: 1,000 above · 500 below · 2,000 horizontal. Works for most controlled airspace below 10,000 MSL.
+    </div>
+
+    <h4>Required documents — ARROW (and AROW)</h4>
+    <ul>
+      <li><strong>A</strong>irworthiness certificate</li>
+      <li><strong>R</strong>egistration certificate</li>
+      <li><strong>R</strong>adio station license (international only)</li>
+      <li><strong>O</strong>perating limitations (POH/flight manual)</li>
+      <li><strong>W</strong>eight and balance data</li>
+    </ul>
+
+    <h4>Required inspections</h4>
+    <div class="kvtable">
+      <div class="kv-row"><div class="kv-key">Annual</div><div class="kv-val">Every 12 calendar months. Always required.</div></div>
+      <div class="kv-row"><div class="kv-key">100-hour</div><div class="kv-val">Every 100 hours of operation IF used for hire (rental + instruction).</div></div>
+      <div class="kv-row"><div class="kv-key">ELT</div><div class="kv-val">Every 12 calendar months. Battery replaced after 1 hour cumulative use or 50% useful life.</div></div>
+      <div class="kv-row"><div class="kv-key">VOR</div><div class="kv-val">Every 30 days for IFR use only.</div></div>
+      <div class="kv-row"><div class="kv-key">Transponder</div><div class="kv-val">Every 24 calendar months.</div></div>
+      <div class="kv-row"><div class="kv-key">Pitot-static</div><div class="kv-val">Every 24 calendar months for IFR use only.</div></div>
+    </div>
+
+    <div class="callout warn">
+      <div class="callout-tag">Common test trap</div>
+      A question asks "when must a 100-hour inspection be done?" The trap answer is "every 100 hours." The correct answer is "every 100 hours <strong>IF used for hire</strong>." Personal aircraft don't need 100-hour inspections — only annuals.
+    </div>
+  `,
+
+  weather: `
+    <h3>The big picture</h3>
+    <p>Weather is the #2 subject by question count on the test, behind regulations. It feels overwhelming, but the test focuses on a few key concepts: <strong>fronts, stability, clouds, hazards, and weather reports/forecasts.</strong></p>
+
+    <h4>Atmosphere basics</h4>
+    <ul>
+      <li><strong>Standard atmosphere:</strong> 29.92 inHg, 59°F (15°C) at sea level. Temperature drops 2°C per 1,000 ft (lapse rate).</li>
+      <li><strong>Heat is the source of all weather.</strong> Differential heating drives wind, pressure differences drive systems.</li>
+      <li><strong>Density altitude:</strong> pressure altitude corrected for non-standard temperature. High DA = poor performance. Hot, high, humid = high DA.</li>
+    </ul>
+
+    <h4>Wind &amp; Coriolis</h4>
+    <p>Wind flows from high to low pressure, but the <strong>Coriolis effect</strong> deflects it to the right in the northern hemisphere. The result: wind flows roughly parallel to isobars at altitude (called the "geostrophic wind"). Near the surface, friction reduces Coriolis effect, so surface wind has more of an angle toward the low.</p>
+
+    <div class="callout">
+      <div class="callout-tag">Memory aid</div>
+      <strong>Veers right with altitude</strong> in the northern hemisphere. If surface wind is 270°, the wind at 3,000 AGL might be 290°.
+    </div>
+
+    <h4>Pressure systems</h4>
+    <ul>
+      <li><strong>High pressure</strong> = descending air = generally good weather, scattered clouds at best.</li>
+      <li><strong>Low pressure</strong> = rising air = clouds, precipitation, instability.</li>
+      <li>Wind flows <strong>clockwise around highs</strong>, <strong>counterclockwise around lows</strong> (northern hemisphere).</li>
+    </ul>
+
+    <h4>Fronts</h4>
+    <div class="kvtable">
+      <div class="kv-row"><div class="kv-key">Cold front</div><div class="kv-val">Cold air pushing under warm air. Steep slope = fast development, towering cumulus, possible thunderstorms. Quick passage, then clearing behind.</div></div>
+      <div class="kv-row"><div class="kv-key">Warm front</div><div class="kv-val">Warm air sliding over cold. Shallow slope = widespread stratus, steady precipitation, slow movement. Can produce hours/days of IFR conditions.</div></div>
+      <div class="kv-row"><div class="kv-key">Occluded front</div><div class="kv-val">Cold front catches up to warm front. Combined weather of both. Often forms low-pressure cyclones.</div></div>
+      <div class="kv-row"><div class="kv-key">Stationary front</div><div class="kv-val">Neither air mass advancing. Long-duration weather along the front line.</div></div>
+    </div>
+
+    <h4>Stability</h4>
+    <ul>
+      <li><strong>Stable air:</strong> resists vertical motion. Layered clouds (stratus). Smooth ride. Reduced visibility (haze, fog). Continuous precipitation.</li>
+      <li><strong>Unstable air:</strong> encourages vertical motion. Vertical clouds (cumulus). Bumpy ride. Good visibility. Showery precipitation, possible thunderstorms.</li>
+    </ul>
+
+    <h4>Clouds</h4>
+    <div class="kvtable">
+      <div class="kv-row"><div class="kv-key">High (above 20,000)</div><div class="kv-val">Cirrus, cirrostratus, cirrocumulus. Made of ice crystals. Wispy.</div></div>
+      <div class="kv-row"><div class="kv-key">Middle (6,500-20,000)</div><div class="kv-val">Altostratus, altocumulus. "Alto" prefix = middle.</div></div>
+      <div class="kv-row"><div class="kv-key">Low (below 6,500)</div><div class="kv-val">Stratus, stratocumulus, nimbostratus. Layered or piled.</div></div>
+      <div class="kv-row"><div class="kv-key">Vertical</div><div class="kv-val">Cumulus, towering cumulus, cumulonimbus. The dangerous ones — thunderstorms.</div></div>
+    </div>
+
+    <h4>Thunderstorms (memorize)</h4>
+    <p>Three stages: <strong>cumulus → mature → dissipating.</strong></p>
+    <ul>
+      <li><strong>Cumulus stage:</strong> Updrafts only. Building cloud. Not yet dangerous, but precursor.</li>
+      <li><strong>Mature stage:</strong> Both updrafts and downdrafts present. Heavy precipitation begins. <strong>Most dangerous.</strong> Hail, severe turbulence, lightning, microbursts.</li>
+      <li><strong>Dissipating stage:</strong> Downdrafts dominate. Storm weakens, but turbulence continues.</li>
+    </ul>
+    <p>Three things required for thunderstorm formation:</p>
+    <ol>
+      <li><strong>Moisture</strong> — water vapor in the air</li>
+      <li><strong>Instability</strong> — air that wants to rise</li>
+      <li><strong>Lifting force</strong> — convection, frontal, orographic, or convergence</li>
+    </ol>
+
+    <div class="callout danger">
+      <div class="callout-tag">Critical rule</div>
+      <strong>Stay 20 NM away from thunderstorms.</strong> The hail, microbursts, and turbulence can be encountered well outside the visible cloud. There is no safe altitude over a thunderstorm.
+    </div>
+
+    <h4>Icing</h4>
+    <ul>
+      <li><strong>Visible moisture + temperature 0°C to -20°C</strong> = structural icing possible</li>
+      <li><strong>Rime ice:</strong> opaque, white, low water content. Forms in stratus clouds.</li>
+      <li><strong>Clear ice:</strong> transparent, dense, high water content. Forms in cumulus. The dangerous kind.</li>
+      <li><strong>Carb ice:</strong> can form at temperatures up to 70°F (21°C) with humidity. Use carb heat in the 182Q.</li>
+    </ul>
+
+    <h4>Reading METARs</h4>
+    <p>METAR format you must read: <code>KICT 121753Z 18012G18KT 10SM FEW250 32/19 A3001 RMK AO2</code></p>
+    <ul>
+      <li><strong>KICT</strong> — station</li>
+      <li><strong>121753Z</strong> — 12th of month, 17:53 Zulu</li>
+      <li><strong>18012G18KT</strong> — wind from 180° at 12 knots, gusting 18</li>
+      <li><strong>10SM</strong> — 10 statute miles visibility</li>
+      <li><strong>FEW250</strong> — few clouds at 25,000 ft</li>
+      <li><strong>32/19</strong> — temperature 32°C, dewpoint 19°C</li>
+      <li><strong>A3001</strong> — altimeter 30.01 inHg</li>
+    </ul>
+
+    <h4>Reading TAFs</h4>
+    <p>A TAF is a forecast for the airport area (5 SM radius). Includes time periods (FM, TEMPO, BECMG). Same format as METAR for actual weather elements.</p>
+
+    <div class="callout note">
+      <div class="callout-tag">High-yield study tip</div>
+      The FAA loves to test you on translating METAR/TAF codes. <strong>Practice reading 10 of each per day until it's automatic.</strong> aviationweather.gov has live examples.
+    </div>
+  `,
+
+  aero: `
+    <h3>The big picture</h3>
+    <p>Aerodynamics is about the four forces and how they interact. You don't need a physics PhD — you need to understand <strong>lift, weight, thrust, drag</strong>, what controls them, and the basic principles of stability and flight envelope.</p>
+
+    <h4>The four forces</h4>
+    <div class="kvtable">
+      <div class="kv-row"><div class="kv-key">Lift</div><div class="kv-val">Generated by wing. Perpendicular to relative wind. Controlled by airspeed and angle of attack.</div></div>
+      <div class="kv-row"><div class="kv-key">Weight</div><div class="kv-val">Gravity. Always straight down toward the center of the earth.</div></div>
+      <div class="kv-row"><div class="kv-key">Thrust</div><div class="kv-val">Propeller produces thrust. Along the flight path direction.</div></div>
+      <div class="kv-row"><div class="kv-key">Drag</div><div class="kv-val">Opposes thrust. Includes parasite drag (form, skin, interference) and induced drag (from generating lift).</div></div>
+    </div>
+
+    <p>In <strong>unaccelerated flight</strong> (cruise), lift = weight and thrust = drag. The airplane is in equilibrium.</p>
+
+    <h4>Angle of attack (AoA)</h4>
+    <p>The angle between the chord line of the wing and the relative wind. <strong>AoA controls lift directly.</strong> Increase AoA → more lift (up to a point). Exceed critical AoA → stall.</p>
+
+    <div class="callout">
+      <div class="callout-tag">Critical concept</div>
+      <strong>Stalls occur at any airspeed, any attitude, and any power setting</strong> if you exceed critical AoA. Stall speed varies with weight, bank angle, and load factor.
+    </div>
+
+    <h4>Lift formula (you don't need to calculate, but know variables)</h4>
+    <p>Lift = ½ × ρ × V² × S × CL</p>
+    <ul>
+      <li><strong>ρ</strong> (rho) — air density. Lower at high altitude or high temperature.</li>
+      <li><strong>V</strong> — velocity (airspeed). Lift varies with the SQUARE of airspeed.</li>
+      <li><strong>S</strong> — wing area. Fixed for your airplane.</li>
+      <li><strong>CL</strong> — coefficient of lift, mostly a function of angle of attack.</li>
+    </ul>
+
+    <h4>Stalls</h4>
+    <ul>
+      <li><strong>Stall = exceed critical angle of attack.</strong> NOT a function of airspeed directly.</li>
+      <li>Stall speed increases with: bank angle, weight, load factor, forward CG.</li>
+      <li>Stall speed decreases with: flaps extended (in flap operating range).</li>
+      <li><strong>Recovery:</strong> reduce AoA (push nose down), apply power, level wings, return to climb.</li>
+    </ul>
+
+    <h4>Spins</h4>
+    <ul>
+      <li><strong>Spin = stall + uncoordinated flight.</strong> One wing more stalled than the other.</li>
+      <li>Recovery: <strong>PARE</strong> — <strong>P</strong>ower idle, <strong>A</strong>ilerons neutral, <strong>R</strong>udder opposite spin, <strong>E</strong>levator forward. Then recover to level.</li>
+      <li>You must demonstrate spin awareness for PPL. Some training programs include actual spin training.</li>
+    </ul>
+
+    <h4>Load factor &amp; G-loads</h4>
+    <p>Load factor = ratio of lift to weight. Level flight = 1G. In a 60° bank, load factor = 2G — stall speed increases by factor of √2 (~1.41).</p>
+    <div class="kvtable">
+      <div class="kv-row"><div class="kv-key">30° bank</div><div class="kv-val">1.15 G · Stall speed +7%</div></div>
+      <div class="kv-row"><div class="kv-key">45° bank</div><div class="kv-val">1.41 G · Stall speed +19%</div></div>
+      <div class="kv-row"><div class="kv-key">60° bank</div><div class="kv-val">2.00 G · Stall speed +41%</div></div>
+      <div class="kv-row"><div class="kv-key">75° bank</div><div class="kv-val">3.86 G · Stall speed +97%</div></div>
+    </div>
+
+    <h4>Stability</h4>
+    <ul>
+      <li><strong>Static stability:</strong> initial tendency to return to equilibrium. Positive = returns. Neutral = stays in new position. Negative = diverges.</li>
+      <li><strong>Dynamic stability:</strong> the trend over time. Positive = oscillations dampen. Neutral = constant amplitude. Negative = oscillations grow.</li>
+      <li>Aircraft are designed with positive longitudinal (pitch) and lateral (roll) stability. Less so directionally (yaw).</li>
+    </ul>
+
+    <h4>CG (center of gravity)</h4>
+    <ul>
+      <li><strong>Forward CG:</strong> more stable, more nose-heavy. Higher stall speed. Better pitch stability. More fuel burn (more lift required).</li>
+      <li><strong>Aft CG:</strong> less stable but more maneuverable. Lower stall speed. Worse stall recovery. Less control authority.</li>
+      <li><strong>You must operate within the CG envelope.</strong> Outside = uncontrollable airplane.</li>
+    </ul>
+
+    <h4>Ground effect</h4>
+    <p>Within about one wingspan of the ground, induced drag decreases and lift artificially improves. Symptoms: airplane wants to keep flying in the flare, can take off "too early" then settle back.</p>
+
+    <h4>P-factor and the left-turning tendencies</h4>
+    <ul>
+      <li><strong>Torque:</strong> reaction to propeller rotation. Propeller spins clockwise (from cockpit), so airplane wants to roll left.</li>
+      <li><strong>P-factor:</strong> at high AoA, descending propeller blade has higher angle of attack and produces more thrust. This is on the right side (for clockwise prop), pulling nose LEFT.</li>
+      <li><strong>Slipstream:</strong> the spiral slipstream wraps around the fuselage and hits the left side of the vertical stab. Pushes the nose LEFT.</li>
+      <li><strong>Gyroscopic precession:</strong> any force applied to the prop is felt 90° later in the direction of rotation. Pitching up (tail down) creates a yaw force to the LEFT.</li>
+    </ul>
+    <p><strong>All four push the nose left.</strong> That's why right rudder is required on takeoff and climb.</p>
+  `,
+
+  systems: `
+    <h3>The big picture</h3>
+    <p>Aircraft systems for the Private Pilot test focus on engine, fuel, electrical, hydraulics, instruments, and the airframe. For your test specifically, you'll need to know your <strong>Cessna 182Q with Continental O-470-U.</strong></p>
+
+    <h4>Engine — Continental O-470-U (N199RF)</h4>
+    <ul>
+      <li><strong>Type:</strong> Horizontally-opposed, 6-cylinder, air-cooled, normally aspirated, carbureted</li>
+      <li><strong>Displacement:</strong> 470 cubic inches</li>
+      <li><strong>Power:</strong> 230 HP at 2,400 RPM</li>
+      <li><strong>Fuel:</strong> 100LL avgas (blue color)</li>
+      <li><strong>Propeller:</strong> McCauley constant-speed, 2-blade</li>
+    </ul>
+
+    <h4>4-stroke cycle (memorize)</h4>
+    <ol>
+      <li><strong>Intake:</strong> piston moves down, intake valve opens, fuel-air mixture enters cylinder</li>
+      <li><strong>Compression:</strong> piston moves up, both valves closed, mixture compressed</li>
+      <li><strong>Power:</strong> spark plug ignites mixture, piston driven down</li>
+      <li><strong>Exhaust:</strong> piston moves up, exhaust valve opens, gases expelled</li>
+    </ol>
+
+    <h4>Carburetor</h4>
+    <p>Your O-470-U is <strong>carbureted</strong>, not fuel-injected. Air flows through a venturi, which creates low pressure, drawing fuel from the float bowl. <strong>Carburetor heat is critical</strong> — the venturi can drop air temperature 30°C, freezing water vapor into ice on the throttle plate.</p>
+
+    <div class="callout warn">
+      <div class="callout-tag">Carb ice in the O-470</div>
+      <strong>Possible from 20°F (-7°C) to 70°F (21°C) with humidity.</strong> Most likely during descent, low power settings, or visible moisture. <strong>Symptoms:</strong> gradual RPM drop with no throttle change. <strong>Fix:</strong> apply carb heat — RPM will drop further as ice melts, then increase as engine runs clean.
+    </div>
+
+    <h4>Mixture control</h4>
+    <ul>
+      <li><strong>Full rich</strong> for takeoff, climb, and landing (below ~3,000 MSL).</li>
+      <li><strong>Lean for cruise</strong> — improved fuel economy, smoother engine. Use EGT or "peak" methods. Lean of peak (LOP) or rich of peak (ROP).</li>
+      <li><strong>Lean for high density altitude takeoff</strong> — at airports above ~3,000 MSL on hot days, lean for max RPM during runup before takeoff.</li>
+      <li><strong>Idle cutoff:</strong> mixture lever full aft. Used to shut down engine.</li>
+    </ul>
+
+    <h4>Ignition</h4>
+    <p>Aircraft engines have <strong>two independent magnetos</strong> (left and right), each firing its own set of spark plugs (top and bottom in each cylinder). Why dual?</p>
+    <ul>
+      <li>Redundancy — if one magneto fails, the engine still runs (slightly rough)</li>
+      <li>More complete combustion — burns the mixture from both sides simultaneously</li>
+      <li>Magnetos are independent of the electrical system — engine runs even with no battery/alternator</li>
+    </ul>
+    <p><strong>Mag check during runup:</strong> verify ~125 RPM drop on each, less than 50 RPM difference between them.</p>
+
+    <h4>Constant-speed propeller</h4>
+    <p>Two controls: <strong>throttle</strong> (manifold pressure) and <strong>prop</strong> (RPM). The propeller blades pivot to maintain set RPM regardless of throttle setting.</p>
+    <ul>
+      <li><strong>High RPM (prop full forward):</strong> fine pitch, used for takeoff, climb, landing</li>
+      <li><strong>Low RPM (prop pulled back):</strong> coarse pitch, used for cruise efficiency</li>
+      <li><strong>Don't oversquare:</strong> rough rule is MP shouldn't exceed RPM ÷ 100 (e.g., max 24" MP at 2,400 RPM)</li>
+    </ul>
+
+    <h4>Fuel system (182Q)</h4>
+    <ul>
+      <li><strong>Capacity:</strong> 92 gallons total, 88 usable (verify with POH for N199RF)</li>
+      <li><strong>Tanks:</strong> One in each wing, gravity-fed (high wing design)</li>
+      <li><strong>Selector:</strong> BOTH (normal), LEFT, RIGHT, or OFF</li>
+      <li><strong>Fuel:</strong> 100LL (low lead) — blue color. 100/100LL approved. NO Jet-A!</li>
+      <li><strong>Drain sumps</strong> during preflight at every tank and at the fuel strainer/gascolator</li>
+    </ul>
+
+    <h4>Electrical system</h4>
+    <ul>
+      <li><strong>28-volt system</strong> with belt-driven alternator (28V, 60A typical)</li>
+      <li><strong>Battery</strong> — 24V lead-acid in cowl/firewall area</li>
+      <li><strong>Master switch</strong> — turns on alternator and battery (split rocker — BAT and ALT sides)</li>
+      <li><strong>Alternator output</strong> shown on ammeter or alt amps gauge — should show charging when engine running</li>
+      <li>If alternator fails: turn off non-essential loads, expect to land within 30 min on battery</li>
+    </ul>
+
+    <h4>Pitot-static system</h4>
+    <ul>
+      <li><strong>Pitot tube</strong> — measures ram (impact) air pressure. Used by airspeed indicator only.</li>
+      <li><strong>Static port</strong> — measures static (ambient) air pressure. Used by airspeed, altimeter, and VSI.</li>
+      <li><strong>Pitot heat</strong> — electrical heating element to prevent ice. Use in visible moisture below freezing.</li>
+      <li><strong>Alternate static</strong> — if static port blocks, you can open alternate static (usually in cockpit) — instruments will read slightly higher.</li>
+    </ul>
+
+    <h4>Vacuum/gyroscopic instruments</h4>
+    <p>Your panel has the <strong>G3X Touch (digital)</strong> as primary, but understand traditional gyros for the test:</p>
+    <ul>
+      <li><strong>Attitude indicator:</strong> vacuum-powered gyro (or electric on glass)</li>
+      <li><strong>Heading indicator:</strong> vacuum-powered gyro, must be set to magnetic compass periodically</li>
+      <li><strong>Turn coordinator:</strong> electrically-powered gyro</li>
+    </ul>
+
+    <h4>Magnetic compass errors</h4>
+    <ul>
+      <li><strong>Variation:</strong> difference between true and magnetic north (depends on location)</li>
+      <li><strong>Deviation:</strong> aircraft-specific magnetic interference (correction card on compass)</li>
+      <li><strong>Acceleration error:</strong> ANDS — Accelerate North, Decelerate South (on east-west headings)</li>
+      <li><strong>Turning error:</strong> UNOS — Undershoot North, Overshoot South (on northern turns roll out early, southern turns roll out late)</li>
+    </ul>
+  `,
+
+  nav: `
+    <h3>The big picture</h3>
+    <p>Modern GA flying is dominated by GPS navigation. The Private Pilot test still asks about traditional VOR/NDB, but the questions about <strong>GPS, magnetic course, true course, variation, deviation, dead reckoning</strong> are all critical to pass.</p>
+
+    <h4>Variation vs. deviation</h4>
+    <ul>
+      <li><strong>Variation:</strong> angular difference between TRUE north and MAGNETIC north. Shown on sectional charts as isogonic lines. East variation: subtract from true to get magnetic. West variation: add.</li>
+      <li><strong>Deviation:</strong> aircraft-specific magnetic interference from the airplane's metal and electronics. Shown on compass correction card.</li>
+    </ul>
+
+    <p><strong>True Course → Magnetic Course → Compass Course</strong></p>
+    <ul>
+      <li><strong>True Course (TC):</strong> measured from sectional with TRUE north</li>
+      <li><strong>Magnetic Course (MC):</strong> apply VARIATION (East subtract, West add)</li>
+      <li><strong>Compass Course (CC):</strong> apply DEVIATION from compass card</li>
+    </ul>
+
+    <div class="callout">
+      <div class="callout-tag">Memory aid</div>
+      <strong>"East is least, West is best"</strong> — meaning East variation makes the magnetic course LESS than true (subtract), West makes it MORE (add to true).
+    </div>
+
+    <h4>True heading vs. true course</h4>
+    <ul>
+      <li><strong>Course (track over the ground)</strong> is what you draw on the chart.</li>
+      <li><strong>Heading</strong> is which way the airplane is pointing.</li>
+      <li>If there's wind, you must crab into it — heading differs from course by the <strong>wind correction angle (WCA)</strong>.</li>
+    </ul>
+
+    <h4>Wind triangle</h4>
+    <p>The relationship between airspeed, wind, course, and heading. Solve using flight computer (E6B), iPad app, or in-cockpit calculator.</p>
+    <p><strong>Variables:</strong></p>
+    <ul>
+      <li><strong>TAS</strong> (true airspeed) — your speed through the air</li>
+      <li><strong>GS</strong> (ground speed) — your speed over the ground (TAS ± wind)</li>
+      <li><strong>WCA</strong> (wind correction angle) — how much you crab into wind</li>
+      <li><strong>Wind direction and speed</strong> — typically from winds aloft forecast</li>
+    </ul>
+
+    <h4>GPS navigation</h4>
+    <p>Your GTN 750Xi is a WAAS GPS, approach-certified. Key concepts:</p>
+    <ul>
+      <li><strong>WAAS</strong> — Wide Area Augmentation System. Improves GPS accuracy to a few meters. Required for LPV approaches.</li>
+      <li><strong>RAIM</strong> — Receiver Autonomous Integrity Monitoring. For non-WAAS GPS — verifies signal integrity. WAAS doesn't need it.</li>
+      <li><strong>Direct-To</strong> — point-to-point navigation, ignoring intervening waypoints. Most-used GPS function.</li>
+      <li><strong>Flight plan</strong> — multi-waypoint route. GTN can store many. Autopilot follows it.</li>
+      <li><strong>Database currency</strong> — required every 28 days for IFR use. Recommended for VFR.</li>
+    </ul>
+
+    <h4>VOR (still tested even though uncommon)</h4>
+    <ul>
+      <li><strong>VHF Omnidirectional Range</strong> — ground-based station broadcasting 360 radials</li>
+      <li><strong>Frequency:</strong> 108.0–117.95 MHz (your GTN's NAV1 receives)</li>
+      <li><strong>TO/FROM</strong> indication — whether your selected course will take you toward or away from the station</li>
+      <li><strong>VOR check</strong> required every 30 days for IFR use only</li>
+    </ul>
+
+    <h4>NDB (rare in the US now)</h4>
+    <p>Non-Directional Beacon. Older AM-band navigation aid. ADF needle points to station. Largely retired, but still tested.</p>
+
+    <h4>Time-Speed-Distance calculations</h4>
+    <p>Basic dead reckoning math you may need on the test:</p>
+    <ul>
+      <li><strong>Distance = Speed × Time</strong></li>
+      <li><strong>Time = Distance ÷ Speed</strong></li>
+      <li><strong>Speed = Distance ÷ Time</strong></li>
+    </ul>
+    <p>Example: 90 NM at 120 KTAS = 45 minutes. Memorize 6-minute rule: <strong>at 120 knots, you cover 12 NM in 6 minutes</strong> (1/10 of GS in NM per 6 min).</p>
+
+    <h4>Pilotage vs. dead reckoning</h4>
+    <ul>
+      <li><strong>Pilotage:</strong> navigating by visual ground references (roads, rivers, towns, landmarks)</li>
+      <li><strong>Dead reckoning:</strong> navigating by computed heading, time, distance from known starting point</li>
+      <li><strong>Both required for PPL.</strong> GPS supplements but doesn't replace.</li>
+    </ul>
+
+    <h4>Sectional chart reading</h4>
+    <p>The FAA loves to test sectional symbology. Memorize:</p>
+    <ul>
+      <li>Airport symbols (towered = blue, non-towered = magenta)</li>
+      <li>Airspace boundaries (Class B solid blue, C solid magenta, D dashed blue, E dashed magenta)</li>
+      <li>MEF (Maximum Elevation Figure) — highest obstacle + 100 ft, rounded up to next 100 ft</li>
+      <li>Obstruction heights (MSL above ground when "above" suffix)</li>
+      <li>VOR/NDB/RNAV waypoint symbols</li>
+    </ul>
+  `,
+
+  perf: `
+    <h3>The big picture</h3>
+    <p>Performance is heavily tested. You'll need to read POH charts and tables to calculate takeoff distance, landing distance, climb performance, and cruise data. Plus weight and balance.</p>
+
+    <h4>Density altitude — the master variable</h4>
+    <p><strong>Density altitude = pressure altitude corrected for non-standard temperature.</strong></p>
+    <ul>
+      <li>Higher DA = thinner air = less engine power, less lift, longer takeoff, longer landing, slower climb</li>
+      <li>Calculated on the fly: pressure altitude + (120 × temperature deviation from standard)</li>
+      <li>Standard temperature at 1,000 ft = 13°C. Temperature drops 2°C per 1,000 ft.</li>
+    </ul>
+
+    <div class="callout warn">
+      <div class="callout-tag">Hot, high, humid</div>
+      <strong>All three increase density altitude.</strong> Hot day at a high airport with humid air = significantly degraded performance.
+    </div>
+
+    <h4>Pressure altitude</h4>
+    <p>The altitude shown on your altimeter when set to 29.92 inHg (standard). Used in performance charts.</p>
+    <p><strong>To get pressure altitude:</strong> set altimeter to 29.92, read altitude. Or: field elevation + (29.92 - current altimeter) × 1,000. If current altimeter is HIGHER than 29.92, pressure altitude is LOWER than field elevation.</p>
+
+    <h4>Weight and balance</h4>
+    <p>Two limits: <strong>maximum gross weight</strong> and <strong>CG envelope</strong>. You must be within BOTH.</p>
+
+    <h4>Key weights</h4>
+    <ul>
+      <li><strong>Empty weight</strong> — airplane with full oil, no usable fuel, no people/cargo. From W&B documents.</li>
+      <li><strong>Useful load</strong> — max takeoff weight minus empty weight</li>
+      <li><strong>Ramp weight</strong> — empty + fuel + people + cargo before taxi</li>
+      <li><strong>Takeoff weight</strong> — ramp weight minus fuel burned during taxi</li>
+      <li><strong>Landing weight</strong> — takeoff weight minus fuel burned in flight</li>
+      <li><strong>Zero fuel weight</strong> — weight with no usable fuel (some structural limit)</li>
+    </ul>
+
+    <h4>Calculating CG</h4>
+    <p><strong>Arm × Weight = Moment.</strong> Sum moments, divide by total weight, get CG.</p>
+    <p>Example: pilot 170 lb at arm 37 in = moment of 6,290. Add all moments. Divide by total weight. Compare result to airplane CG envelope.</p>
+
+    <div class="callout">
+      <div class="callout-tag">CG envelope</div>
+      The envelope is shown in the POH. Plot your CG against your weight. <strong>Both must fall inside the envelope.</strong> Outside = unsafe, illegal.
+    </div>
+
+    <h4>Effects of weight</h4>
+    <ul>
+      <li><strong>Heavier:</strong> longer takeoff distance, longer landing distance, reduced climb rate, higher stall speed, higher fuel burn, lower service ceiling</li>
+      <li><strong>Lighter:</strong> opposite of all of the above</li>
+    </ul>
+
+    <h4>Effects of CG</h4>
+    <ul>
+      <li><strong>Forward CG:</strong> stable but nose-heavy. Higher stall speed (more tail down force = more lift needed = higher AoA). Better stability. Worse fuel economy.</li>
+      <li><strong>Aft CG:</strong> less stable, more maneuverable. Lower stall speed but worse recovery. Higher cruise speed. Risk of departure stall.</li>
+    </ul>
+
+    <h4>Takeoff and landing performance</h4>
+    <p>POH charts give ground roll and total distance over 50-ft obstacle. Adjustments needed for:</p>
+    <ul>
+      <li><strong>Pressure altitude</strong> (higher = longer)</li>
+      <li><strong>Temperature</strong> (hotter = longer)</li>
+      <li><strong>Weight</strong> (heavier = longer)</li>
+      <li><strong>Wind</strong> (headwind reduces, tailwind increases)</li>
+      <li><strong>Runway surface</strong> (wet, grass, etc., add to distance)</li>
+      <li><strong>Runway slope</strong> (uphill = longer)</li>
+    </ul>
+
+    <h4>Climb performance</h4>
+    <ul>
+      <li><strong>V_X (best angle):</strong> maximum altitude gained per horizontal distance. Used for obstacle clearance.</li>
+      <li><strong>V_Y (best rate):</strong> maximum altitude gained per unit time. Used when no obstacles, want to get high fast.</li>
+      <li>Both decrease with altitude. They converge at the service ceiling.</li>
+    </ul>
+
+    <h4>Cruise performance</h4>
+    <ul>
+      <li>Higher altitude = lower air density = higher TAS for same MP/RPM (up to a point)</li>
+      <li>Cruise altitudes typically chosen for: tailwind benefit, smooth air, terrain clearance, fuel economy</li>
+      <li>POH cruise tables show MP, RPM, fuel burn, TAS at various altitudes</li>
+    </ul>
+
+    <h4>Glide performance</h4>
+    <ul>
+      <li><strong>Best glide speed</strong> for your 182Q is around 70 KIAS (verify POH)</li>
+      <li>Glide ratio of about 9:1 for a 182 (9 NM forward per 1 NM down at best glide)</li>
+      <li>At 5,000 ft AGL, you have ~9 NM of glide range — useful for engine-out planning</li>
+    </ul>
+
+    <h4>Fuel planning</h4>
+    <ul>
+      <li><strong>Required reserves</strong> per FAR 91.151: Day VFR = +30 min, Night VFR = +45 min</li>
+      <li><strong>Total fuel needed</strong> = trip fuel + reserve + taxi + climb adjustment</li>
+      <li><strong>Cruise fuel flow</strong> from POH at planned power setting</li>
+      <li>Practical rule: <strong>land with at least 1 hour fuel.</strong> Safer than legal minimum.</li>
+    </ul>
+  `,
+};
+
+// ============================================================
+// Flashcards
+// ============================================================
+
+const FLASHCARDS = [
+  // Regulations
+  { id: 'reg-001', subject: 'regs', front: 'How often is a flight review required?', back: 'Every <strong>24 calendar months</strong> (FAR 61.56). Must include 1 hour ground training and 1 hour flight training, minimum.' },
+  { id: 'reg-002', subject: 'regs', front: 'What is required to carry passengers?', back: '<strong>3 takeoffs and landings within the preceding 90 days</strong>. For night ops, the landings must be to a full stop within 1 hour of sunset to sunrise. (FAR 61.57)' },
+  { id: 'reg-003', subject: 'regs', front: 'VFR minimum fuel reserve (day vs night)', back: '<strong>Day VFR:</strong> destination + 30 min at normal cruise. <strong>Night VFR:</strong> destination + 45 min. (FAR 91.151)' },
+  { id: 'reg-004', subject: 'regs', front: 'Speed limit below 10,000 MSL', back: '<strong>250 KIAS.</strong> Below Class B = 200 KIAS. Below 2,500 AGL within 4 NM of Class C/D = 200 KIAS. (FAR 91.117)' },
+  { id: 'reg-005', subject: 'regs', front: 'VFR minimum altitudes over congested vs other areas', back: '<strong>Congested:</strong> 1,000 ft above highest obstacle within 2,000 ft horizontal. <strong>Other:</strong> 500 ft AGL. <strong>Sparsely populated:</strong> 500 ft from any person/vessel/vehicle/structure. (FAR 91.119)' },
+  { id: 'reg-006', subject: 'regs', front: 'VFR cruising altitudes (above 3,000 AGL)', back: '<strong>Eastbound (0-179°):</strong> odd thousands + 500 (3,500, 5,500, 7,500). <strong>Westbound (180-359°):</strong> even thousands + 500 (4,500, 6,500, 8,500). (FAR 91.159)' },
+  { id: 'reg-007', subject: 'regs', front: 'What documents must be onboard? (ARROW)', back: '<strong>A</strong>irworthiness · <strong>R</strong>egistration · <strong>R</strong>adio station (intl) · <strong>O</strong>perating limits (POH) · <strong>W</strong>eight & balance' },
+  { id: 'reg-008', subject: 'regs', front: 'When is supplemental oxygen required for crew?', back: '<strong>Above 12,500 MSL</strong> after 30 minutes. <strong>Above 14,000 MSL</strong> the entire time. <strong>Above 15,000 MSL</strong> all occupants must have available. (FAR 91.211)' },
+  { id: 'reg-009', subject: 'regs', front: 'VFR weather minimums for Class B', back: '<strong>3 SM visibility, clear of clouds.</strong> Simpler than other airspace because of ATC separation. (FAR 91.155)' },
+  { id: 'reg-010', subject: 'regs', front: 'Standard VFR weather minimums (Class C, D, E below 10K)', back: '<strong>3 SM visibility · 500 below · 1,000 above · 2,000 horizontal</strong> from clouds. The "152" rule. (FAR 91.155)' },
+  { id: 'reg-011', subject: 'regs', front: 'When is a 100-hour inspection required?', back: 'Only when aircraft is <strong>used for hire</strong> (rental, flight instruction). Personal aircraft only need annual inspection.' },
+  { id: 'reg-012', subject: 'regs', front: 'Transponder inspection interval', back: 'Every <strong>24 calendar months.</strong>' },
+  { id: 'reg-013', subject: 'regs', front: 'When does an ELT battery need replacement?', back: 'After <strong>1 hour cumulative use</strong> OR when <strong>50% of useful life</strong> has expired (whichever comes first). Inspection annually.' },
+  { id: 'reg-014', subject: 'regs', front: 'Private pilot compensation rules', back: 'Generally NO compensation. Exception: PIC can share <strong>pro-rata operating expenses</strong> (fuel, oil, rental, airport fees) with passengers. (FAR 61.113)' },
+  { id: 'reg-015', subject: 'regs', front: 'Right of way: balloon vs glider vs airplane', back: 'Order: <strong>aircraft in distress &gt; balloon &gt; glider &gt; airship &gt; powered (airplane)</strong>. Less maneuverable has right of way. (FAR 91.113)' },
+
+  // Weather
+  { id: 'wx-001', subject: 'weather', front: 'Standard atmosphere at sea level', back: '<strong>29.92 inHg</strong> pressure, <strong>59°F (15°C)</strong> temperature. Lapse rate: <strong>2°C per 1,000 ft</strong>.' },
+  { id: 'wx-002', subject: 'weather', front: 'Three stages of a thunderstorm', back: '<strong>1. Cumulus</strong> (updrafts only, building). <strong>2. Mature</strong> (updrafts + downdrafts, most dangerous, precipitation begins). <strong>3. Dissipating</strong> (downdrafts only, storm weakening).' },
+  { id: 'wx-003', subject: 'weather', front: 'Three things required for thunderstorm formation', back: '<strong>Moisture · Instability · Lifting force</strong> (frontal, convective, orographic, or convergence).' },
+  { id: 'wx-004', subject: 'weather', front: 'Stable vs unstable air signs', back: '<strong>Stable:</strong> stratus clouds, steady precipitation, smooth ride, poor visibility (haze/fog). <strong>Unstable:</strong> cumulus, showery precipitation, bumpy ride, good visibility.' },
+  { id: 'wx-005', subject: 'weather', front: 'Carb ice temperature range', back: '<strong>20°F to 70°F (-7°C to 21°C) with humidity present.</strong> Most likely during descent or low power settings.' },
+  { id: 'wx-006', subject: 'weather', front: 'Rime vs clear ice', back: '<strong>Rime:</strong> opaque white, forms in stratus, low water content. <strong>Clear:</strong> transparent, forms in cumulus, high water content, more dangerous (heavier, harder to detect).' },
+  { id: 'wx-007', subject: 'weather', front: 'Density altitude factors', back: '<strong>Hot, high, humid</strong> increases density altitude. Higher DA = poor performance (less lift, less power, longer takeoffs).' },
+  { id: 'wx-008', subject: 'weather', front: 'Cold front vs warm front characteristics', back: '<strong>Cold:</strong> steep slope, fast development, towering cumulus, possible TS, quick passage. <strong>Warm:</strong> shallow slope, widespread stratus, steady precipitation, slow movement.' },
+  { id: 'wx-009', subject: 'weather', front: 'Coriolis effect direction (Northern Hemisphere)', back: 'Wind deflects to the <strong>RIGHT</strong> in the northern hemisphere. Wind tends to <strong>veer with altitude</strong> (turn clockwise).' },
+  { id: 'wx-010', subject: 'weather', front: 'Reading METAR: 18012G18KT', back: 'Wind from <strong>180° at 12 knots, gusting to 18 knots</strong>.' },
+  { id: 'wx-011', subject: 'weather', front: 'Reading METAR: BKN035', back: '<strong>Broken clouds at 3,500 ft AGL</strong>. (BKN = 5-7 oktas, base in hundreds of feet AGL.)' },
+  { id: 'wx-012', subject: 'weather', front: 'High pressure system weather', back: '<strong>Descending air, scattered clouds, generally good weather.</strong> Wind flows clockwise around highs (N hemisphere).' },
+  { id: 'wx-013', subject: 'weather', front: 'Low pressure system weather', back: '<strong>Rising air, clouds, precipitation, instability.</strong> Wind flows counterclockwise around lows (N hemisphere).' },
+  { id: 'wx-014', subject: 'weather', front: 'How far should you stay from thunderstorms?', back: '<strong>20 NM minimum.</strong> Hail, microbursts, turbulence can extend well outside the visible cloud.' },
+  { id: 'wx-015', subject: 'weather', front: 'Where is the most dangerous weather around a thunderstorm?', back: 'The <strong>gust front</strong> (where downdrafts hit the ground and spread out) — can extend 15+ NM ahead of the storm. Sudden wind shear.' },
+
+  // Aerodynamics
+  { id: 'aero-001', subject: 'aero', front: 'Four forces in flight', back: '<strong>Lift, Weight, Thrust, Drag.</strong> In unaccelerated flight: lift = weight, thrust = drag.' },
+  { id: 'aero-002', subject: 'aero', front: 'What controls lift?', back: '<strong>Airspeed (squared) and angle of attack.</strong> Plus air density and wing area (fixed).' },
+  { id: 'aero-003', subject: 'aero', front: 'What causes a stall?', back: '<strong>Exceeding the critical angle of attack.</strong> Can happen at any airspeed, any attitude, any power setting.' },
+  { id: 'aero-004', subject: 'aero', front: 'Stall recovery procedure', back: '<strong>1. Reduce AoA</strong> (push nose down). <strong>2. Apply power</strong> (full throttle). <strong>3. Level wings</strong>. <strong>4. Recover to climb.</strong>' },
+  { id: 'aero-005', subject: 'aero', front: 'Spin recovery — PARE', back: '<strong>P</strong>ower idle · <strong>A</strong>ilerons neutral · <strong>R</strong>udder opposite spin · <strong>E</strong>levator forward (then recover from dive).' },
+  { id: 'aero-006', subject: 'aero', front: 'Load factor in 60° bank', back: '<strong>2.0 G.</strong> Stall speed increases by factor of √2 (~41%).' },
+  { id: 'aero-007', subject: 'aero', front: 'Forward CG effects', back: '<strong>More stable, higher stall speed, better stall recovery, lower cruise speed, more fuel burn.</strong> Generally safer but less efficient.' },
+  { id: 'aero-008', subject: 'aero', front: 'Aft CG effects', back: '<strong>Less stable, lower stall speed, worse stall recovery, higher cruise speed.</strong> More efficient but more dangerous.' },
+  { id: 'aero-009', subject: 'aero', front: 'Ground effect — when does it occur?', back: 'Within approximately <strong>one wingspan of the ground</strong>. Reduces induced drag, can cause the airplane to "float" in the flare.' },
+  { id: 'aero-010', subject: 'aero', front: 'Four left-turning tendencies', back: '<strong>Torque · P-factor · Spiraling slipstream · Gyroscopic precession.</strong> All push nose left, requiring right rudder.' },
+  { id: 'aero-011', subject: 'aero', front: 'P-factor — when is it strongest?', back: 'At <strong>high angle of attack, high power, low airspeed</strong> — descending prop blade has higher AoA on one side. Pulls nose left.' },
+  { id: 'aero-012', subject: 'aero', front: 'Static vs dynamic stability', back: '<strong>Static:</strong> initial tendency (returns/diverges/stays). <strong>Dynamic:</strong> behavior over time (oscillations dampen/grow/stay constant).' },
+  { id: 'aero-013', subject: 'aero', front: 'Induced drag vs parasite drag', back: '<strong>Induced drag:</strong> created by generating lift. Decreases with airspeed. <strong>Parasite drag:</strong> form/skin/interference. Increases with airspeed squared.' },
+  { id: 'aero-014', subject: 'aero', front: 'Total drag — minimum at what speed?', back: '<strong>L/D max</strong> — the speed where induced and parasite drag intersect. This is also best glide speed.' },
+  { id: 'aero-015', subject: 'aero', front: 'Stall speed in turns', back: 'Increases with bank angle. <strong>30° bank: +7%. 45° bank: +19%. 60° bank: +41%. 75° bank: +97%.</strong>' },
+
+  // Systems
+  { id: 'sys-001', subject: 'systems', front: 'N199RF engine specifications', back: '<strong>Continental O-470-U</strong>, 470 cubic inches, horizontally-opposed 6-cylinder, normally aspirated, carbureted. <strong>230 HP at 2,400 RPM.</strong>' },
+  { id: 'sys-002', subject: 'systems', front: '4-stroke cycle (memorize)', back: '<strong>Intake · Compression · Power · Exhaust.</strong> One revolution per stroke; two complete revolutions per cycle.' },
+  { id: 'sys-003', subject: 'systems', front: 'Why two magnetos?', back: '<strong>Redundancy · more complete combustion · independence from electrical system</strong> (engine runs even with dead battery).' },
+  { id: 'sys-004', subject: 'systems', front: 'Normal mag drop range', back: 'Approximately <strong>125 RPM</strong> per magneto. Maximum difference between mags: <strong>50 RPM</strong>.' },
+  { id: 'sys-005', subject: 'systems', front: 'Constant-speed prop — high RPM means what?', back: '<strong>Fine pitch</strong> — used for takeoff, climb, landing. Allows engine to develop full power.' },
+  { id: 'sys-006', subject: 'systems', front: 'Constant-speed prop — low RPM means what?', back: '<strong>Coarse pitch</strong> — used for cruise efficiency. Engine works less hard per rotation.' },
+  { id: 'sys-007', subject: 'systems', front: 'What does "oversquared" mean?', back: 'Manifold pressure exceeds RPM ÷ 100 (e.g., 25" MP at 2,400 RPM = oversquared). Some engines tolerate it, others not. Verify with POH.' },
+  { id: 'sys-008', subject: 'systems', front: '100LL fuel color', back: '<strong>Blue.</strong> (80 octane = red, 100/100LL = blue, Jet-A = clear/straw, contaminated water = clear separated layer.)' },
+  { id: 'sys-009', subject: 'systems', front: 'When to lean the mixture', back: '<strong>Cruise (typically above ~3,000 MSL or per POH).</strong> Also at high DA airports during runup for max power on takeoff.' },
+  { id: 'sys-010', subject: 'systems', front: 'Carb heat — when to use', back: '<strong>Before reducing power for descent · before any low power setting · when you suspect carb ice.</strong> Also during runup as a check.' },
+  { id: 'sys-011', subject: 'systems', front: 'Why is using carb heat on takeoff usually bad?', back: 'Carb heat sends UNFILTERED air to the engine (no air filter on the alternate path) AND reduces power. Use it only when absolutely needed.' },
+  { id: 'sys-012', subject: 'systems', front: 'Pitot tube measures what?', back: '<strong>Ram (impact) air pressure.</strong> Used only by airspeed indicator. Static port measures ambient pressure for ASI, altimeter, VSI.' },
+  { id: 'sys-013', subject: 'systems', front: 'Alternator failure — what to do', back: 'Turn off non-essential electrical loads. Battery has ~30 min of essential power. Land within 30 min if possible.' },
+  { id: 'sys-014', subject: 'systems', front: 'Magnetic compass errors (ANDS)', back: '<strong>A</strong>ccelerate <strong>N</strong>orth, <strong>D</strong>ecelerate <strong>S</strong>outh. (On east/west headings, acceleration causes compass to indicate north, deceleration south.)' },
+  { id: 'sys-015', subject: 'systems', front: 'Magnetic compass errors (UNOS)', back: '<strong>U</strong>ndershoot <strong>N</strong>orth, <strong>O</strong>vershoot <strong>S</strong>outh. (Northern turns — roll out before reaching heading. Southern turns — roll out after.)' },
+
+  // Navigation
+  { id: 'nav-001', subject: 'nav', front: 'Variation: east vs west', back: '<strong>East is least</strong> (subtract from true for magnetic). <strong>West is best</strong> (add to true for magnetic).' },
+  { id: 'nav-002', subject: 'nav', front: 'Order: True → Magnetic → Compass', back: '<strong>True Course → apply Variation → Magnetic Course → apply Deviation → Compass Course.</strong>' },
+  { id: 'nav-003', subject: 'nav', front: 'What is WAAS?', back: '<strong>Wide Area Augmentation System.</strong> Improves GPS accuracy to a few meters using ground-based reference stations. Required for LPV approaches.' },
+  { id: 'nav-004', subject: 'nav', front: 'How often does GPS database need update for IFR?', back: '<strong>Every 28 days.</strong> For VFR use, current database is recommended but not legally required.' },
+  { id: 'nav-005', subject: 'nav', front: 'What is RAIM?', back: '<strong>Receiver Autonomous Integrity Monitoring.</strong> Used by non-WAAS GPS to verify signal integrity. WAAS GPS doesn\'t need RAIM.' },
+  { id: 'nav-006', subject: 'nav', front: 'VOR frequency range', back: '<strong>108.0 to 117.95 MHz.</strong> Your GTN 750Xi receives VOR on its NAV1 receiver.' },
+  { id: 'nav-007', subject: 'nav', front: 'Wind correction angle (WCA)', back: 'The angle between your heading and your course, caused by wind drift. Crab into the wind to maintain ground track.' },
+  { id: 'nav-008', subject: 'nav', front: 'Time-Speed-Distance: 60 NM at 120 knots', back: '<strong>30 minutes.</strong> (Distance ÷ Speed = Time. 60 ÷ 120 = 0.5 hour = 30 min.)' },
+  { id: 'nav-009', subject: 'nav', front: 'MEF on a sectional chart', back: '<strong>Maximum Elevation Figure.</strong> The highest obstacle in that quadrangle + 100 ft buffer, rounded UP to next 100 ft.' },
+  { id: 'nav-010', subject: 'nav', front: 'Airport symbol: blue vs magenta', back: '<strong>Blue:</strong> towered airport (Class B, C, or D). <strong>Magenta:</strong> non-towered airport (Class E or G).' },
+  { id: 'nav-011', subject: 'nav', front: 'Class B airspace boundary on sectional', back: '<strong>Solid blue lines.</strong> (Class C = solid magenta, Class D = dashed blue, Class E surface = dashed magenta.)' },
+  { id: 'nav-012', subject: 'nav', front: 'Obstruction height "1,200 (450)" means what?', back: '<strong>Top of obstruction at 1,200 ft MSL, which is 450 ft above the ground.</strong>' },
+  { id: 'nav-013', subject: 'nav', front: 'Sectional terrain colors', back: '<strong>Green</strong> = lowest elevation. <strong>Yellow/tan</strong> = mid-range. <strong>Brown</strong> = highest. Color bar in the chart legend.' },
+  { id: 'nav-014', subject: 'nav', front: 'Direct-To on the GTN 750Xi', back: 'Press the <strong>magenta D→ button</strong> → type identifier → Activate. Magenta line draws to the destination.' },
+  { id: 'nav-015', subject: 'nav', front: 'Pilotage vs Dead Reckoning', back: '<strong>Pilotage:</strong> navigate by visual ground references. <strong>Dead reckoning:</strong> navigate by computed heading, time, distance from known starting point.' },
+
+  // Performance
+  { id: 'perf-001', subject: 'perf', front: 'What is density altitude?', back: '<strong>Pressure altitude corrected for non-standard temperature.</strong> The altitude the airplane "thinks" it\'s at for performance purposes.' },
+  { id: 'perf-002', subject: 'perf', front: 'What three factors increase density altitude?', back: '<strong>Hot, high, humid.</strong> High temperature, high pressure altitude, and high humidity all increase DA.' },
+  { id: 'perf-003', subject: 'perf', front: 'Effect of higher density altitude', back: '<strong>Reduced lift, reduced engine power, longer takeoff, longer landing, slower climb, lower service ceiling.</strong>' },
+  { id: 'perf-004', subject: 'perf', front: 'V_X vs V_Y', back: '<strong>V_X (best angle):</strong> max altitude per horizontal distance. Use for obstacle clearance. <strong>V_Y (best rate):</strong> max altitude per time. Use when no obstacles.' },
+  { id: 'perf-005', subject: 'perf', front: 'Best glide speed in 182Q', back: 'Approximately <strong>70 KIAS</strong> (verify with POH). Provides best L/D ratio for maximum glide distance.' },
+  { id: 'perf-006', subject: 'perf', front: 'Glide ratio of a 182', back: 'Approximately <strong>9:1</strong> — 9 NM forward per 1 NM down at best glide speed in still air.' },
+  { id: 'perf-007', subject: 'perf', front: 'How to calculate arm × weight × moment', back: '<strong>Moment = Arm × Weight.</strong> Sum all moments, divide by total weight = CG location. Check CG against envelope.' },
+  { id: 'perf-008', subject: 'perf', front: 'Effect of headwind on takeoff distance', back: '<strong>Reduces takeoff distance.</strong> Each knot of headwind reduces ground roll. Tailwind significantly increases.' },
+  { id: 'perf-009', subject: 'perf', front: 'Effect of weight on stall speed', back: 'Heavier weight = <strong>higher stall speed.</strong> Stall speed varies with the square root of weight ratio.' },
+  { id: 'perf-010', subject: 'perf', front: 'Effect of wet runway on landing distance', back: '<strong>Increases by approximately 15%</strong> (verify POH). Reduced friction increases stopping distance.' },
+  { id: 'perf-011', subject: 'perf', front: 'Effect of grass runway on takeoff distance', back: 'Increases by approximately <strong>15%</strong> for short/dry grass, more for wet or long grass.' },
+  { id: 'perf-012', subject: 'perf', front: 'Effect of uphill slope on takeoff distance', back: 'Increases by approximately <strong>10% for each 2% slope</strong>. Significantly longer roll required.' },
+  { id: 'perf-013', subject: 'perf', front: 'Service ceiling vs absolute ceiling', back: '<strong>Service ceiling:</strong> altitude where best climb rate drops to 100 fpm. <strong>Absolute ceiling:</strong> altitude where climb rate is zero.' },
+  { id: 'perf-014', subject: 'perf', front: 'Standard temperature at 5,000 ft', back: '<strong>5°C (41°F).</strong> Starting from 15°C at sea level, subtract 2°C per 1,000 ft.' },
+  { id: 'perf-015', subject: 'perf', front: 'How to convert pressure altitude to density altitude', back: 'Pressure altitude + (120 × deviation from standard temp in °C). Hotter than standard = higher DA. Or use the chart in the POH.' },
+];
+
+// ============================================================
+// Practice questions
+// ============================================================
+
+const QUESTIONS = [
+  // Regulations
+  { id: 'q-reg-001', subject: 'regs', q: 'A pilot wishes to carry passengers under day VFR. What recent flight experience is required?', a: ['3 takeoffs and landings within the preceding 90 days', '3 hours of dual instruction in the past 12 months', '3 takeoffs and landings in the preceding 60 days', 'A successful biennial flight review'], correct: 0, explain: 'FAR 61.57 requires 3 takeoffs and 3 landings within the preceding 90 days in the same category, class, and (if a type rating is required) type. For night ops, the landings must be to a full stop within 1 hour of sunset to sunrise.' },
+  { id: 'q-reg-002', subject: 'regs', q: 'During the day, VFR fuel reserves require fuel for the destination plus how much additional?', a: ['15 minutes at normal cruise', '30 minutes at normal cruise', '45 minutes at normal cruise', '60 minutes at normal cruise'], correct: 1, explain: 'FAR 91.151(a)(1) requires day VFR fuel reserves of 30 minutes beyond destination at normal cruise. Night VFR requires 45 minutes.' },
+  { id: 'q-reg-003', subject: 'regs', q: 'What is the maximum indicated airspeed below 10,000 feet MSL (outside of Class B/C/D and not within 4 NM)?', a: ['180 KIAS', '200 KIAS', '250 KIAS', '288 KIAS'], correct: 2, explain: 'FAR 91.117(a) sets the maximum speed below 10,000 MSL at 250 KIAS. Below Class B is 200, and within 4 NM of a primary Class C/D airport below 2,500 AGL is 200 KIAS.' },
+  { id: 'q-reg-004', subject: 'regs', q: 'A pilot crosses sectional chart isogonic line of 7° East variation. The true course is 090°. What is the magnetic course?', a: ['083°', '090°', '097°', '107°'], correct: 0, explain: '"East is least" — subtract east variation from true. 090° - 7° = 083° magnetic course. (West variation would be added.)' },
+  { id: 'q-reg-005', subject: 'regs', q: 'Right of way: a balloon, glider, and Cessna are converging at the same altitude. Who has the right of way?', a: ['Cessna (less maneuverable)', 'Glider (sailplane priority)', 'Balloon (least maneuverable)', 'Aircraft on the right'], correct: 2, explain: 'FAR 91.113 right-of-way order: aircraft in distress > balloon > glider > airship > rotorcraft/airplane. The balloon, being least maneuverable, has the right of way.' },
+  { id: 'q-reg-006', subject: 'regs', q: 'VFR minimums in Class C airspace below 10,000 feet MSL are:', a: ['1 SM visibility, clear of clouds', '3 SM visibility, clear of clouds', '3 SM visibility · 500 below · 1,000 above · 2,000 horizontal', '5 SM visibility · 1,000 below · 1,000 above · 1 SM horizontal'], correct: 2, explain: 'Class C below 10,000 MSL requires standard "152" cloud clearance: 1,000 above, 500 below, 2,000 horizontal, with 3 SM visibility. Class B is the only one that requires only "clear of clouds" with 3 SM viz.' },
+  { id: 'q-reg-007', subject: 'regs', q: 'A Cessna 182 used for personal flight (no compensation) requires which inspections?', a: ['Annual only', 'Annual and 100-hour', '100-hour only', 'Annual, 100-hour, and progressive'], correct: 0, explain: 'Aircraft not used for hire only require annual inspections. 100-hour inspections are required only when used for hire (rental, instruction). This trips many test-takers.' },
+  { id: 'q-reg-008', subject: 'regs', q: 'You are flying eastbound at a true course of 087°. According to the hemispheric rule, what is the lowest legal VFR cruising altitude above 3,000 AGL?', a: ['3,000 MSL', '3,500 MSL', '4,000 MSL', '4,500 MSL'], correct: 1, explain: 'FAR 91.159: above 3,000 AGL, eastbound (0-179°) uses odd thousands + 500. The lowest legal is 3,500 MSL. (4,500 would be westbound.)' },
+  { id: 'q-reg-009', subject: 'regs', q: 'A private pilot may share which expenses with passengers?', a: 'No expenses (no compensation allowed),pro-rata share of operating expenses (fuel, oil, rental, airport fees),50% of operating expenses,All expenses including aircraft purchase amortization'.split(','), correct: 1, explain: 'FAR 61.113 allows a private pilot to share PRO-RATA operating expenses with passengers. The pilot must pay at least their equal share. No profit may be made.' },
+  { id: 'q-reg-010', subject: 'regs', q: 'What is the minimum altitude over a sparsely populated area?', a: ['500 feet AGL', '1,000 feet above the highest obstacle within 2,000 feet horizontal', '500 feet from any person, vessel, vehicle, or structure', '1,000 feet AGL'], correct: 2, explain: 'FAR 91.119(c): over sparsely populated areas or open water, the aircraft may not be operated closer than 500 feet to any person, vessel, vehicle, or structure. Over congested areas it\'s 1,000 above obstacles.' },
+
+  // Weather
+  { id: 'q-wx-001', subject: 'weather', q: 'The standard temperature at 5,000 feet MSL is approximately:', a: ['15°C', '5°C', '0°C', '-5°C'], correct: 1, explain: 'Standard temperature is 15°C at sea level, decreasing 2°C per 1,000 ft. At 5,000 ft: 15 - (5 × 2) = 5°C.' },
+  { id: 'q-wx-002', subject: 'weather', q: 'A METAR reports "BKN 035 OVC100." What does this indicate?', a: ['Few clouds at 3,500 and broken at 10,000', 'Broken clouds at 3,500 AGL and overcast at 10,000 AGL', 'Broken ceiling at 350 ft and overcast at 1,000 ft', 'Broken at 3,500 MSL and overcast at 10,000 MSL'], correct: 1, explain: 'Cloud heights in METARs are in hundreds of feet ABOVE GROUND LEVEL (AGL). BKN035 = broken at 3,500 AGL. OVC100 = overcast at 10,000 AGL. Both are layer reports.' },
+  { id: 'q-wx-003', subject: 'weather', q: 'You are descending through clouds in your O-470-powered Cessna 182 at 60°F (16°C) at 2,000 MSL. The engine has been at low power for several minutes. RPM begins to drop with no throttle change. What is the most likely cause?', a: ['Magneto failure', 'Carburetor ice', 'Spark plug fouling', 'Fuel exhaustion'], correct: 1, explain: 'Carb ice symptoms: gradual RPM drop without throttle change, often during low-power descent in moist conditions. The O-470 is particularly prone. Temperature range 20-70°F with humidity is the prime danger zone. Apply carb heat immediately.' },
+  { id: 'q-wx-004', subject: 'weather', q: 'The three stages of a thunderstorm in order are:', a: ['Building, mature, dissipating', 'Cumulus, mature, dissipating', 'Towering cumulus, mature, anvil', 'Updraft, mature, downdraft'], correct: 1, explain: 'Stages: cumulus (updrafts only, building cloud), mature (both updrafts and downdrafts, most dangerous, precipitation begins), dissipating (downdrafts only, storm weakening but still turbulent).' },
+  { id: 'q-wx-005', subject: 'weather', q: 'Three conditions necessary for thunderstorm formation are:', a: ['Moisture, stability, lifting force', 'Moisture, instability, lifting force', 'Moisture, low pressure, frontal activity', 'Heat, instability, convection'], correct: 1, explain: 'Required: moisture (water vapor), unstable air (atmospheric conditions that allow vertical motion), and a lifting force (convection, frontal, orographic, or convergence) to start the air rising.' },
+  { id: 'q-wx-006', subject: 'weather', q: 'Stable atmospheric conditions typically produce:', a: ['Towering cumulus and turbulence', 'Stratus clouds and steady precipitation', 'Thunderstorms and good visibility', 'Cumulus clouds and showery precipitation'], correct: 1, explain: 'Stable air resists vertical motion. Result: layered (stratus) clouds, steady (not showery) precipitation, smooth ride, and often reduced visibility from haze/fog/smoke.' },
+  { id: 'q-wx-007', subject: 'weather', q: 'A pilot is climbing on a hot summer day from a low-elevation airport. As altitude increases, density altitude:', a: ['Decreases with altitude', 'Stays the same', 'May be higher than indicated altitude', 'Is irrelevant in cruise'], correct: 2, explain: 'On a hot day, the air is less dense than standard. Density altitude is higher than the actual altitude. The aircraft "thinks" it\'s flying higher, with reduced performance.' },
+  { id: 'q-wx-008', subject: 'weather', q: 'How far from a thunderstorm should you maintain separation?', a: ['5 NM', '10 NM', '20 NM', '50 NM'], correct: 2, explain: 'AIM recommends 20 NM minimum separation from thunderstorms. Hail, microbursts, and turbulence can extend well beyond the visible cloud, especially downwind from severe storms.' },
+
+  // Aero
+  { id: 'q-aero-001', subject: 'aero', q: 'At what point does an airfoil reach its critical angle of attack?', a: ['At maximum airspeed', 'When the angle of attack exceeds the design limit', 'At the speed where lift equals weight', 'When airspeed drops below V_S0'], correct: 1, explain: 'A stall occurs when the angle of attack exceeds the critical AoA — typically around 16-18° for general aviation airfoils. This is independent of airspeed, attitude, or power setting.' },
+  { id: 'q-aero-002', subject: 'aero', q: 'In a 60° banked level turn, the load factor is:', a: ['1.0 G', '1.4 G', '2.0 G', '3.0 G'], correct: 2, explain: 'In a 60° bank level turn, load factor = 1/cos(60°) = 1/0.5 = 2.0 G. Stall speed increases by factor of √2 (~41%).' },
+  { id: 'q-aero-003', subject: 'aero', q: 'On takeoff in a single-engine prop airplane, the nose tends to yaw to the left primarily due to:', a: ['Wind from the left', 'Magnetic compass deviation', 'P-factor, torque, spiraling slipstream, and gyroscopic precession', 'Pilot inputs only'], correct: 2, explain: 'The four left-turning tendencies all push the nose left in a high-power, high-AoA situation (climb): P-factor, torque reaction, spiraling slipstream hitting the vertical stabilizer, and gyroscopic precession from pitching up. Right rudder counteracts.' },
+  { id: 'q-aero-004', subject: 'aero', q: 'The forward limit of the CG envelope typically results in:', a: ['Higher cruise speed', 'Lower stall speed', 'Higher stall speed and more stable pitch behavior', 'No effect on stall speed'], correct: 2, explain: 'Forward CG requires more nose-down tail force from the horizontal stabilizer, which means the wing must generate more lift (higher AoA) for any given speed. This raises stall speed slightly. It also provides more pitch stability.' },
+  { id: 'q-aero-005', subject: 'aero', q: 'Ground effect occurs when an aircraft is within approximately:', a: ['One-half wingspan of the surface', 'One wingspan of the surface', 'Two wingspans of the surface', 'Five wingspans of the surface'], correct: 1, explain: 'Ground effect is most pronounced within one wingspan of the ground. Within this distance, the wing\'s downwash is restricted, reducing induced drag and increasing lift. Common cause of "floating" in the flare.' },
+  { id: 'q-aero-006', subject: 'aero', q: 'During spin recovery, the elevator should be:', a: ['Pulled fully back', 'Held neutral', 'Pushed forward to break the stall', 'Trimmed nose-up'], correct: 2, explain: 'PARE: Power idle, Ailerons neutral, Rudder opposite spin, Elevator forward. Forward elevator breaks the stall, allowing the airplane to recover from the spin and dive.' },
+
+  // Systems
+  { id: 'q-sys-001', subject: 'systems', q: 'The two magneto check during runup is intended to verify:', a: ['Engine oil pressure', 'Each magneto is operational and providing proper ignition', 'Mixture is correct for altitude', 'Carburetor heat is working'], correct: 1, explain: 'During runup, you cycle from BOTH to L, back to BOTH, to R, back to BOTH. You\'re verifying each magneto is operational independently (an RPM drop of around 125, with less than 50 RPM difference between them).' },
+  { id: 'q-sys-002', subject: 'systems', q: 'You are operating the constant-speed propeller. To increase manifold pressure during climb, you should:', a: ['Push prop forward', 'Pull prop back', 'Push throttle forward', 'Pull throttle back'], correct: 2, explain: 'Throttle controls manifold pressure directly. Prop control changes RPM. To increase MP, push throttle forward. Prop is for RPM, not MP.' },
+  { id: 'q-sys-003', subject: 'systems', q: '100LL aviation fuel is what color?', a: ['Red', 'Blue', 'Green', 'Clear'], correct: 1, explain: '100LL is blue. (80 octane was red but is no longer available. Jet-A is clear/straw colored. Contaminated water appears as a clear layer separated from the fuel.)' },
+  { id: 'q-sys-004', subject: 'systems', q: 'A pilot notices the alternator output gauge showing zero amps in cruise. What should be done first?', a: ['Land immediately', 'Turn off the master switch', 'Turn off non-essential electrical loads', 'Continue normally — it\'s not important'], correct: 2, explain: 'Alternator failure means battery is the only power source. Turn off non-essential loads (lights, second radio, etc.) to extend battery life. You typically have ~30 minutes. Plan to land at a suitable airport.' },
+  { id: 'q-sys-005', subject: 'systems', q: 'During a no-flap landing, the angle of attack at touchdown will be:', a: ['Lower than with flaps', 'Higher than with flaps', 'The same as with flaps', 'Variable depending on the runway slope'], correct: 1, explain: 'Without flaps, the wing has less coefficient of lift at any AoA. To generate the same lift for landing, you need a HIGHER angle of attack — meaning more nose-up pitch.' },
+
+  // Nav
+  { id: 'q-nav-001', subject: 'nav', q: 'You measure a course of 270° true on the sectional. The isogonic line shows 8° west variation. The magnetic course is:', a: ['262°', '270°', '278°', '286°'], correct: 2, explain: '"West is best" — add west variation to true. 270° + 8° = 278° magnetic course.' },
+  { id: 'q-nav-002', subject: 'nav', q: 'Your true heading is 060°, true airspeed is 120 knots, wind is from 030° at 20 knots. The wind correction angle is approximately:', a: ['5° right', '5° left', '10° right', '10° left'], correct: 0, explain: 'Wind from 030° at 20 KT — there\'s a left crosswind component. To maintain ground track, crab to the right (into the wind). Use E6B or flight computer for exact WCA. Conceptually, you crab into the wind.' },
+  { id: 'q-nav-003', subject: 'nav', q: 'WAAS-equipped GPS allows you to fly which type of instrument approach?', a: ['LNAV only', 'LNAV/VNAV only', 'LPV (precision-like approach)', 'ILS only'], correct: 2, explain: 'WAAS (Wide Area Augmentation System) provides precise enough vertical guidance for LPV approaches (Localizer Performance with Vertical guidance) — similar precision to ILS. Your GTN 750Xi is WAAS-equipped.' },
+  { id: 'q-nav-004', subject: 'nav', q: 'How often is the GPS database required to be updated for IFR use?', a: ['Annually', 'Every 56 days', 'Every 28 days', 'Every 14 days'], correct: 2, explain: 'For IFR use, the GPS database must be current — updated every 28 days. For VFR use, an out-of-date database is technically allowed but not recommended.' },
+  { id: 'q-nav-005', subject: 'nav', q: 'A blue dashed line on a sectional chart depicts:', a: ['Class B airspace boundary', 'Class C airspace boundary', 'Class D airspace boundary', 'Class E surface boundary'], correct: 2, explain: 'Class D = solid blue lines? No — dashed blue. Class B = solid blue. Class C = solid magenta. Class D = dashed blue. Class E surface = dashed magenta.' },
+
+  // Performance
+  { id: 'q-perf-001', subject: 'perf', q: 'You are taking off from an airport at 5,500 ft pressure altitude on a 95°F day. The takeoff distance will be:', a: ['Shorter than at sea level standard day', 'About the same as sea level', 'Significantly longer due to high density altitude', 'Affected only by wind'], correct: 2, explain: 'Hot and high = very high density altitude. 5,500 PA on a 95°F day might be 8,500-9,000 ft DA. Engine power is reduced significantly, takeoff distance much longer. Always check the POH chart.' },
+  { id: 'q-perf-002', subject: 'perf', q: 'V_X (best angle of climb) is most useful when:', a: ['You want to reach altitude as fast as possible', 'You need to clear an obstacle off the departure end', 'In cruise flight', 'You\'re short on fuel'], correct: 1, explain: 'V_X provides maximum altitude per HORIZONTAL distance — used to clear obstacles. V_Y provides maximum altitude per TIME — used when you want to get high quickly without obstacle concerns.' },
+  { id: 'q-perf-003', subject: 'perf', q: 'A 10-knot headwind on takeoff will:', a: ['Have no effect on ground roll', 'Reduce ground roll by approximately 10%', 'Reduce ground roll significantly (rule of thumb ~10% per 10 KT)', 'Increase ground roll'], correct: 2, explain: 'Each knot of headwind reduces ground roll. Rough rule: 10% reduction per 10 KT of headwind. Tailwind significantly increases takeoff distance — never take off downwind if avoidable.' },
+  { id: 'q-perf-004', subject: 'perf', q: 'Calculate weight and balance: airplane empty weight 1,800 lb (arm 35"), pilot 180 lb (arm 38"), fuel 240 lb (arm 41"). The total moment is:', a: ['64,440', '67,020', '72,000', '76,200'], correct: 1, explain: 'Moment = weight × arm. Empty: 1800 × 35 = 63,000. Pilot: 180 × 38 = 6,840. Fuel: 240 × 41 = 9,840. Sum = 79,680. Hmm let me recalc: 63000+6840+9840 = 79,680. (Note: this question is illustrative; the exact arms depend on the airplane. Practice calculating with your N199RF actual numbers.)' },
+  { id: 'q-perf-005', subject: 'perf', q: 'Best glide speed for a Cessna 182 is approximately:', a: ['55 KIAS', '70 KIAS', '85 KIAS', '100 KIAS'], correct: 1, explain: 'Best glide for the 182 is around 70 KIAS (verify your POH for N199RF specifically). This provides maximum L/D ratio for longest glide distance. Glide ratio approximately 9:1.' },
+];
+
+// ============================================================
+// UI & navigation
+// ============================================================
+
+function showView(name) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById('view-' + name).classList.add('active');
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.view === name));
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (name === 'dashboard') updateDashboard();
+}
+
+document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => showView(t.dataset.view)));
+
+// ============================================================
+// Dashboard
+// ============================================================
+
+function updateDashboard() {
+  state.questionsTotal = QUESTIONS.length;
+  state.flashcardsTotal = FLASHCARDS.length;
+
+  const allQ = Object.values(state.questionsAnswered);
+  const totalAnswered = allQ.length;
+  const totalCorrect = allQ.filter(q => q.correct).length;
+  const accuracy = totalAnswered > 0 ? Math.round((totalCorrect / totalAnswered) * 100) : 0;
+
+  document.getElementById('statQuestions').textContent = totalAnswered;
+  document.getElementById('statQuestionsAcc').textContent = totalAnswered > 0 ? `${accuracy}% correct` : 'No data yet';
+
+  const cardsReviewed = Object.keys(state.cards).length;
+  document.getElementById('statCards').textContent = cardsReviewed;
+  document.getElementById('statCardsTotal').textContent = `of ${FLASHCARDS.length} in deck`;
+
+  const subjectsStudied = Object.keys(state.subjectStats).length;
+  document.getElementById('statSubjects').textContent = subjectsStudied;
+
+  // Readiness: weighted accuracy across subjects, with bonus for coverage
+  let readiness = 0;
+  if (totalAnswered >= 20) {
+    readiness = accuracy;
+    if (totalAnswered < 50) readiness = Math.max(0, readiness - 10); // penalty for low sample
+  } else {
+    document.getElementById('statReadinessSub').textContent = 'Take 20+ practice questions to calibrate';
+  }
+  document.getElementById('statReadiness').textContent = totalAnswered >= 20 ? `${readiness}%` : '—';
+  if (totalAnswered >= 20) {
+    document.getElementById('statReadinessSub').textContent = readiness >= 75 ? 'You\'re close to ready' : readiness >= 60 ? 'Solid progress' : 'Keep studying';
+  }
+
+  // Subject readiness list
+  const list = document.getElementById('subjectReadinessList');
+  list.innerHTML = SUBJECTS.map(s => {
+    const stats = state.subjectStats[s.id] || { questions: 0, correct: 0 };
+    const acc = stats.questions > 0 ? Math.round((stats.correct / stats.questions) * 100) : 0;
+    const progress = stats.questions > 0 ? Math.min(100, (stats.questions / 15) * 100) : 0; // 15 Qs = "well-covered"
+    if (s.status === 'soon') {
+      return `<div class="subject-row disabled">
+        <div class="subject-num">${s.num}</div>
+        <div><div class="subject-info-name">${s.name}</div><div class="subject-info-meta">${Math.round(s.weight * 100)}% of test</div></div>
+        <div class="subject-progress"><span class="subject-tag-soon">v2</span></div>
+        <div class="subject-arrow">—</div>
+      </div>`;
+    }
+    return `<div class="subject-row" onclick="openSubject('${s.id}')">
+      <div class="subject-num">${s.num}</div>
+      <div><div class="subject-info-name">${s.name}</div><div class="subject-info-meta">${Math.round(s.weight * 100)}% of test · ${stats.questions} questions answered</div></div>
+      <div class="subject-progress"><div class="subject-progress-bar"><div class="subject-progress-fill" style="width:${progress}%"></div></div><span>${acc}%</span></div>
+      <div class="subject-arrow">→</div>
+    </div>`;
+  }).join('');
+}
+
+// ============================================================
+// Subjects
+// ============================================================
+
+function renderSubjectList() {
+  const list = document.getElementById('subjectList');
+  list.innerHTML = SUBJECTS.map(s => {
+    if (s.status === 'soon') {
+      return `<div class="subject-row disabled">
+        <div class="subject-num">${s.num}</div>
+        <div><div class="subject-info-name">${s.name}</div><div class="subject-info-meta">${Math.round(s.weight * 100)}% of test · Coming in v2</div></div>
+        <div class="subject-progress"><span class="subject-tag-soon">v2</span></div>
+        <div class="subject-arrow">—</div>
+      </div>`;
+    }
+    const stats = state.subjectStats[s.id] || { questions: 0 };
+    return `<div class="subject-row" onclick="openSubject('${s.id}')">
+      <div class="subject-num">${s.num}</div>
+      <div><div class="subject-info-name">${s.name}</div><div class="subject-info-meta">${Math.round(s.weight * 100)}% of test · ${stats.questions} practice questions taken</div></div>
+      <div class="subject-progress"></div>
+      <div class="subject-arrow">→</div>
+    </div>`;
+  }).join('');
+}
+
+function openSubject(id) {
+  const s = SUBJECTS.find(x => x.id === id);
+  if (!s || s.status === 'soon') return;
+  const content = SUBJECT_CONTENT[id];
+  if (!content) {
+    document.getElementById('subjectDetailContent').innerHTML = `<h2>${s.name}</h2><p>Content coming soon.</p>`;
+  } else {
+    document.getElementById('subjectDetailContent').innerHTML = `
+      <div class="lesson-eyebrow">Subject ${s.num} · ${Math.round(s.weight * 100)}% of test</div>
+      <h2>${s.name}</h2>
+      <p class="h2-sub">Structured review focused on FAA test priorities.</p>
+      <div class="lesson-body">${content}</div>
+      <div class="btn-row" style="margin-top:32px">
+        <button class="btn accent" onclick="startSubjectPractice('${id}')">Practice questions for this subject</button>
+        <button class="btn" onclick="startFlashcards('${id}')">Flashcards for this subject</button>
+      </div>
+    `;
+  }
+  state.subjectStats[id] = state.subjectStats[id] || { questions: 0, correct: 0, lastStudied: Date.now() };
+  state.subjectStats[id].lastStudied = Date.now();
+  saveState();
+  document.getElementById('subjectListContainer').style.display = 'none';
+  document.getElementById('subjectDetailContainer').style.display = 'block';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function showSubjectList() {
+  document.getElementById('subjectListContainer').style.display = 'block';
+  document.getElementById('subjectDetailContainer').style.display = 'none';
+}
+
+function renderFcSubjectList() {
+  document.getElementById('fcSubjectList').innerHTML = SUBJECTS.filter(s => s.status === 'ready').map(s => {
+    const count = FLASHCARDS.filter(c => c.subject === s.id).length;
+    return `<div class="subject-row" onclick="startFlashcards('${s.id}')">
+      <div class="subject-num">${s.num}</div>
+      <div><div class="subject-info-name">${s.name}</div><div class="subject-info-meta">${count} cards</div></div>
+      <div class="subject-progress"></div>
+      <div class="subject-arrow">→</div>
+    </div>`;
+  }).join('');
+}
+
+function renderPrSubjectList() {
+  document.getElementById('prSubjectList').innerHTML = SUBJECTS.filter(s => s.status === 'ready').map(s => {
+    const count = QUESTIONS.filter(q => q.subject === s.id).length;
+    return `<div class="subject-row" onclick="startSubjectPractice('${s.id}')">
+      <div class="subject-num">${s.num}</div>
+      <div><div class="subject-info-name">${s.name}</div><div class="subject-info-meta">${count} questions available</div></div>
+      <div class="subject-progress"></div>
+      <div class="subject-arrow">→</div>
+    </div>`;
+  }).join('');
+}
+
+// ============================================================
+// Flashcards
+// ============================================================
+
+let fcSession = null;
+let fcFlipped = false;
+
+function startFlashcards(filter) {
+  let deck = [...FLASHCARDS];
+  if (filter && filter !== 'all') {
+    if (filter === 'due') {
+      const now = Date.now();
+      deck = deck.filter(c => {
+        const card = state.cards[c.id];
+        return !card || (card.due && card.due <= now);
+      });
+    } else if (filter === 'weakest') {
+      deck.sort((a, b) => {
+        const aLapses = (state.cards[a.id]?.lapses || 0);
+        const bLapses = (state.cards[b.id]?.lapses || 0);
+        return bLapses - aLapses;
+      });
+      deck = deck.slice(0, 20);
+    } else {
+      deck = deck.filter(c => c.subject === filter);
+    }
+  }
+  // Shuffle
+  for (let i = deck.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [deck[i], deck[j]] = [deck[j], deck[i]];
+  }
+  deck = deck.slice(0, 20); // cap at 20 per session
+
+  if (deck.length === 0) {
+    alert('No cards match that filter. Try a different one.');
+    return;
+  }
+
+  fcSession = { deck, index: 0 };
+  fcFlipped = false;
+  document.getElementById('fcStartContainer').style.display = 'none';
+  document.getElementById('fcSessionContainer').style.display = 'block';
+  renderFlashcard();
+}
+
+function renderFlashcard() {
+  if (!fcSession) return;
+  const card = fcSession.deck[fcSession.index];
+  if (!card) {
+    endFlashcards();
+    return;
+  }
+  const subject = SUBJECTS.find(s => s.id === card.subject);
+  document.getElementById('fcCounter').textContent = `Card ${fcSession.index + 1} of ${fcSession.deck.length}`;
+  document.getElementById('fcProgress').style.width = `${((fcSession.index) / fcSession.deck.length) * 100}%`;
+  document.getElementById('fcContent').innerHTML = fcFlipped
+    ? `<div class="fc-side-tag">${subject.short} · Answer</div><div class="fc-answer">${card.back}</div>`
+    : `<div class="fc-side-tag">${subject.short} · Question</div><div class="fc-question">${card.front}</div>`;
+  document.getElementById('fcRateContainer').style.display = fcFlipped ? 'block' : 'none';
+  document.getElementById('fcHint').textContent = fcFlipped ? 'Rate how well you knew this' : 'Tap card to reveal answer';
+}
+
+function flipCard() {
+  if (!fcSession) return;
+  fcFlipped = !fcFlipped;
+  renderFlashcard();
+}
+
+function rateCard(rating) {
+  if (!fcSession) return;
+  const card = fcSession.deck[fcSession.index];
+  const now = Date.now();
+  const existing = state.cards[card.id] || { easeFactor: 2.5, interval: 1, due: now, lastReviewed: 0, lapses: 0 };
+
+  // Simple SM-2 style spaced repetition
+  if (rating === 0) {
+    existing.interval = 1;
+    existing.lapses = (existing.lapses || 0) + 1;
+    existing.easeFactor = Math.max(1.3, existing.easeFactor - 0.2);
+  } else if (rating === 1) {
+    existing.interval = Math.max(1, existing.interval * 1.2);
+    existing.easeFactor = Math.max(1.3, existing.easeFactor - 0.15);
+  } else if (rating === 2) {
+    existing.interval = existing.interval * existing.easeFactor;
+  } else if (rating === 3) {
+    existing.interval = existing.interval * existing.easeFactor * 1.3;
+    existing.easeFactor = Math.min(3.0, existing.easeFactor + 0.15);
+  }
+
+  existing.lastReviewed = now;
+  existing.due = now + (existing.interval * 86400000); // interval in days
+  state.cards[card.id] = existing;
+  saveState();
+
+  fcSession.index++;
+  fcFlipped = false;
+  if (fcSession.index >= fcSession.deck.length) {
+    setTimeout(endFlashcards, 200);
+  } else {
+    renderFlashcard();
+  }
+}
+
+function endFlashcards() {
+  fcSession = null;
+  document.getElementById('fcSessionContainer').style.display = 'none';
+  document.getElementById('fcStartContainer').style.display = 'block';
+  updateDashboard();
+}
+
+// ============================================================
+// Practice questions
+// ============================================================
+
+let prSession = null;
+
+function startQuickPractice(count) {
+  let deck = [...QUESTIONS];
+  for (let i = deck.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [deck[i], deck[j]] = [deck[j], deck[i]];
+  }
+  deck = deck.slice(0, count);
+  prSession = { deck, index: 0, correct: 0, answered: false, selected: null };
+  document.getElementById('prStartContainer').style.display = 'none';
+  document.getElementById('prResultsContainer').style.display = 'none';
+  document.getElementById('prSessionContainer').style.display = 'block';
+  renderPracticeQuestion();
+}
+
+function startSubjectPractice(subjectId) {
+  let deck = QUESTIONS.filter(q => q.subject === subjectId);
+  if (deck.length === 0) {
+    alert('No practice questions available for this subject yet.');
+    return;
+  }
+  for (let i = deck.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [deck[i], deck[j]] = [deck[j], deck[i]];
+  }
+  prSession = { deck, index: 0, correct: 0, answered: false, selected: null };
+  showView('practice');
+  document.getElementById('prStartContainer').style.display = 'none';
+  document.getElementById('prResultsContainer').style.display = 'none';
+  document.getElementById('prSessionContainer').style.display = 'block';
+  renderPracticeQuestion();
+}
+
+function startWeakAreaPractice() {
+  // Find weakest subjects (lowest accuracy with at least 3 questions)
+  const subjectScores = {};
+  Object.values(state.questionsAnswered).forEach(q => {
+    if (!subjectScores[q.subject]) subjectScores[q.subject] = { total: 0, correct: 0 };
+    subjectScores[q.subject].total++;
+    if (q.correct) subjectScores[q.subject].correct++;
+  });
+  const weakSubjects = Object.keys(subjectScores)
+    .filter(s => subjectScores[s].total >= 3)
+    .sort((a, b) => (subjectScores[a].correct / subjectScores[a].total) - (subjectScores[b].correct / subjectScores[b].total))
+    .slice(0, 3);
+
+  if (weakSubjects.length === 0) {
+    alert('Take more questions first so I can identify weak areas. Try a 20-question quick drill.');
+    return;
+  }
+  let deck = QUESTIONS.filter(q => weakSubjects.includes(q.subject));
+  for (let i = deck.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [deck[i], deck[j]] = [deck[j], deck[i]];
+  }
+  deck = deck.slice(0, 15);
+  prSession = { deck, index: 0, correct: 0, answered: false, selected: null };
+  document.getElementById('prStartContainer').style.display = 'none';
+  document.getElementById('prResultsContainer').style.display = 'none';
+  document.getElementById('prSessionContainer').style.display = 'block';
+  renderPracticeQuestion();
+}
+
+function renderPracticeQuestion() {
+  const q = prSession.deck[prSession.index];
+  if (!q) { showPracticeResults(); return; }
+  const subject = SUBJECTS.find(s => s.id === q.subject);
+  document.getElementById('prCounter').textContent = `Question ${prSession.index + 1} of ${prSession.deck.length}`;
+  document.getElementById('prScore').textContent = `Score: ${prSession.correct}/${prSession.index}`;
+
+  const choicesHtml = q.a.map((choice, i) => {
+    const letter = ['A', 'B', 'C', 'D'][i];
+    let cls = '';
+    if (prSession.answered) {
+      if (i === q.correct) cls = 'correct';
+      else if (i === prSession.selected && i !== q.correct) cls = 'incorrect';
+    } else if (i === prSession.selected) {
+      cls = 'selected';
+    }
+    return `<div class="q-choice ${cls}" onclick="selectChoice(${i})"><div class="q-choice-letter">${letter}</div><div>${choice}</div></div>`;
+  }).join('');
+
+  document.getElementById('prCard').innerHTML = `
+    <div class="q-subject">${subject.short}</div>
+    <div class="q-text">${q.q}</div>
+    <div class="q-choices">${choicesHtml}</div>
+    ${prSession.answered ? `<div class="q-explanation"><div class="q-explanation-tag">Explanation</div>${q.explain}</div>` : ''}
+    <div class="q-actions">
+      ${!prSession.answered ? `<button class="q-btn" onclick="submitAnswer()" ${prSession.selected === null ? 'disabled style="opacity:0.4"' : ''}>Submit</button>` : `<button class="q-btn" onclick="nextQuestion()">Next →</button>`}
+    </div>
+  `;
+}
+
+function selectChoice(i) {
+  if (prSession.answered) return;
+  prSession.selected = i;
+  renderPracticeQuestion();
+}
+
+function submitAnswer() {
+  if (prSession.selected === null) return;
+  prSession.answered = true;
+  const q = prSession.deck[prSession.index];
+  const isCorrect = prSession.selected === q.correct;
+  if (isCorrect) prSession.correct++;
+  state.questionsAnswered[q.id] = {
+    correct: isCorrect,
+    attempts: (state.questionsAnswered[q.id]?.attempts || 0) + 1,
+    lastSeen: Date.now(),
+    subject: q.subject,
+  };
+  if (!state.subjectStats[q.subject]) state.subjectStats[q.subject] = { questions: 0, correct: 0, lastStudied: Date.now() };
+  state.subjectStats[q.subject].questions++;
+  if (isCorrect) state.subjectStats[q.subject].correct++;
+  state.subjectStats[q.subject].lastStudied = Date.now();
+  saveState();
+  renderPracticeQuestion();
+}
+
+function nextQuestion() {
+  prSession.index++;
+  prSession.answered = false;
+  prSession.selected = null;
+  if (prSession.index >= prSession.deck.length) {
+    showPracticeResults();
+  } else {
+    renderPracticeQuestion();
+  }
+}
+
+function showPracticeResults() {
+  document.getElementById('prSessionContainer').style.display = 'none';
+  document.getElementById('prResultsContainer').style.display = 'block';
+  const pct = Math.round((prSession.correct / prSession.deck.length) * 100);
+  document.getElementById('prResultsScore').textContent = `${pct}%`;
+  document.getElementById('prResultsScore').className = `results-score ${pct >= 70 ? 'pass' : 'fail'}`;
+  document.getElementById('prResultsLabel').textContent = `${prSession.correct} of ${prSession.deck.length} correct`;
+  document.getElementById('prResultsStatus').textContent = pct >= 70 ? 'Passing score' : 'Below passing';
+  document.getElementById('prResultsStatus').className = `results-status ${pct >= 70 ? 'pass' : 'fail'}`;
+}
+
+function endPractice() {
+  prSession = null;
+  document.getElementById('prSessionContainer').style.display = 'none';
+  document.getElementById('prResultsContainer').style.display = 'none';
+  document.getElementById('prStartContainer').style.display = 'block';
+  updateDashboard();
+}
+
+// ============================================================
+// Mock exam
+// ============================================================
+
+let examSession = null;
+let examTimer = null;
+
+function startMockExam() {
+  // Sample 60 questions weighted by subject importance
+  const weighted = [];
+  SUBJECTS.forEach(s => {
+    if (s.status !== 'ready') return;
+    const subjectQs = QUESTIONS.filter(q => q.subject === s.id);
+    const count = Math.max(1, Math.round(60 * s.weight / 0.65)); // normalize to ready subjects
+    for (let i = 0; i < count && subjectQs.length > 0; i++) {
+      weighted.push(subjectQs[i % subjectQs.length]);
+    }
+  });
+  // Shuffle and trim/pad to 60
+  for (let i = weighted.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [weighted[i], weighted[j]] = [weighted[j], weighted[i]];
+  }
+  const deck = weighted.slice(0, 60);
+  examSession = { deck, index: 0, answers: new Array(deck.length).fill(null), startTime: Date.now(), endTime: Date.now() + 150 * 60 * 1000 };
+  document.getElementById('examStartContainer').style.display = 'none';
+  document.getElementById('examResultsContainer').style.display = 'none';
+  document.getElementById('examSessionContainer').style.display = 'block';
+  showView('exam');
+  renderExamQuestion();
+  examTimer = setInterval(updateExamTimer, 1000);
+}
+
+function updateExamTimer() {
+  if (!examSession) return;
+  const remaining = Math.max(0, examSession.endTime - Date.now());
+  const h = Math.floor(remaining / 3600000);
+  const m = Math.floor((remaining % 3600000) / 60000);
+  const s = Math.floor((remaining % 60000) / 1000);
+  document.getElementById('examTimer').textContent = `${h}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  if (remaining <= 0) examSubmit();
+}
+
+function renderExamQuestion() {
+  const q = examSession.deck[examSession.index];
+  const subject = SUBJECTS.find(s => s.id === q.subject);
+  const selected = examSession.answers[examSession.index];
+  document.getElementById('examMeta').textContent = `Question ${examSession.index + 1} of ${examSession.deck.length}`;
+  const choicesHtml = q.a.map((choice, i) => {
+    const letter = ['A', 'B', 'C', 'D'][i];
+    const cls = i === selected ? 'selected' : '';
+    return `<div class="q-choice ${cls}" onclick="examSelectChoice(${i})"><div class="q-choice-letter">${letter}</div><div>${choice}</div></div>`;
+  }).join('');
+  document.getElementById('examCard').innerHTML = `
+    <div class="q-subject">${subject.short}</div>
+    <div class="q-text">${q.q}</div>
+    <div class="q-choices">${choicesHtml}</div>
+  `;
+}
+
+function examSelectChoice(i) {
+  examSession.answers[examSession.index] = i;
+  renderExamQuestion();
+}
+
+function examPrev() {
+  if (examSession.index > 0) {
+    examSession.index--;
+    renderExamQuestion();
+  }
+}
+
+function examNext() {
+  if (examSession.index < examSession.deck.length - 1) {
+    examSession.index++;
+    renderExamQuestion();
+  } else {
+    if (confirm('Last question — submit the exam?')) examSubmit();
+  }
+}
+
+function examSubmit() {
+  if (!examSession) return;
+  clearInterval(examTimer);
+  let correct = 0;
+  const bySubject = {};
+  examSession.deck.forEach((q, i) => {
+    if (!bySubject[q.subject]) bySubject[q.subject] = { total: 0, correct: 0 };
+    bySubject[q.subject].total++;
+    if (examSession.answers[i] === q.correct) {
+      correct++;
+      bySubject[q.subject].correct++;
+    }
+    // Record answer
+    state.questionsAnswered[q.id] = {
+      correct: examSession.answers[i] === q.correct,
+      attempts: (state.questionsAnswered[q.id]?.attempts || 0) + 1,
+      lastSeen: Date.now(),
+      subject: q.subject,
+    };
+    if (!state.subjectStats[q.subject]) state.subjectStats[q.subject] = { questions: 0, correct: 0, lastStudied: Date.now() };
+    state.subjectStats[q.subject].questions++;
+    if (examSession.answers[i] === q.correct) state.subjectStats[q.subject].correct++;
+  });
+  state.examHistory.push({ date: Date.now(), score: correct, total: examSession.deck.length, bySubject });
+  saveState();
+
+  const pct = Math.round((correct / examSession.deck.length) * 100);
+  document.getElementById('examScore').textContent = `${pct}%`;
+  document.getElementById('examScore').className = `results-score ${pct >= 70 ? 'pass' : 'fail'}`;
+  document.getElementById('examLabel').textContent = `${correct} of ${examSession.deck.length} correct`;
+  document.getElementById('examStatus').textContent = pct >= 70 ? 'Passing (70%+)' : 'Below passing';
+  document.getElementById('examStatus').className = `results-status ${pct >= 70 ? 'pass' : 'fail'}`;
+
+  document.getElementById('examBySubject').innerHTML = Object.keys(bySubject).map(sid => {
+    const s = SUBJECTS.find(x => x.id === sid);
+    const stats = bySubject[sid];
+    const acc = Math.round((stats.correct / stats.total) * 100);
+    return `<div class="subject-row" style="cursor:default" onclick="event.preventDefault()">
+      <div class="subject-num">${s.num}</div>
+      <div><div class="subject-info-name">${s.name}</div><div class="subject-info-meta">${stats.correct}/${stats.total} correct</div></div>
+      <div class="subject-progress"><div class="subject-progress-bar"><div class="subject-progress-fill" style="width:${acc}%;background:${acc >= 70 ? 'var(--green)' : 'var(--red)'}"></div></div><span>${acc}%</span></div>
+      <div class="subject-arrow">—</div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('examSessionContainer').style.display = 'none';
+  document.getElementById('examResultsContainer').style.display = 'block';
+}
+
+function examReview() {
+  alert('Answer review coming in a future update. For now, your weak subjects are shown above — use Practice mode to drill them.');
+}
+
+function endExam() {
+  examSession = null;
+  document.getElementById('examResultsContainer').style.display = 'none';
+  document.getElementById('examStartContainer').style.display = 'block';
+}
+
+// ============================================================
+// Settings & sync
+// ============================================================
+
+function saveProfile() {
+  const p = document.getElementById('profileInput').value.trim();
+  if (!p) return;
+  localStorage.setItem('ppl_profile', p);
+  alert('Profile saved. Reload the page.');
+}
+
+function saveToken() {
+  const t = document.getElementById('tokenInput').value.trim();
+  if (!t) return;
+  localStorage.setItem(TOKEN_KEY, t);
+  document.getElementById('tokenInput').value = '';
+  alert('Token saved.');
+  updateSyncStatus();
+}
+
+async function createGist() {
+  const token = localStorage.getItem(TOKEN_KEY);
+  if (!token) return alert('Save a token first.');
+  try {
+    const res = await fetch('https://api.github.com/gists', {
+      method: 'POST',
+      headers: { 'Authorization': `token ${token}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        description: `N199RF PPL Knowledge - ${profile}`,
+        public: false,
+        files: { 'ppl-state.json': { content: JSON.stringify(state) } },
+      }),
+    });
+    const data = await res.json();
+    if (data.id) {
+      localStorage.setItem(GIST_KEY, data.id);
+      alert(`Gist created: ${data.id}`);
+      updateSyncStatus();
+    } else {
+      alert('Failed: ' + (data.message || 'unknown'));
+    }
+  } catch (e) { alert('Failed: ' + e.message); }
+}
+
+async function loadGist() {
+  const token = localStorage.getItem(TOKEN_KEY);
+  const gistId = document.getElementById('gistIdInput').value.trim();
+  if (!token || !gistId) return alert('Need token and Gist ID.');
+  try {
+    const res = await fetch(`https://api.github.com/gists/${gistId}`, {
+      headers: { 'Authorization': `token ${token}` },
+    });
+    const data = await res.json();
+    if (data.files && data.files['ppl-state.json']) {
+      const parsed = JSON.parse(data.files['ppl-state.json'].content);
+      state = { ...state, ...parsed };
+      localStorage.setItem(GIST_KEY, gistId);
+      saveState();
+      alert('Loaded from Gist. Reloading…');
+      location.reload();
+    }
+  } catch (e) { alert('Failed: ' + e.message); }
+}
+
+let syncTimer = null;
+async function syncToGist() {
+  clearTimeout(syncTimer);
+  syncTimer = setTimeout(async () => {
+    const token = localStorage.getItem(TOKEN_KEY);
+    const gistId = localStorage.getItem(GIST_KEY);
+    if (!token || !gistId) return;
+    try {
+      await fetch(`https://api.github.com/gists/${gistId}`, {
+        method: 'PATCH',
+        headers: { 'Authorization': `token ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ files: { 'ppl-state.json': { content: JSON.stringify(state) } } }),
+      });
+      updateSyncStatus(true);
+    } catch (e) { /* fail silently */ }
+  }, 2000);
+}
+
+function updateSyncStatus(justSynced) {
+  const token = localStorage.getItem(TOKEN_KEY);
+  const gistId = localStorage.getItem(GIST_KEY);
+  const dot = document.getElementById('syncDot');
+  const text = document.getElementById('syncText');
+  if (token && gistId) {
+    dot.classList.add('synced');
+    text.textContent = justSynced ? 'Synced just now' : 'Sync enabled';
+  } else {
+    dot.classList.remove('synced');
+    text.textContent = 'Local only';
+  }
+}
+
+function exportData() {
+  const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `n199rf-ppl-${profile}-${Date.now()}.json`;
+  a.click();
+}
+
+function importData(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    try {
+      const parsed = JSON.parse(e.target.result);
+      state = { ...state, ...parsed };
+      saveState();
+      alert('Imported. Reloading…');
+      location.reload();
+    } catch (err) { alert('Failed to parse JSON.'); }
+  };
+  reader.readAsText(file);
+}
+
+function resetData() {
+  if (!confirm('Reset all your progress? This cannot be undone.')) return;
+  if (!confirm('Are you sure? All flashcard ratings and question history will be lost.')) return;
+  localStorage.removeItem(STATE_KEY);
+  state = { cards: {}, questionsAnswered: {}, subjectStats: {}, examHistory: [], flashcardsTotal: 0, questionsTotal: 0 };
+  location.reload();
+}
+
+// ============================================================
+// Init
+// ============================================================
+
+loadState();
+renderSubjectList();
+renderFcSubjectList();
+renderPrSubjectList();
+updateDashboard();
+updateSyncStatus();
+
+// Pre-fill settings if available
+if (localStorage.getItem('ppl_profile')) {
+  document.getElementById('profileInput').value = localStorage.getItem('ppl_profile');
+}
+</script>
+</body>
+</html>

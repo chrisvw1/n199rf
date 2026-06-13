@@ -1,0 +1,18 @@
+{
+  "name": "N199RF Pilot Reference",
+  "short_name": "N199RF",
+  "description": "Aviation training and avionics reference for N199RF",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FBFBFD",
+  "theme_color": "#0071E3",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='96' fill='%230071E3'/><text x='256' y='340' font-family='-apple-system,sans-serif' font-size='280' font-weight='700' text-anchor='middle' fill='white'>N</text></svg>",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
