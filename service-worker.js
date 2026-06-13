@@ -1,7 +1,7 @@
 // N199RF Pilot Reference - Service Worker
 // Caches all pages for offline use after first visit
 
-const CACHE_NAME = 'n199rf-v3-c150';
+const CACHE_NAME = 'n199rf-v4-flights';
 const ASSETS = [
   '/',
   '/course/',
@@ -11,6 +11,10 @@ const ASSETS = [
   '/gtn750/',
   '/gfc500/',
   '/flight-1-flint-hills/',
+  '/flight-2-kict-class-c/',
+  '/flight-3-beaumont/',
+  '/flight-4-hutchinson/',
+  '/flight-5-jabara/',
   '/manifest.json',
   // Google Fonts (cached on first load)
   'https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap',

@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flight 2: Class C at KICT · N199RF</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #FBFBFD; --surface: #FFFFFF; --surface-2: #F5F5F7;
+  --ink: #1D1D1F; --ink-2: #424245; --ink-3: #86868B;
+  --line: #D2D2D7; --line-2: #E8E8ED;
+  --accent: #0071E3; --green: #34C759; --orange: #FF9500; --red: #FF3B30; --purple: #5856D6;
+  --shadow: 0 4px 16px rgba(0,0,0,0.06);
+  --radius: 14px; --radius-lg: 22px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--ink); font-family: 'Inter', -apple-system, sans-serif; line-height: 1.6; -webkit-font-smoothing: antialiased; padding: 0; }
+.wrap { max-width: 820px; margin: 0 auto; padding: 40px 24px 80px; }
+
+.hero { text-align: center; padding: 32px 0 48px; border-bottom: 1px solid var(--line-2); margin-bottom: 48px; }
+.eyebrow { font-size: 12px; font-weight: 600; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 14px; }
+h1 { font-family: 'Fraunces', serif; font-size: clamp(34px, 6vw, 54px); font-weight: 400; letter-spacing: -0.03em; line-height: 1.05; margin-bottom: 18px; }
+h1 em { font-style: italic; color: var(--ink-2); font-weight: 300; }
+.lede { color: var(--ink-2); font-size: 18px; max-width: 600px; margin: 0 auto; }
+
+.crew { display: flex; gap: 12px; justify-content: center; margin-top: 32px; flex-wrap: wrap; }
+.crew-pill { background: var(--surface); border: 1px solid var(--line-2); padding: 10px 16px; border-radius: 999px; display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 500; }
+.crew-avatar { width: 26px; height: 26px; border-radius: 50%; background: linear-gradient(135deg, var(--ink), #3A3A3C); color: #fff; display: flex; align-items: center; justify-content: center; font-family: 'Fraunces', serif; font-size: 13px; font-weight: 500; }
+.crew-avatar.b { background: linear-gradient(135deg, #5856D6, #AF52DE); }
+.crew-role { color: var(--ink-3); font-weight: 500; }
+
+h2 { font-family: 'Fraunces', serif; font-size: 32px; font-weight: 500; letter-spacing: -0.02em; margin: 64px 0 8px; line-height: 1.2; }
+.h2-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; color: var(--accent); text-transform: uppercase; margin-bottom: 8px; }
+.h2-sub { color: var(--ink-3); font-size: 15px; margin-bottom: 28px; }
+
+h3 { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 500; letter-spacing: -0.015em; margin: 32px 0 10px; }
+p { margin-bottom: 14px; color: var(--ink-2); }
+strong { color: var(--ink); font-weight: 600; }
+
+.callout { background: var(--surface); border-left: 3px solid var(--accent); padding: 18px 22px; border-radius: 0 var(--radius) var(--radius) 0; margin: 18px 0; }
+.callout.warn { border-left-color: var(--orange); background: #FFF8EF; }
+.callout.danger { border-left-color: var(--red); background: #FFF1F0; }
+.callout.note { border-left-color: var(--green); background: #F0FBF4; }
+.callout-tag { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px; color: var(--accent); }
+.callout.warn .callout-tag { color: var(--orange); }
+.callout.danger .callout-tag { color: var(--red); }
+.callout.note .callout-tag { color: var(--green); }
+
+.steps { counter-reset: step; list-style: none; padding: 0; margin: 18px 0; }
+.steps > li {
+  counter-increment: step; padding-left: 56px; position: relative;
+  margin-bottom: 18px; min-height: 36px;
+}
+.steps > li::before {
+  content: counter(step); position: absolute; left: 0; top: 0;
+  width: 36px; height: 36px; border-radius: 50%; background: var(--ink); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Fraunces', serif; font-weight: 500; font-size: 16px;
+}
+.steps li strong { color: var(--ink); }
+
+.key {
+  display: inline-block; padding: 2px 8px; border-radius: 6px;
+  background: var(--surface-2); border: 1px solid var(--line);
+  font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 600;
+  color: var(--ink); margin: 0 2px;
+}
+.key.red { background: #FFF1F0; border-color: #FFCDD2; color: #B71C1C; }
+.key.green { background: #F0FBF4; border-color: #BBE5C5; color: #1B5E20; }
+.key.blue { background: #EAF2FB; border-color: #B6D4F2; color: #0D47A1; }
+
+.route-summary { background: var(--surface); border: 1px solid var(--line-2); border-radius: var(--radius-lg); padding: 24px; margin: 24px 0 40px; }
+.route-row { display: grid; grid-template-columns: 130px 1fr; gap: 14px; padding: 10px 0; border-bottom: 1px solid var(--line-2); align-items: baseline; }
+.route-row:last-child { border-bottom: 0; }
+.route-key { font-size: 12px; font-weight: 600; letter-spacing: 0.05em; color: var(--ink-3); text-transform: uppercase; }
+.route-val { font-size: 15px; color: var(--ink); }
+.route-val code { font-family: 'JetBrains Mono', monospace; font-size: 13px; }
+
+.waypoint-list { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 14px 0; }
+.wp { background: var(--ink); color: #fff; padding: 6px 12px; border-radius: 8px; font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 600; }
+.wp-arrow { color: var(--ink-3); font-size: 16px; }
+
+.phase-card {
+  background: var(--surface); border: 1px solid var(--line-2);
+  border-radius: var(--radius-lg); padding: 28px; margin: 20px 0;
+}
+.phase-num {
+  display: inline-flex; align-items: center; gap: 10px; margin-bottom: 12px;
+  font-size: 12px; font-weight: 700; letter-spacing: 0.1em; color: var(--accent); text-transform: uppercase;
+}
+.phase-num-circle {
+  width: 28px; height: 28px; border-radius: 50%; background: var(--accent); color: #fff;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-family: 'Fraunces', serif; font-size: 14px; font-weight: 500;
+}
+.phase-title { font-family: 'Fraunces', serif; font-size: 26px; font-weight: 500; letter-spacing: -0.02em; margin-bottom: 4px; }
+.phase-meta { color: var(--ink-3); font-size: 13px; margin-bottom: 18px; font-weight: 500; }
+
+.role-tag {
+  display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 4px;
+  letter-spacing: 0.05em; margin-right: 6px; vertical-align: middle; position: relative; top: -2px;
+}
+.role-tag.brenda { background: #EAE9FC; color: #5856D6; }
+.role-tag.chris { background: #E4E4E7; color: #1D1D1F; }
+.role-tag.both { background: var(--surface-2); color: var(--ink-2); }
+
+.radio-call {
+  background: linear-gradient(180deg, #1D1D1F, #2C2C2E); color: #fff;
+  border-radius: var(--radius); padding: 16px 18px; margin: 12px 0;
+  font-family: 'JetBrains Mono', monospace; font-size: 14px; line-height: 1.5;
+}
+.radio-call .speaker { color: rgba(255,255,255,0.6); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; margin-bottom: 4px; }
+.radio-call em { color: #FFB84D; font-style: normal; }
+
+ul.bare { list-style: none; padding: 0; }
+ul.bare li { padding: 8px 0; border-bottom: 1px solid var(--line-2); display: flex; justify-content: space-between; gap: 14px; }
+ul.bare li:last-child { border-bottom: 0; }
+ul.bare li > span:first-child { color: var(--ink); font-weight: 500; }
+ul.bare li > span:last-child { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--ink-2); font-weight: 600; }
+
+ul:not(.bare) { padding-left: 22px; margin-bottom: 14px; }
+ul:not(.bare) li { color: var(--ink-2); margin-bottom: 6px; }
+
+.divider { border: 0; border-top: 1px solid var(--line-2); margin: 56px 0; }
+
+.toc { background: var(--surface); border: 1px solid var(--line-2); border-radius: var(--radius); padding: 20px 24px; margin-bottom: 40px; }
+.toc-title { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; color: var(--ink-3); text-transform: uppercase; margin-bottom: 12px; }
+.toc ol { padding-left: 22px; }
+.toc li { padding: 4px 0; }
+.toc a { color: var(--ink); text-decoration: none; font-weight: 500; }
+.toc a:hover { color: var(--accent); }
+
+/* ── Frequency VERIFY fill-in box — render [VERIFY: …] as a visible blank, never an invented number ── */
+.verify { display: inline-flex; align-items: baseline; gap: 7px; background: #FFF8EF; border: 1px dashed var(--orange); border-radius: 8px; padding: 2px 9px; margin: 0 1px; line-height: 1.3; }
+.verify-label { font-size: 9px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--orange); position: relative; top: -1px; }
+.verify-what { font-size: 13px; font-weight: 500; color: var(--ink-2); }
+.verify-blank { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--ink-3); letter-spacing: 0.08em; }
+
+/* ── Generic [fill-in] (runway, ATIS letter, taxiway) ── */
+.fill { font-family: 'JetBrains Mono', monospace; font-size: 0.9em; color: var(--ink-3); border-bottom: 1px dashed var(--line); padding: 0 3px; }
+
+/* ── Debrief checklist (tappable) ── */
+.checklist { list-style: none; padding: 0; margin: 8px 0; }
+.checklist li { display: flex; gap: 12px; align-items: flex-start; padding: 11px 2px; border-bottom: 1px solid var(--line-2); color: var(--ink-2); }
+.checklist li:last-child { border-bottom: 0; }
+.checklist input[type="checkbox"] { appearance: none; -webkit-appearance: none; width: 22px; height: 22px; border: 1.5px solid var(--line); border-radius: 6px; flex-shrink: 0; margin-top: 1px; cursor: pointer; position: relative; transition: all 0.15s; background: var(--surface); }
+.checklist input[type="checkbox"]:checked { background: var(--accent); border-color: var(--accent); }
+.checklist input[type="checkbox"]:checked::after { content: "✓"; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 14px; font-weight: 700; }
+.checklist label { cursor: pointer; }
+
+@media (max-width: 640px) {
+  .wrap { padding: 24px 16px 60px; }
+  .steps > li { padding-left: 46px; }
+  .steps > li::before { width: 30px; height: 30px; font-size: 14px; }
+  .route-row { grid-template-columns: 100px 1fr; }
+}
+</style>
+<link rel="manifest" href="/manifest.json"><meta name="theme-color" content="#0071E3"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="apple-mobile-web-app-title" content="N199RF"><script>if("serviceWorker" in navigator){window.addEventListener("load",()=>{navigator.serviceWorker.register("/service-worker.js").catch(e=>console.log("SW failed:",e));});}</script></head>
+<body>
+<div class="wrap">
+
+<!-- ===== HERO ===== -->
+<div class="hero">
+  <div class="eyebrow">Flight 2 of 5 · Approximately 1.5 hours</div>
+  <h1>Wichita <em>Class C</em></h1>
+  <p class="lede">Your first tower visit. Request flight following, enter Wichita's Class C, transit or land at Eisenhower (KICT), and come home. This is the highest-workload flight of the five — and the one that makes talking to ATC feel routine.</p>
+  <div class="crew">
+    <div class="crew-pill"><div class="crew-avatar b">B</div><span>Brenda</span><span class="crew-role">· Pilot in Command</span></div>
+    <div class="crew-pill"><div class="crew-avatar">C</div><span>Chris</span><span class="crew-role">· Right seat · Radios &amp; avionics</span></div>
+  </div>
+</div>
+
+<!-- ===== TOC ===== -->
+<div class="toc">
+  <div class="toc-title">What's in this playbook</div>
+  <ol>
+    <li><a href="#before">Before you go — aircraft, house rules, safety</a></li>
+    <li><a href="#phase1">Phase 1 · Night-before brief</a></li>
+    <li><a href="#phase2">Phase 2 · Cold cockpit &amp; preflight</a></li>
+    <li><a href="#phase3">Phase 3 · Avionics power-up &amp; setup</a></li>
+    <li><a href="#phase4">Phase 4 · Taxi &amp; run-up</a></li>
+    <li><a href="#phase5">Phase 5 · Departure from 1K1</a></li>
+    <li><a href="#phase6">Phase 6 · Getting into the Class C</a></li>
+    <li><a href="#phase7">Phase 7 · The handoff to Tower</a></li>
+    <li><a href="#phase8">Phase 8 · Pattern &amp; landing</a></li>
+    <li><a href="#phase9">Phase 9 · On the ground at KICT</a></li>
+    <li><a href="#phase10">Phase 10 · Departure &amp; return</a></li>
+    <li><a href="#debrief">Debrief checklist</a></li>
+    <li><a href="#reference">Quick reference card</a></li>
+  </ol>
+</div>
+
+<!-- ===== ROUTE SUMMARY ===== -->
+<div class="route-summary">
+  <div class="route-row"><div class="route-key">Route</div><div class="route-val">
+    <div class="waypoint-list">
+      <span class="wp">1K1</span><span class="wp-arrow">→</span>
+      <span class="wp">Wichita Approach</span><span class="wp-arrow">→</span>
+      <span class="wp">KICT</span><span class="wp-arrow">→</span>
+      <span class="wp">1K1</span>
+    </div>
+  </div></div>
+  <div class="route-row"><div class="route-key">Distance</div><div class="route-val">~25 NM round trip</div></div>
+  <div class="route-row"><div class="route-key">Time</div><div class="route-val">~1.5 hours with a full stop</div></div>
+  <div class="route-row"><div class="route-key">Conditions</div><div class="route-val">Good VFR, light winds preferred for a first tower visit</div></div>
+  <div class="route-row"><div class="route-key">Airspace</div><div class="route-val">KICT Wichita Class C — note where the shelf steps down between 1K1 and the field</div></div>
+  <div class="route-row"><div class="route-key">Builds</div><div class="route-val">ATC comms, Class C entry, frequency-lookup workflow, split-COM operation, squawk entry</div></div>
+</div>
+
+<!-- ===== BEFORE YOU GO ===== -->
+<h2 id="before"><span class="h2-eyebrow">Before you go</span>Brief the airplane</h2>
+<p class="h2-sub">Repeated on every flight page so you can brief one sortie standalone.</p>
+
+<div class="callout warn">
+<div class="callout-tag">Verify everything · this is a study aid</div>
+Verify all frequencies, airspace, and fuel against current charts, NOTAMs, and ForeFlight. These are study/briefing aids, not flight plans. Fly with your CFI — Chris is a student pilot.
+</div>
+
+<div class="route-summary">
+  <div class="route-row"><div class="route-key">Aircraft</div><div class="route-val">N199RF — 1979 Cessna 182Q · Continental O-470 (carbureted) · constant-speed prop</div></div>
+  <div class="route-row"><div class="route-key">Base</div><div class="route-val">1K1 Stearman Field, Benton KS · field elev <code>1,364 ft</code> · KICT Class C just to the west</div></div>
+  <div class="route-row"><div class="route-key">Panel</div><div class="route-val">G3X Touch (PFD + EIS) · GTN 750Xi (GPS / NAV1 / <strong>COM1</strong>) · GTR 205 (<strong>COM2</strong>) · GFC 500 AP w/ GMC 507 · GI 275 standby · GMA 350c audio · GTX 345R (ADS-B In/Out) · CIES fuel senders</div></div>
+</div>
+
+<div class="callout danger">
+<div class="callout-tag">COM1 is not COM2</div>
+<strong>COM1 and COM2 are independent radios tuned at different physical locations.</strong> COM1 lives on the GTN 750Xi. COM2 is the separate GTR 205 box. Tuning COM2 means reaching for a different unit — and you pick which one you transmit on at the <strong>GMA 350c audio panel</strong>. This was the recurring point of confusion. Always know which radio is hot before you key the mic.
+</div>
+
+<div class="callout note">
+<div class="callout-tag">House rules · every flight</div>
+<ul>
+  <li><strong>Prop full forward by midfield downwind.</strong> Never pull the prop back on short final.</li>
+  <li><strong>Touch-and-go, in order:</strong> carb heat OFF → flaps 20° → full throttle. In that order, before power.</li>
+  <li><strong>Landing:</strong> separate the power reduction from the flare. The flare is a slow 3–4 second motion, not one input — maintain and increase back pressure through rollout.</li>
+  <li><strong>Climb mantra:</strong> pitch for speed, power for altitude. Set attitude with the yoke first, then trim off the pressure.</li>
+</ul>
+</div>
+
+<hr class="divider">
+
+<!-- ===== PHASE 1 ===== -->
+<div class="phase-card" id="phase1">
+  <div class="phase-num"><span class="phase-num-circle">1</span>Phase 1</div>
+  <div class="phase-title">Night-before brief</div>
+  <div class="phase-meta">The evening before · Both of you · At the kitchen table</div>
+
+  <ul>
+    <li>Pull up the <strong>KICT airport diagram</strong> and the Class C floor/ceiling rings on ForeFlight. Note where the shelf steps down between 1K1 and the field.</li>
+    <li>Decide your request <em>now</em>: <strong>transition</strong> (low pass / stay in the system and come home) vs. <strong>full stop</strong> (taxi in, shut down, taxi back out). For a first visit, full stop is calmer than it sounds and gives you a breather.</li>
+  </ul>
+
+  <div class="callout note">
+    <div class="callout-tag">Write this on your kneeboard — comm sequence in order</div>
+    <div class="waypoint-list">
+      <span class="wp">ATIS</span><span class="wp-arrow">→</span>
+      <span class="wp">Approach</span><span class="wp-arrow">→</span>
+      <span class="wp">Tower</span><span class="wp-arrow">→</span>
+      <span class="wp">Ground</span><span class="wp-arrow">→</span>
+      <span class="wp">Departure</span>
+    </div>
+    Wichita Approach → Wichita Tower → Ground (after landing) → Wichita Departure/Approach (leaving).
+  </div>
+</div>
+
+<!-- ===== PHASE 2 ===== -->
+<div class="phase-card" id="phase2">
+  <div class="phase-num"><span class="phase-num-circle">2</span>Phase 2</div>
+  <div class="phase-title">Cold cockpit &amp; preflight</div>
+  <div class="phase-meta">~15 minutes · Master OFF</div>
+
+  <ol class="steps">
+    <li><strong>Standard 182Q walkaround.</strong> Fuel to a known quantity and <strong>enter fuel-on-board into the GTN</strong> so the fuel-at-destination page is meaningful.</li>
+    <li><strong>Confirm the GTX 345R is set to <span class="key green">ALT</span> (Mode C)</strong> so ADS-B and the transponder are live before you ever talk to Approach.</li>
+  </ol>
+</div>
+
+<!-- ===== PHASE 3 ===== -->
+<div class="phase-card" id="phase3">
+  <div class="phase-num"><span class="phase-num-circle">3</span>Phase 3</div>
+  <div class="phase-title">Avionics power-up &amp; setup</div>
+  <div class="phase-meta">~5 minutes · This is the skill of the day</div>
+
+  <ol class="steps">
+    <li><strong>Let the G3X and GTN boot fully.</strong> Confirm GPS position and that ADS-B traffic is painting.</li>
+    <li><strong>COM1 (GTN):</strong> tune <span class="verify"><span class="verify-label">Verify</span><span class="verify-what">KICT ATIS</span><span class="verify-blank">___.___</span></span> in standby, flip to active, copy the ATIS letter.</li>
+    <li><strong>COM2 (GTR 205):</strong> tune <span class="verify"><span class="verify-label">Verify</span><span class="verify-what">Wichita Approach</span><span class="verify-blank">___.___</span></span> in standby on the <em>separate box</em> so it's ready. Remember — this is a different radio, tuned in a different place.</li>
+    <li><strong>Practice the lookup itself:</strong> on the GTN, <span class="key">Nearest</span> → <span class="key">Airport</span> → <span class="key">KICT</span> → <span class="key">Frequencies</span>. This is the skill. Find ATIS, Tower, Ground, and Approach right there on the GTN.</li>
+  </ol>
+
+  <div class="callout">
+    <div class="callout-tag">Why the blanks?</div>
+    The whole point of this drill is practicing the GTN frequency-lookup workflow. The numbers are intentionally left blank — look them up on the chart and on the GTN, and write them in. Only <strong>121.5</strong> (guard) is safe to memorize.
+  </div>
+</div>
+
+<!-- ===== PHASE 4 ===== -->
+<div class="phase-card" id="phase4">
+  <div class="phase-num"><span class="phase-num-circle">4</span>Phase 4</div>
+  <div class="phase-title">Taxi &amp; run-up</div>
+  <div class="phase-meta">~8 minutes</div>
+
+  <ol class="steps">
+    <li><strong>Standard run-up.</strong> <strong>Cycle the prop</strong> during run-up and confirm the RPM drop and recovery.</li>
+    <li><strong>Brief the departure:</strong> which way you'll turn out of 1K1 toward Wichita, your initial altitude, and that your <strong>first call to Approach happens shortly after departure</strong> — not on the ground.</li>
+  </ol>
+</div>
+
+<!-- ===== PHASE 5 ===== -->
+<div class="phase-card" id="phase5">
+  <div class="phase-num"><span class="phase-num-circle">5</span>Phase 5</div>
+  <div class="phase-title">Departure from 1K1</div>
+  <div class="phase-meta">~5 minutes</div>
+
+  <ol class="steps">
+    <li><strong>Self-announce on CTAF (COM1):</strong></li>
+  </ol>
+
+  <div class="radio-call">
+    <div class="speaker">Brenda · COM1 · Stearman CTAF</div>
+    "Stearman traffic, Skylane Nine-Niner-Romeo-Foxtrot departing runway <em>[XX]</em>, westbound, Stearman."
+  </div>
+
+  <ol class="steps" start="2">
+    <li><strong>Climb out:</strong> pitch for V_Y, power's already at full — adjust pitch to hold the speed, then trim it off.</li>
+    <li><strong>Level at your planned transition altitude.</strong> Stay below the Class C shelf until you're talking to Approach.</li>
+  </ol>
+</div>
+
+<!-- ===== PHASE 6 ===== -->
+<div class="phase-card" id="phase6">
+  <div class="phase-num"><span class="phase-num-circle">6</span>Phase 6</div>
+  <div class="phase-title">Getting into the Class C</div>
+  <div class="phase-meta">~5 minutes · The main event</div>
+
+  <ol class="steps">
+    <li><strong>Switch COM1 to Wichita Approach</strong> (or talk on COM2 if that's where you staged it — your choice, just know which radio is hot on the GMA 350c).</li>
+    <li><strong>Initial call:</strong></li>
+  </ol>
+
+  <div class="radio-call">
+    <div class="speaker">Brenda · Wichita Approach</div>
+    "Wichita Approach, Skylane Nine-Niner-Romeo-Foxtrot."
+  </div>
+
+  <p>When they answer:</p>
+
+  <div class="radio-call">
+    <div class="speaker">Brenda · Wichita Approach</div>
+    "Wichita Approach, Skylane One-Niner-Niner-Romeo-Foxtrot, Cessna One-Eighty-Two, off Stearman, <em>[altitude]</em>, request landing at Kilo-India-Charlie-Tango with information <em>[ATIS letter]</em>."
+  </div>
+
+  <div class="callout danger">
+    <div class="callout-tag">Two-way contact is your clearance</div>
+    <strong>Listen for your callsign before entering the Class C.</strong> Two-way radio contact — them saying your tail number — is your clearance to enter Class C airspace. They'll likely assign a <strong>squawk</strong>: read it back and enter it in the GTX via the GTN transponder page.
+  </div>
+</div>
+
+<!-- ===== PHASE 7 ===== -->
+<div class="phase-card" id="phase7">
+  <div class="phase-num"><span class="phase-num-circle">7</span>Phase 7</div>
+  <div class="phase-title">The handoff to Tower</div>
+  <div class="phase-meta">~5 minutes</div>
+
+  <ol class="steps">
+    <li><strong>Approach hands you to Wichita Tower</strong> at some point. Tune it (they'll give the frequency) and check in:</li>
+  </ol>
+
+  <div class="radio-call">
+    <div class="speaker">Brenda · Wichita Tower</div>
+    "Wichita Tower, Skylane Nine-Niner-Romeo-Foxtrot, <em>[position/landmark]</em>, inbound, with <em>[ATIS letter]</em>."
+  </div>
+
+  <ol class="steps" start="2">
+    <li><strong>Tower sequences you and clears you to land.</strong> Fly the numbers — KICT has a long runway, no need to rush the approach.</li>
+  </ol>
+</div>
+
+<!-- ===== PHASE 8 ===== -->
+<div class="phase-card" id="phase8">
+  <div class="phase-num"><span class="phase-num-circle">8</span>Phase 8</div>
+  <div class="phase-title">Pattern &amp; landing</div>
+  <div class="phase-meta">~5 minutes</div>
+
+  <ol class="steps">
+    <li><strong>Prop full forward by midfield downwind.</strong></li>
+    <li><strong>Manage the descent in steps</strong> — don't let manifold pressure surprise you on final (your Flint Hills debrief flagged this).</li>
+    <li><strong>Flare slow,</strong> a 3–4 second motion, back pressure increasing through rollout.</li>
+  </ol>
+</div>
+
+<!-- ===== PHASE 9 ===== -->
+<div class="phase-card" id="phase9">
+  <div class="phase-num"><span class="phase-num-circle">9</span>Phase 9</div>
+  <div class="phase-title">On the ground at KICT</div>
+  <div class="phase-meta">Take a beat — you just flew into Class C</div>
+
+  <ol class="steps">
+    <li><strong>"Turn off at <span class="fill">taxiway</span>, contact Ground."</strong> Switch to <strong>Ground</strong>, get your taxi instructions, and write them down before you move.</li>
+    <li><strong>If full-stopping:</strong> taxi to transient/FBO, shut down, take a beat. You just flew into Class C.</li>
+  </ol>
+</div>
+
+<!-- ===== PHASE 10 ===== -->
+<div class="phase-card" id="phase10">
+  <div class="phase-num"><span class="phase-num-circle">10</span>Phase 10</div>
+  <div class="phase-title">Departure &amp; return</div>
+  <div class="phase-meta">~20 minutes home</div>
+
+  <ol class="steps">
+    <li><strong>Ground → Tower → Departure (Approach).</strong> They'll walk you out. Keep flight following home if you like the practice.</li>
+    <li><strong>Cancel / say goodbye to Approach</strong> when clear of their airspace, switch COM1 back to <strong>Stearman CTAF</strong>, self-announce inbound to 1K1, land, taxi in.</li>
+  </ol>
+
+  <div class="radio-call">
+    <div class="speaker">Brenda · COM1 · Stearman CTAF</div>
+    "Stearman traffic, Skylane Nine-Niner-Romeo-Foxtrot, <em>[distance/direction]</em> miles, inbound for full stop runway <em>[XX]</em>, Stearman."
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ===== DEBRIEF ===== -->
+<h2 id="debrief"><span class="h2-eyebrow">After you land</span>Debrief checklist</h2>
+<p class="h2-sub">Answer these out loud to each other while it's fresh. Best flown twice — fly it, debrief, then swap seats.</p>
+
+<div class="phase-card">
+  <ul class="checklist">
+    <li><input type="checkbox" id="d1"><label for="d1">Did two-way contact — them using my callsign — actually happen <strong>before</strong> I crossed into the Class C?</label></li>
+    <li><input type="checkbox" id="d2"><label for="d2">Did I keep COM1 / COM2 straight, and use the GMA 350c to pick which radio I was transmitting on?</label></li>
+    <li><input type="checkbox" id="d3"><label for="d3">Squawk entered correctly on the first try?</label></li>
+    <li><input type="checkbox" id="d4"><label for="d4">Where did workload spike — and what could I have set up earlier on the ground?</label></li>
+  </ul>
+</div>
+
+<hr class="divider">
+
+<!-- ===== REFERENCE ===== -->
+<h2 id="reference"><span class="h2-eyebrow">Reference</span>Quick reference card</h2>
+<p class="h2-sub">Look every frequency up on the current chart and the GTN — that's the drill. Write them in.</p>
+
+<h3>Frequencies</h3>
+<ul class="bare">
+  <li><span>KICT ATIS</span><span>VERIFY on chart / GTN</span></li>
+  <li><span>Wichita Approach</span><span>VERIFY on chart / GTN</span></li>
+  <li><span>Wichita Tower</span><span>VERIFY on chart / GTN</span></li>
+  <li><span>Wichita Ground</span><span>VERIFY on chart / GTN</span></li>
+  <li><span>1K1 Stearman CTAF</span><span>VERIFY on chart / GTN</span></li>
+  <li><span>Emergency (guard)</span><span>121.50</span></li>
+</ul>
+
+<h3>N199RF V-speeds (verify POH)</h3>
+<ul class="bare">
+  <li><span>V_R Rotation</span><span>55 KIAS</span></li>
+  <li><span>V_X Best angle</span><span>59 KIAS</span></li>
+  <li><span>V_Y Best rate</span><span>80 KIAS</span></li>
+  <li><span>V_REF Final approach</span><span>65 KIAS</span></li>
+  <li><span>Best glide</span><span>75 KIAS</span></li>
+  <li><span>V_NE Never exceed</span><span>176 KIAS</span></li>
+</ul>
+
+<h3>Airport quick reference</h3>
+<ul class="bare">
+  <li><span>1K1 elevation</span><span>1,364 ft</span></li>
+  <li><span>1K1 pattern altitude</span><span>2,364 MSL</span></li>
+  <li><span>KICT Wichita Eisenhower</span><span>Class C · long runways</span></li>
+  <li><span>KICT elevation / diagram</span><span>VERIFY on chart</span></li>
+</ul>
+
+<hr class="divider">
+
+<div class="callout">
+<div class="callout-tag">Next flight</div>
+<strong>Flight 3: Beaumont Hotel Pilgrimage.</strong> The fun reward flight — ~35 NM southeast to the grass strip at the Beaumont Hotel, where pilots taxi down Main Street for coffee. Direct-To from memory, synthetic vision, ADS-B weather, and in-flight flight-plan editing.
+</div>
+
+</div>
+</body>
+</html>

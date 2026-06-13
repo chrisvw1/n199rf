@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flight 3: Beaumont Hotel · N199RF</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #FBFBFD; --surface: #FFFFFF; --surface-2: #F5F5F7;
+  --ink: #1D1D1F; --ink-2: #424245; --ink-3: #86868B;
+  --line: #D2D2D7; --line-2: #E8E8ED;
+  --accent: #0071E3; --green: #34C759; --orange: #FF9500; --red: #FF3B30; --purple: #5856D6;
+  --shadow: 0 4px 16px rgba(0,0,0,0.06);
+  --radius: 14px; --radius-lg: 22px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--ink); font-family: 'Inter', -apple-system, sans-serif; line-height: 1.6; -webkit-font-smoothing: antialiased; padding: 0; }
+.wrap { max-width: 820px; margin: 0 auto; padding: 40px 24px 80px; }
+
+.hero { text-align: center; padding: 32px 0 48px; border-bottom: 1px solid var(--line-2); margin-bottom: 48px; }
+.eyebrow { font-size: 12px; font-weight: 600; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 14px; }
+h1 { font-family: 'Fraunces', serif; font-size: clamp(34px, 6vw, 54px); font-weight: 400; letter-spacing: -0.03em; line-height: 1.05; margin-bottom: 18px; }
+h1 em { font-style: italic; color: var(--ink-2); font-weight: 300; }
+.lede { color: var(--ink-2); font-size: 18px; max-width: 600px; margin: 0 auto; }
+
+.crew { display: flex; gap: 12px; justify-content: center; margin-top: 32px; flex-wrap: wrap; }
+.crew-pill { background: var(--surface); border: 1px solid var(--line-2); padding: 10px 16px; border-radius: 999px; display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 500; }
+.crew-avatar { width: 26px; height: 26px; border-radius: 50%; background: linear-gradient(135deg, var(--ink), #3A3A3C); color: #fff; display: flex; align-items: center; justify-content: center; font-family: 'Fraunces', serif; font-size: 13px; font-weight: 500; }
+.crew-avatar.b { background: linear-gradient(135deg, #5856D6, #AF52DE); }
+.crew-role { color: var(--ink-3); font-weight: 500; }
+
+h2 { font-family: 'Fraunces', serif; font-size: 32px; font-weight: 500; letter-spacing: -0.02em; margin: 64px 0 8px; line-height: 1.2; }
+.h2-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; color: var(--accent); text-transform: uppercase; margin-bottom: 8px; }
+.h2-sub { color: var(--ink-3); font-size: 15px; margin-bottom: 28px; }
+
+h3 { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 500; letter-spacing: -0.015em; margin: 32px 0 10px; }
+p { margin-bottom: 14px; color: var(--ink-2); }
+strong { color: var(--ink); font-weight: 600; }
+
+.callout { background: var(--surface); border-left: 3px solid var(--accent); padding: 18px 22px; border-radius: 0 var(--radius) var(--radius) 0; margin: 18px 0; }
+.callout.warn { border-left-color: var(--orange); background: #FFF8EF; }
+.callout.danger { border-left-color: var(--red); background: #FFF1F0; }
+.callout.note { border-left-color: var(--green); background: #F0FBF4; }
+.callout-tag { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px; color: var(--accent); }
+.callout.warn .callout-tag { color: var(--orange); }
+.callout.danger .callout-tag { color: var(--red); }
+.callout.note .callout-tag { color: var(--green); }
+
+.steps { counter-reset: step; list-style: none; padding: 0; margin: 18px 0; }
+.steps > li {
+  counter-increment: step; padding-left: 56px; position: relative;
+  margin-bottom: 18px; min-height: 36px;
+}
+.steps > li::before {
+  content: counter(step); position: absolute; left: 0; top: 0;
+  width: 36px; height: 36px; border-radius: 50%; background: var(--ink); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Fraunces', serif; font-weight: 500; font-size: 16px;
+}
+.steps li strong { color: var(--ink); }
+
+.key {
+  display: inline-block; padding: 2px 8px; border-radius: 6px;
+  background: var(--surface-2); border: 1px solid var(--line);
+  font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 600;
+  color: var(--ink); margin: 0 2px;
+}
+.key.red { background: #FFF1F0; border-color: #FFCDD2; color: #B71C1C; }
+.key.green { background: #F0FBF4; border-color: #BBE5C5; color: #1B5E20; }
+.key.blue { background: #EAF2FB; border-color: #B6D4F2; color: #0D47A1; }
+
+.route-summary { background: var(--surface); border: 1px solid var(--line-2); border-radius: var(--radius-lg); padding: 24px; margin: 24px 0 40px; }
+.route-row { display: grid; grid-template-columns: 130px 1fr; gap: 14px; padding: 10px 0; border-bottom: 1px solid var(--line-2); align-items: baseline; }
+.route-row:last-child { border-bottom: 0; }
+.route-key { font-size: 12px; font-weight: 600; letter-spacing: 0.05em; color: var(--ink-3); text-transform: uppercase; }
+.route-val { font-size: 15px; color: var(--ink); }
+.route-val code { font-family: 'JetBrains Mono', monospace; font-size: 13px; }
+
+.waypoint-list { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 14px 0; }
+.wp { background: var(--ink); color: #fff; padding: 6px 12px; border-radius: 8px; font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 600; }
+.wp-arrow { color: var(--ink-3); font-size: 16px; }
+
+.phase-card {
+  background: var(--surface); border: 1px solid var(--line-2);
+  border-radius: var(--radius-lg); padding: 28px; margin: 20px 0;
+}
+.phase-num {
+  display: inline-flex; align-items: center; gap: 10px; margin-bottom: 12px;
+  font-size: 12px; font-weight: 700; letter-spacing: 0.1em; color: var(--accent); text-transform: uppercase;
+}
+.phase-num-circle {
+  width: 28px; height: 28px; border-radius: 50%; background: var(--accent); color: #fff;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-family: 'Fraunces', serif; font-size: 14px; font-weight: 500;
+}
+.phase-title { font-family: 'Fraunces', serif; font-size: 26px; font-weight: 500; letter-spacing: -0.02em; margin-bottom: 4px; }
+.phase-meta { color: var(--ink-3); font-size: 13px; margin-bottom: 18px; font-weight: 500; }
+
+.role-tag {
+  display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 4px;
+  letter-spacing: 0.05em; margin-right: 6px; vertical-align: middle; position: relative; top: -2px;
+}
+.role-tag.brenda { background: #EAE9FC; color: #5856D6; }
+.role-tag.chris { background: #E4E4E7; color: #1D1D1F; }
+.role-tag.both { background: var(--surface-2); color: var(--ink-2); }
+
+.radio-call {
+  background: linear-gradient(180deg, #1D1D1F, #2C2C2E); color: #fff;
+  border-radius: var(--radius); padding: 16px 18px; margin: 12px 0;
+  font-family: 'JetBrains Mono', monospace; font-size: 14px; line-height: 1.5;
+}
+.radio-call .speaker { color: rgba(255,255,255,0.6); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; margin-bottom: 4px; }
+.radio-call em { color: #FFB84D; font-style: normal; }
+
+ul.bare { list-style: none; padding: 0; }
+ul.bare li { padding: 8px 0; border-bottom: 1px solid var(--line-2); display: flex; justify-content: space-between; gap: 14px; }
+ul.bare li:last-child { border-bottom: 0; }
+ul.bare li > span:first-child { color: var(--ink); font-weight: 500; }
+ul.bare li > span:last-child { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--ink-2); font-weight: 600; }
+
+ul:not(.bare) { padding-left: 22px; margin-bottom: 14px; }
+ul:not(.bare) li { color: var(--ink-2); margin-bottom: 6px; }
+
+.divider { border: 0; border-top: 1px solid var(--line-2); margin: 56px 0; }
+
+.toc { background: var(--surface); border: 1px solid var(--line-2); border-radius: var(--radius); padding: 20px 24px; margin-bottom: 40px; }
+.toc-title { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; color: var(--ink-3); text-transform: uppercase; margin-bottom: 12px; }
+.toc ol { padding-left: 22px; }
+.toc li { padding: 4px 0; }
+.toc a { color: var(--ink); text-decoration: none; font-weight: 500; }
+.toc a:hover { color: var(--accent); }
+
+/* ── Frequency VERIFY fill-in box — render [VERIFY: …] as a visible blank, never an invented number ── */
+.verify { display: inline-flex; align-items: baseline; gap: 7px; background: #FFF8EF; border: 1px dashed var(--orange); border-radius: 8px; padding: 2px 9px; margin: 0 1px; line-height: 1.3; }
+.verify-label { font-size: 9px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--orange); position: relative; top: -1px; }
+.verify-what { font-size: 13px; font-weight: 500; color: var(--ink-2); }
+.verify-blank { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--ink-3); letter-spacing: 0.08em; }
+
+/* ── Generic [fill-in] (runway, ATIS letter, taxiway) ── */
+.fill { font-family: 'JetBrains Mono', monospace; font-size: 0.9em; color: var(--ink-3); border-bottom: 1px dashed var(--line); padding: 0 3px; }
+
+/* ── Debrief checklist (tappable) ── */
+.checklist { list-style: none; padding: 0; margin: 8px 0; }
+.checklist li { display: flex; gap: 12px; align-items: flex-start; padding: 11px 2px; border-bottom: 1px solid var(--line-2); color: var(--ink-2); }
+.checklist li:last-child { border-bottom: 0; }
+.checklist input[type="checkbox"] { appearance: none; -webkit-appearance: none; width: 22px; height: 22px; border: 1.5px solid var(--line); border-radius: 6px; flex-shrink: 0; margin-top: 1px; cursor: pointer; position: relative; transition: all 0.15s; background: var(--surface); }
+.checklist input[type="checkbox"]:checked { background: var(--accent); border-color: var(--accent); }
+.checklist input[type="checkbox"]:checked::after { content: "✓"; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 14px; font-weight: 700; }
+.checklist label { cursor: pointer; }
+
+@media (max-width: 640px) {
+  .wrap { padding: 24px 16px 60px; }
+  .steps > li { padding-left: 46px; }
+  .steps > li::before { width: 30px; height: 30px; font-size: 14px; }
+  .route-row { grid-template-columns: 100px 1fr; }
+}
+</style>
+<link rel="manifest" href="/manifest.json"><meta name="theme-color" content="#0071E3"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="apple-mobile-web-app-title" content="N199RF"><script>if("serviceWorker" in navigator){window.addEventListener("load",()=>{navigator.serviceWorker.register("/service-worker.js").catch(e=>console.log("SW failed:",e));});}</script></head>
+<body>
+<div class="wrap">
+
+<!-- ===== HERO ===== -->
+<div class="hero">
+  <div class="eyebrow">Flight 3 of 5 · Approximately 1.5 hours</div>
+  <h1>Beaumont <em>Hotel</em></h1>
+  <p class="lede">The fun reward flight. A bucket-list Kansas pilgrimage: fly southeast to the grass strip at the Beaumont Hotel, taxi down Main Street, and stop for coffee. Light avionics drills along the way — Direct-To from memory, synthetic vision on approach, ADS-B weather, and in-flight flight-plan editing.</p>
+  <div class="crew">
+    <div class="crew-pill"><div class="crew-avatar b">B</div><span>Brenda</span><span class="crew-role">· Pilot in Command</span></div>
+    <div class="crew-pill"><div class="crew-avatar">C</div><span>Chris</span><span class="crew-role">· Right seat · Radios &amp; avionics</span></div>
+  </div>
+</div>
+
+<!-- ===== TOC ===== -->
+<div class="toc">
+  <div class="toc-title">What's in this playbook</div>
+  <ol>
+    <li><a href="#before">Before you go — aircraft, house rules, safety</a></li>
+    <li><a href="#phase1">Phase 1 · Night-before brief</a></li>
+    <li><a href="#phase2">Phase 2 · Cold cockpit &amp; preflight</a></li>
+    <li><a href="#phase3">Phase 3 · Avionics power-up &amp; setup</a></li>
+    <li><a href="#phase4">Phase 4 · Taxi &amp; run-up</a></li>
+    <li><a href="#phase5">Phase 5 · Departure</a></li>
+    <li><a href="#phase6">Phase 6 · En route drills</a></li>
+    <li><a href="#phase7">Phase 7 · Arrival setup</a></li>
+    <li><a href="#phase8">Phase 8 · Pattern &amp; landing (grass)</a></li>
+    <li><a href="#phase9">Phase 9 · Main Street</a></li>
+    <li><a href="#phase10">Phase 10 · Return &amp; shutdown</a></li>
+    <li><a href="#debrief">Debrief checklist</a></li>
+    <li><a href="#reference">Quick reference card</a></li>
+  </ol>
+</div>
+
+<!-- ===== ROUTE SUMMARY ===== -->
+<div class="route-summary">
+  <div class="route-row"><div class="route-key">Route</div><div class="route-val">
+    <div class="waypoint-list">
+      <span class="wp">1K1</span><span class="wp-arrow">→</span>
+      <span class="wp">07S</span><span class="wp-arrow">→</span>
+      <span class="wp">1K1</span>
+    </div>
+  </div></div>
+  <div class="route-row"><div class="route-key">Distance</div><div class="route-val">~70 NM round trip</div></div>
+  <div class="route-row"><div class="route-key">Time</div><div class="route-val">~1.5 hours with a stop</div></div>
+  <div class="route-row"><div class="route-key">Conditions</div><div class="route-val">Good VFR — check winds and grass condition; big-sky, low-traffic country</div></div>
+  <div class="route-row"><div class="route-key">Builds</div><div class="route-val">Direct-To from memory, synthetic vision on approach, ADS-B weather, in-flight flight-plan editing</div></div>
+</div>
+
+<!-- ===== CREW NOTE ===== -->
+<div class="callout">
+<div class="callout-tag">Crew note</div>
+This is the fun reward flight. Bucket-list Kansas — pilots taxi down Main Street to the hotel. Keep it relaxed and let the avionics drills be light.
+</div>
+
+<!-- ===== BEFORE YOU GO ===== -->
+<h2 id="before"><span class="h2-eyebrow">Before you go</span>Brief the airplane</h2>
+<p class="h2-sub">Repeated on every flight page so you can brief one sortie standalone.</p>
+
+<div class="callout warn">
+<div class="callout-tag">Verify everything · this is a study aid</div>
+Verify all frequencies, airspace, and fuel against current charts, NOTAMs, and ForeFlight. These are study/briefing aids, not flight plans. Fly with your CFI — Chris is a student pilot.
+</div>
+
+<div class="route-summary">
+  <div class="route-row"><div class="route-key">Aircraft</div><div class="route-val">N199RF — 1979 Cessna 182Q · Continental O-470 (carbureted) · constant-speed prop</div></div>
+  <div class="route-row"><div class="route-key">Base</div><div class="route-val">1K1 Stearman Field, Benton KS · field elev <code>1,364 ft</code> · KICT Class C just to the west</div></div>
+  <div class="route-row"><div class="route-key">Panel</div><div class="route-val">G3X Touch (PFD + EIS) · GTN 750Xi (GPS / NAV1 / <strong>COM1</strong>) · GTR 205 (<strong>COM2</strong>) · GFC 500 AP w/ GMC 507 · GI 275 standby · GMA 350c audio · GTX 345R (ADS-B In/Out) · CIES fuel senders</div></div>
+</div>
+
+<div class="callout danger">
+<div class="callout-tag">COM1 is not COM2</div>
+<strong>COM1 and COM2 are independent radios tuned at different physical locations.</strong> COM1 lives on the GTN 750Xi. COM2 is the separate GTR 205 box. Tuning COM2 means reaching for a different unit — and you pick which one you transmit on at the <strong>GMA 350c audio panel</strong>. This was the recurring point of confusion. Always know which radio is hot before you key the mic.
+</div>
+
+<div class="callout note">
+<div class="callout-tag">House rules · every flight</div>
+<ul>
+  <li><strong>Prop full forward by midfield downwind.</strong> Never pull the prop back on short final.</li>
+  <li><strong>Touch-and-go, in order:</strong> carb heat OFF → flaps 20° → full throttle. In that order, before power.</li>
+  <li><strong>Landing:</strong> separate the power reduction from the flare. The flare is a slow 3–4 second motion, not one input — maintain and increase back pressure through rollout.</li>
+  <li><strong>Climb mantra:</strong> pitch for speed, power for altitude. Set attitude with the yoke first, then trim off the pressure.</li>
+</ul>
+</div>
+
+<hr class="divider">
+
+<!-- ===== PHASE 1 ===== -->
+<div class="phase-card" id="phase1">
+  <div class="phase-num"><span class="phase-num-circle">1</span>Phase 1</div>
+  <div class="phase-title">Night-before brief</div>
+  <div class="phase-meta">The evening before · Both of you</div>
+
+  <ul>
+    <li>Look at <strong>07S on the chart</strong> — short field, terrain slightly higher than home, grass strip. Brief the approach end and any obstacles.</li>
+    <li><strong>Confirm current status</strong> — grass strips and the café hours change. Call ahead if you can.</li>
+  </ul>
+</div>
+
+<!-- ===== PHASE 2 ===== -->
+<div class="phase-card" id="phase2">
+  <div class="phase-num"><span class="phase-num-circle">2</span>Phase 2</div>
+  <div class="phase-title">Cold cockpit &amp; preflight</div>
+  <div class="phase-meta">~15 minutes</div>
+
+  <ol class="steps">
+    <li><strong>Standard preflight.</strong></li>
+    <li><strong>Soft/short-field review</strong> since it's grass — have the soft-field takeoff and landing technique fresh.</li>
+    <li><strong>Enter fuel-on-board into the GTN.</strong></li>
+  </ol>
+</div>
+
+<!-- ===== PHASE 3 ===== -->
+<div class="phase-card" id="phase3">
+  <div class="phase-num"><span class="phase-num-circle">3</span>Phase 3</div>
+  <div class="phase-title">Avionics power-up &amp; setup</div>
+  <div class="phase-meta">~5 minutes</div>
+
+  <ol class="steps">
+    <li><strong>Boot up,</strong> confirm GPS + ADS-B.</li>
+    <li><strong>DRILL — Direct-To from memory:</strong> without looking at the bezel, press <span class="key">Direct-To</span> → type <span class="key">07S</span> → <span class="key green">Enter</span> → <span class="key blue">Activate</span>. Build the muscle memory.</li>
+    <li><strong>Pull up ADS-B weather (FIS-B):</strong> check METARs for surrounding fields on the GTN map overlay before you go.</li>
+  </ol>
+</div>
+
+<!-- ===== PHASE 4 ===== -->
+<div class="phase-card" id="phase4">
+  <div class="phase-num"><span class="phase-num-circle">4</span>Phase 4</div>
+  <div class="phase-title">Taxi &amp; run-up</div>
+  <div class="phase-meta">~8 minutes</div>
+
+  <ol class="steps">
+    <li><strong>Standard run-up,</strong> cycle the prop.</li>
+  </ol>
+</div>
+
+<!-- ===== PHASE 5 ===== -->
+<div class="phase-card" id="phase5">
+  <div class="phase-num"><span class="phase-num-circle">5</span>Phase 5</div>
+  <div class="phase-title">Departure</div>
+  <div class="phase-meta">~5 minutes</div>
+
+  <ol class="steps">
+    <li><strong>Self-announce on CTAF:</strong></li>
+  </ol>
+
+  <div class="radio-call">
+    <div class="speaker">Brenda · COM1 · Stearman CTAF</div>
+    "Stearman traffic, Skylane Nine-Niner-Romeo-Foxtrot departing runway <em>[XX]</em>, southeast-bound, Stearman."
+  </div>
+
+  <ol class="steps" start="2">
+    <li><strong>Climb out:</strong> pitch for speed.</li>
+    <li><strong>Level at a comfortable cruise</strong> — low enough to enjoy the scenery, high enough to be safe over the terrain.</li>
+  </ol>
+</div>
+
+<!-- ===== PHASE 6 ===== -->
+<div class="phase-card" id="phase6">
+  <div class="phase-num"><span class="phase-num-circle">6</span>Phase 6</div>
+  <div class="phase-title">En route drills</div>
+  <div class="phase-meta">The relaxed leg</div>
+
+  <ol class="steps">
+    <li><strong>In-flight flight-plan editing:</strong> add an intermediate waypoint between 1K1 and 07S on the GTN, watch the route redraw, then delete it. Practice doing this without breaking the active leg.</li>
+    <li><strong>Keep scanning ADS-B traffic.</strong></li>
+  </ol>
+
+  <div class="callout warn">
+    <div class="callout-tag">Quiet ≠ empty</div>
+    NORDO / non-announcing aircraft are real out here — don't let a quiet frequency lull the scan.
+  </div>
+</div>
+
+<!-- ===== PHASE 7 ===== -->
+<div class="phase-card" id="phase7">
+  <div class="phase-num"><span class="phase-num-circle">7</span>Phase 7</div>
+  <div class="phase-title">Arrival setup</div>
+  <div class="phase-meta">~10 minutes</div>
+
+  <ol class="steps">
+    <li><strong>Switch COM1 to the 07S CTAF</strong> <span class="verify"><span class="verify-label">Verify</span><span class="verify-what">07S Beaumont CTAF</span><span class="verify-blank">___.___</span></span> well out, and start listening.</li>
+    <li><strong>G3X synthetic vision:</strong> with 07S in slightly higher terrain, good syn-vis practice — confirm the picture matches what you see out the window.</li>
+    <li><strong>Self-announce inbound:</strong></li>
+  </ol>
+
+  <div class="radio-call">
+    <div class="speaker">Brenda · COM1 · Beaumont CTAF</div>
+    "Beaumont traffic, Skylane Nine-Niner-Romeo-Foxtrot, <em>[distance/direction]</em> miles, inbound for landing <em>[runway]</em>, Beaumont."
+  </div>
+</div>
+
+<!-- ===== PHASE 8 ===== -->
+<div class="phase-card" id="phase8">
+  <div class="phase-num"><span class="phase-num-circle">8</span>Phase 8</div>
+  <div class="phase-title">Pattern &amp; landing (grass)</div>
+  <div class="phase-meta">~5 minutes</div>
+
+  <ol class="steps">
+    <li><strong>Prop full forward by midfield downwind.</strong></li>
+    <li><strong>Soft-field landing</strong> — carry a touch of power into the flare, hold the nosewheel off, let the mains settle into the grass gently; back pressure stays in through rollout.</li>
+    <li><strong>Announce each leg on CTAF</strong> — downwind, base, final.</li>
+  </ol>
+</div>
+
+<!-- ===== PHASE 9 ===== -->
+<div class="phase-card" id="phase9">
+  <div class="phase-num"><span class="phase-num-circle">9</span>Phase 9</div>
+  <div class="phase-title">Main Street</div>
+  <div class="phase-meta">The one you tell people about</div>
+
+  <ol class="steps">
+    <li><strong>Taxi to the hotel</strong> per local custom.</li>
+    <li><strong>Shut down, coffee, enjoy it.</strong></li>
+  </ol>
+</div>
+
+<!-- ===== PHASE 10 ===== -->
+<div class="phase-card" id="phase10">
+  <div class="phase-num"><span class="phase-num-circle">10</span>Phase 10</div>
+  <div class="phase-title">Return &amp; shutdown</div>
+  <div class="phase-meta">~45 minutes home</div>
+
+  <ol class="steps">
+    <li><strong>Soft-field takeoff</strong> off the grass.</li>
+    <li><strong>Direct-To 1K1 from memory</strong> again.</li>
+    <li><strong>Self-announce inbound to Stearman,</strong> land, taxi in, shut down.</li>
+  </ol>
+</div>
+
+<hr class="divider">
+
+<!-- ===== DEBRIEF ===== -->
+<h2 id="debrief"><span class="h2-eyebrow">After you land</span>Debrief checklist</h2>
+<p class="h2-sub">Answer these out loud to each other while it's fresh. Best flown twice — fly it, debrief, then swap seats.</p>
+
+<div class="phase-card">
+  <ul class="checklist">
+    <li><input type="checkbox" id="d1"><label for="d1">Direct-To from memory — did I do it without hunting for buttons?</label></li>
+    <li><input type="checkbox" id="d2"><label for="d2">Did the syn-vis terrain picture match reality on the way in?</label></li>
+    <li><input type="checkbox" id="d3"><label for="d3">Flight-plan add/delete — clean, or did I disturb the active leg?</label></li>
+    <li><input type="checkbox" id="d4"><label for="d4">Soft-field technique on grass — nosewheel stayed off?</label></li>
+  </ul>
+</div>
+
+<hr class="divider">
+
+<!-- ===== REFERENCE ===== -->
+<h2 id="reference"><span class="h2-eyebrow">Reference</span>Quick reference card</h2>
+<p class="h2-sub">Look every frequency up on the current chart and the GTN — that's the drill. Write them in.</p>
+
+<h3>Frequencies</h3>
+<ul class="bare">
+  <li><span>07S Beaumont CTAF</span><span>VERIFY on chart / GTN</span></li>
+  <li><span>1K1 Stearman CTAF</span><span>VERIFY on chart / GTN</span></li>
+  <li><span>Emergency (guard)</span><span>121.50</span></li>
+</ul>
+
+<h3>N199RF V-speeds (verify POH)</h3>
+<ul class="bare">
+  <li><span>V_R Rotation</span><span>55 KIAS</span></li>
+  <li><span>V_X Best angle</span><span>59 KIAS</span></li>
+  <li><span>V_Y Best rate</span><span>80 KIAS</span></li>
+  <li><span>V_REF Final approach</span><span>65 KIAS</span></li>
+  <li><span>Best glide</span><span>75 KIAS</span></li>
+  <li><span>V_NE Never exceed</span><span>176 KIAS</span></li>
+</ul>
+
+<h3>Airport quick reference</h3>
+<ul class="bare">
+  <li><span>1K1 elevation</span><span>1,364 ft</span></li>
+  <li><span>1K1 pattern altitude</span><span>2,364 MSL</span></li>
+  <li><span>07S Beaumont</span><span>Grass strip · short field · slightly higher terrain</span></li>
+  <li><span>07S elevation / runway</span><span>VERIFY on chart</span></li>
+</ul>
+
+<hr class="divider">
+
+<div class="callout">
+<div class="callout-tag">Next flight</div>
+<strong>Flight 4: Salt Plains &amp; Salty Sandwiches (Hutchinson XC).</strong> ~100 NM round trip to KHUT for fuel and lunch — fuel planning on the GTN, EIS deep monitoring, your first GFC 500 autopilot engagement, and top-of-descent math.
+</div>
+
+</div>
+</body>
+</html>
